@@ -1,0 +1,71 @@
+.contact > h2 {
+  margin-top: 40px;
+}
+
+.title {
+  width: 20em;
+  height: 120px;
+  line-height: 130px;
+  border-bottom: 5px solid var(--color-dark-white);
+  margin: auto;
+}
+
+.container {
+  background-color: var(--color-backgroundTransparency);
+  border-radius: 15px;
+  padding: 60px 50px;
+  margin-top: 30px;
+  display: flex;
+}
+
+.guide {
+  margin-top: 55px;
+  margin-bottom: 50px;
+  color: var(--color-dark-white);
+  font-weight: 100;
+  line-height: 25px;
+}
+
+.contact > p > span {
+  color: var(--color-orange);
+  font-weight: 100;
+}
+
+.container h2::after {
+  content: '';
+  position: relative;
+  top: 0;
+  left: 50%;
+  margin-left: -25px;
+  margin-top: 15px;
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: var(--color-white);
+}
+
+.container a svg {
+  font-size: var(--font-large);
+  margin: 15px 0;
+}
+
+.loginButton {
+  font-size: var(--font-small);
+  color: var(--color-blue);
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    width: 15em;
+  }
+
+  .container {
+    padding: 25px 15px;
+    flex-direction: column;
+    margin-bottom: 35px;
+  }
+
+  .guide {
+    margin: 35px 0;
+  }
+}

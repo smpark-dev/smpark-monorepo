@@ -1,0 +1,13 @@
+.content {
+  flex-basis: 50%;
+  height: 220px;
+}
+
+.content a:hover svg {
+  transform: scale(1.2);
+  transition: all var(--animation-duration) ease;
+}
+
+.contentText {
+  cursor: pointer;
+}

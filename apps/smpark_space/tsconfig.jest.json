@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx", // Jest에서 JSX를 처리하기 위한 설정
+    "moduleNameMapper": {
+      "src/(.*)": "<rootDir>/$1"
+    }
+  }
+}

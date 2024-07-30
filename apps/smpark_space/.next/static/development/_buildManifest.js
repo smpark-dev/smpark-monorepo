@@ -1,0 +1,1 @@
+self.__BUILD_MANIFEST = (function(a){return {__rewrites:{afterFiles:[{has:a,source:"\u002Fapi\u002F:path*",destination:"\u002Finterfaces\u002Fapi\u002F:path*"},{has:a,source:"\u002F:path*",destination:"\u002Fui\u002Fpages\u002F:path*"}],beforeFiles:[],fallback:[]},sortedPages:["\u002F_app"]}}(void 0));self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()

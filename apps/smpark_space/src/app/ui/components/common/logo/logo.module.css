@@ -1,0 +1,25 @@
+.logo {
+  font-family: 'Inconsolata', monospace;
+  line-height: 30px;
+  letter-spacing: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--font-regular);
+  padding: 10px 0 10px 10px;
+  width: 15%;
+  height: 100%;
+}
+
+.logo a:hover {
+  color: var(--color-orange);
+}
+
+@media screen and (max-width: 1024px) {
+  .logo {
+    letter-spacing: 0.17rem;
+    font-size: var(--font-regular);
+  }
+}

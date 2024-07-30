@@ -1,0 +1,15 @@
+{
+  "name": "smpark_space",
+  "sourceRoot": "apps/smpark_space",
+  "projectType": "application",
+  "targets": {
+    "dev": {
+      "executor": "@nx/next:server",
+      "options": {
+        "dev": true,
+        "port": 3000
+      }
+    }
+  },
+  "tags": []
+}

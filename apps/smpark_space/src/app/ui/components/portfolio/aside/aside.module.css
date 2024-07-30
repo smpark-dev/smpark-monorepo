@@ -1,0 +1,78 @@
+.menu__btn {
+  font-size: var(--font-regular);
+  color: var(--color-light-white);
+  display: none;
+  margin: 0 auto;
+  width: 30px;
+  justify-content: center;
+  flex-direction: column;
+  flex-basis: 10%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+  margin-top: 45px;
+  padding-bottom: 45px;
+  width: 100%;
+}
+
+.studyPage,
+.loginPage {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .menu {
+    display: none;
+    animation-duration: var(--animation-duration);
+    animation-name: menuSlide;
+  }
+
+  .studyPage {
+    display: none;
+    animation-duration: var(--animation-duration);
+    animation-name: menuSlide;
+  }
+
+  @keyframes menuSlide {
+    from {
+      transform: translateX(100px);
+    }
+    to {
+      transform: translateX(0px);
+    }
+  }
+
+  .menu.active {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 0 0 20px 0;
+    height: 100%;
+    margin: 0;
+  }
+
+  .studyPage.active {
+    display: flex;
+  }
+
+  .menu li {
+    font-size: var(--font-small);
+  }
+
+  .menu__btn {
+    display: flex;
+    width: 50px;
+    align-items: center;
+    flex-basis: 50px;
+    margin: 0;
+    padding: 0;
+  }
+}
