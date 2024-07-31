@@ -9,7 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-    environment: ${{ github.ref == 'refs/heads/main' && '.env.production' || '.env.development' }} # 브랜치에 따라 구분
+    environment: ${{ github.ref == 'refs/heads/main' && '.env.production' || '.env.development' }}
 
     env:
       ENV_NAME: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
