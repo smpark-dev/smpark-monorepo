@@ -1,4 +1,4 @@
-import NextAuth, { User } from 'next-auth';
+import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import GitHub from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
@@ -71,9 +71,17 @@ const options: NextAuthOptions = {
       console.log('token', token);
       if (account) {
         if (account?.provider === 'google') {
+          // Google 로그인 관련 로직
+          console.log('Google login');
         } else if (account?.provider === 'github') {
+          // GitHub 로그인 관련 로직
+          console.log('GitHub login');
         } else if (account?.provider === 'guest') {
+          // 게스트 로그인 관련 로직
+          console.log('Guest login');
         } else if (account?.provider === 'smpark') {
+          // smpark 로그인 관련 로직
+          console.log('smpark login');
         } else {
           throw new Error('존재하지 않는 provider');
         }
