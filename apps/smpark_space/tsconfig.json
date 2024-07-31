@@ -13,6 +13,7 @@
     "incremental": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
+    
     "plugins": [
       {
         "name": "next"
@@ -26,7 +27,7 @@
       "@/*": [
         "./apps/smpark_space/src/*"
       ]
-    },
+    }
   },
   "include": [
     "**/*.ts",
@@ -36,7 +37,8 @@
     "../../apps/next-test/.next/types/**/*.ts",
     "../../dist/apps/next-test/.next/types/**/*.ts",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "../../dist/apps/smpark_space/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
