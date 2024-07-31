@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  oauth:
+    build:
+      context: .
+      target: development
+    image: smpark9596/oauth2.0:${VERSION}
+    container_name: oauth2.0-dev_${VERSION}
+    ports:
+      - '4000:4000'
+    env_file:
+      - .env.development
+    environment:
+      - NODE_ENV=development
+    volumes:
+    - .:/usr/src/oauth2.0
+    - smpark_log:/usr/src/oauth_log
+    command: yarn dev
+    
+networks:
+  default:
+    name: smpark_oauth_network_dev
+
+volumes:
+  smpark_log:

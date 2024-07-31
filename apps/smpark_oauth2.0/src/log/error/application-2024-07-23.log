@@ -1,0 +1,2 @@
+ERROR: 2024. 7. 23. 오후 9:43:27 [2024-07-23T12:43:27.875Z] POST /oauth/register - 로그인이 필요한 서비스입니다.
+ERROR: 2024. 7. 23. 오후 11:41:55 [2024-07-23T14:41:55.389Z] POST /oauth/credential - clientRequested is not defined

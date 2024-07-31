@@ -1,0 +1,13 @@
+ERROR: 2024. 7. 16. 오전 11:25:19 [2024-07-16T02:25:19.065Z] POST /oauth/register - 서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.
+ERROR: 2024. 7. 16. 오전 11:25:30 [2024-07-16T02:25:30.842Z] POST /oauth/register - 서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.
+ERROR: 2024. 7. 16. 오전 11:26:28 [2024-07-16T02:26:28.168Z] POST /oauth/register - 서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.
+ERROR: 2024. 7. 16. 오전 11:26:59 [2024-07-16T02:26:59.543Z] POST /oauth/register - 서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.
+ERROR: 2024. 7. 16. 오전 11:27:05 [2024-07-16T02:27:05.329Z] POST /oauth/register - 서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.
+ERROR: 2024. 7. 16. 오전 11:27:20 [2024-07-16T02:27:20.980Z] POST /oauth/register - 서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.
+ERROR: 2024. 7. 16. 오전 11:27:48 [2024-07-16T02:27:48.416Z] POST /oauth/register - 서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.
+ERROR: 2024. 7. 16. 오전 11:28:10 [2024-07-16T02:28:10.555Z] POST /oauth/register - 서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.
+ERROR: 2024. 7. 16. 오전 11:45:49 [2024-07-16T02:45:49.965Z] GET /oauth/authorize?client_id=e54eb890-0e8b-4-smpark&scope=openid%20name&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fsmpark&state=qNYn8qw2tLs8-1t-JRzVsvixAKXFyOBNnSPqvKRjLec - referer_uri가 존재하지 않습니다.
+ERROR: 2024. 7. 16. 오전 11:47:12 [2024-07-16T02:47:12.392Z] GET /oauth/authorize?client_id=e54eb890-0e8b-4-smpark&scope=openid%20name&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fsmpark&state=Y1BGjN-Mp6dyoozyM2fPjlbcNwG4YyePgOphPWGjon8 - referer_uri가 존재하지 않습니다.
+ERROR: 2024. 7. 16. 오후 12:01:07 [2024-07-16T03:01:07.842Z] GET /oauth/authorize?client_id=e54eb890-0e8b-4-smpark&scope=openid%20name&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fsmpark&state=NFmCvlmnevkk2wXip7VpQiicjrSlrn3ZqFvAmCsIdjQ - referer_uri가 존재하지 않습니다.
+ERROR: 2024. 7. 16. 오후 12:39:23 [2024-07-16T03:39:23.557Z] POST /login - 아이디 또는 패스워드가 일치하지 않습니다.
+ERROR: 2024. 7. 16. 오후 12:39:30 [2024-07-16T03:39:30.412Z] POST /login - 등록되지 않은 유저입니다.

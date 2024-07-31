@@ -1,0 +1,73 @@
+{
+  "name": "smpark_oauth2.0",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/smpark_oauth2.0/src",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cross-env NODE_ENV=development nodemon --config apps/smpark_oauth2.0/nodemon.json"
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/smpark_oauth2.0",
+        "format": ["esm"],
+        "bundle": true,
+        "main": "apps/smpark_oauth2.0/src/index.ts",
+        "tsConfig": "apps/smpark_oauth2.0/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/smpark_oauth2.0/src/views",
+            "output": "apps/smpark_oauth2.0/src/views"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/smpark_oauth2.0/src/public",
+            "output": "apps/smpark_oauth2.0/src/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/smpark_oauth2.0/src/script",
+            "output": "apps/smpark_oauth2.0/src/script"
+          }
+        ],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "production": {
+          "generateLockfile": true,
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            },
+            "define": {
+              "process.env.NODE_ENV": "'production'"
+            }
+          }
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/smpark_oauth2.0/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

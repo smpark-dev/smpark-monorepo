@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title OAuth Server
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=9;IE=10;IE=11;IE=Edge,chrome=1')
+    meta(name='viewport', content='width=device-width, initial-scale=1, user-scalable=no')
+    link(rel='stylesheet', href='/public/css/style.css')
+
+  body
+    block content
+
+    // Auth Login
+    script(type='module', src='/script/auth/login.js')
+    // Auth Register
+    script(type='module', src='/script/auth/register.js')
+    // OAuth Register
+    script(type='module', src='/script/oauth/register.js')
+    // OAuth Login
+    script(type='module', src='/script/oauth/login.js')
+
+
