@@ -16,12 +16,10 @@ const errorHandlerMiddleware = (
   const statusCode = err.status || 500;
   const errorMessage = err.message || ERROR_MESSAGES.SERVER.ISSUE;
 
-  // 에러 로그 남기기
   logger.error(
     `[${new Date().toISOString()}] ${req.method} ${req.url} - ${errorMessage}`,
   );
 
-  // 특정 에러 상태 코드에 대한 처리
   if ([500, 501, 502, 503, 504].includes(statusCode)) {
     res.status(statusCode).render('main/error', {
       code: statusCode,
@@ -33,7 +31,6 @@ const errorHandlerMiddleware = (
       message: ERROR_MESSAGES.NOT_FOUND.PAGE,
     });
   } else {
-    // 기타 에러는 JSON 응답
     res.status(statusCode).json({ message: errorMessage });
   }
 };

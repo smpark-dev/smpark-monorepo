@@ -18,7 +18,6 @@ const dynamicCSPMiddleware = (
     );
   }
 
-  // 동적으로 formAction 설정
   const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
   directives['form-action'] = ["'self'", refererUri];
 

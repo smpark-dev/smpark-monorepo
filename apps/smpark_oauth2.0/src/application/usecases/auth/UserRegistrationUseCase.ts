@@ -29,7 +29,7 @@ class UserRegistrationUseCase implements IUserRegistrationUseCase {
 
     this.oAuthVerifierService.verifyRegUser(fetchedUser);
 
-    // const userByEmail = await this.userRepository.findByEmail(email); // 이메일 관련 기능 보류
+    // const userByEmail = await this.userRepository.findByEmail(email); // 이메일 확인 관련 기능 보류 (2024-07 작성)
 
     const hashedPassword = await this.authService.hashedPassword(password);
     const updatedInfo = {
