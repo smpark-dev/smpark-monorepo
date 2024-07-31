@@ -3,7 +3,6 @@ import Google from 'next-auth/providers/google';
 import GitHub from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
 import { NextAuthOptions } from 'next-auth';
-import { NextApiHandler } from 'next/types';
 import { v4 as uuidv4 } from 'uuid';
 
 const options: NextAuthOptions = {
@@ -69,10 +68,9 @@ const options: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, account, profile, user }) {
-      console.log("token", token);
+      console.log('token', token);
       if (account) {
         if (account?.provider === 'google') {
-
         } else if (account?.provider === 'github') {
         } else if (account?.provider === 'guest') {
         } else if (account?.provider === 'smpark') {

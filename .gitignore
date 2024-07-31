@@ -1,15 +1,24 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
-# compiled output
-dist
-tmp
-/out-tsc
-
-# dependencies
+# Dependencies
 node_modules
+/.yarn/install-state.gz
+.yarn
+
+# Build outputs
+/dist
+/build
+/out
+/.next/
+/out/
+/tmp
+/out-tsc
 
 # IDEs and editors
 /.idea
+/.vscode/*
+!/.vscode/settings.json
+!/.vscode/tasks.json
+!/.vscode/launch.json
+!/.vscode/extensions.json
 .project
 .classpath
 .c9/
@@ -17,26 +26,38 @@ node_modules
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-/.sass-cache
-/connect.lock
+# Testing
 /coverage
-/libpeerconnection.log
+/cypress/videos/
+/cypress/screenshots/
+
+# Logs and debugging
 npm-debug.log
 yarn-error.log
 testem.log
-/typings
 
-# System Files
+# Environment and config files
+.env*
+*.pem
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# NX specific
+/.nx/cache
+/.nx/workspace-data
+
+# Misc
 .DS_Store
 Thumbs.db
+.vercel
+/.sass-cache
+/connect.lock
+/libpeerconnection.log
+/typings
+/src/log/*
 
-.nx/cache
-.nx/workspace-data
+# Next.js
+apps/**/.next
+out
