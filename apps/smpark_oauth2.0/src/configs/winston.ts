@@ -1,9 +1,10 @@
 import 'winston-daily-rotate-file';
 import fs from 'fs';
 import path from 'path';
-import winston from 'winston';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+
+import winston from 'winston';
 
 import env from '@configs/env';
 

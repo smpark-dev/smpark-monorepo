@@ -1,3 +1,5 @@
+import { injectable } from 'inversify';
+
 import {
   AuthorizeRequestDTO,
   ScopeResponseDTO,
@@ -6,7 +8,6 @@ import {
   ValidIdsDTO,
 } from '@dtos/OAuthDTO';
 import { ScopeDTO } from '@dtos/TokenDTO';
-import { injectable } from 'inversify';
 
 @injectable()
 class OAuthMapper {

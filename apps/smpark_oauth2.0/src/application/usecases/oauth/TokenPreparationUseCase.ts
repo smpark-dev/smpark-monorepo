@@ -1,14 +1,16 @@
 import { injectable, inject } from 'inversify';
-import { TokenRequestDTO, TokenValidateDTO } from '@dtos/OAuthDTO';
+
+import { ITokenPreparationUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
 import { ClientsDTO } from '@dtos/ClientsDTO';
 import { CodeDTO } from '@dtos/CodeDTO';
+import { TokenRequestDTO, TokenValidateDTO } from '@dtos/OAuthDTO';
 import OAuthMapper from '@mapper/OAuthMapper';
+
 import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
 import type { ICodeRepository } from '@domain-interfaces/repository/ICodeRepository';
 import type { ICodeService } from '@domain-interfaces/services/ICodeService';
 import type { IOAuthRequestValidService } from '@domain-interfaces/services/IOAuthRequestValidService';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
-import { ITokenPreparationUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
 
 @injectable()
 class TokenPreparationUseCase implements ITokenPreparationUseCase {

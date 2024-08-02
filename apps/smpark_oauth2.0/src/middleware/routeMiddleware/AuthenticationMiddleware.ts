@@ -1,27 +1,24 @@
-import createError from 'http-errors';
 import { Response, NextFunction } from 'express';
+import createError from 'http-errors';
 import { inject, injectable } from 'inversify';
 import { JwtPayload } from 'jsonwebtoken';
 
-import User from '@entities/User';
-import type { EnvConfig } from '@lib/dotenv-env';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
-import type { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
-import type { ITokenService } from '@domain-interfaces/services/ITokenService';
+import User from '@entities/User';
 import { IAuthenticationMiddleware } from '@middleware/interfaces/routeMiddleware/IAuthenticationMiddleware';
 
+import type { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
+import type { ITokenService } from '@domain-interfaces/services/ITokenService';
+import type { EnvConfig } from '@lib/dotenv-env';
+
 @injectable()
-class AuthenticationMiddleware implements IAuthenticationMiddleware{
+class AuthenticationMiddleware implements IAuthenticationMiddleware {
   constructor(
     @inject('env') private env: EnvConfig,
     @inject('ITokenService') private tokenService: ITokenService,
   ) {}
 
-  public handle = (
-    req: IOauthRequest,
-    res: Response,
-    next: NextFunction,
-  ): void => {
+  public handle = (req: IOauthRequest, res: Response, next: NextFunction): void => {
     if (req.session.user) {
       return next();
     }
@@ -62,20 +59,14 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware{
     }
   }
 
-  private handleTokenVerificationError(
-    error: unknown,
-    res: Response,
-    next: NextFunction,
-  ): void {
+  private handleTokenVerificationError(error: unknown, res: Response, next: NextFunction): void {
     if (error instanceof Error) {
       switch (error.name) {
         case 'JsonWebTokenError':
           return next(createError(401, ERROR_MESSAGES.VALIDATION.FORMAT.TOKEN));
         case 'TokenExpiredError':
           res.clearCookie('auth_token');
-          return next(
-            createError(401, ERROR_MESSAGES.VALIDATION.EXPIRED.TOKEN),
-          );
+          return next(createError(401, ERROR_MESSAGES.VALIDATION.EXPIRED.TOKEN));
         default:
           return next(error);
       }

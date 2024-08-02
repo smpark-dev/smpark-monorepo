@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 
-import User from '@entities/User';
 import { UserDTO, LoginDTO, UserResponseDTO, RegisterDTO } from '@dtos/UserDTO';
+import User from '@entities/User';
 
 @injectable()
 class UserMapper {

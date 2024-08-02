@@ -16,9 +16,7 @@ const errorHandlerMiddleware = (
   const statusCode = err.status || 500;
   const errorMessage = err.message || ERROR_MESSAGES.SERVER.ISSUE;
 
-  logger.error(
-    `[${new Date().toISOString()}] ${req.method} ${req.url} - ${errorMessage}`,
-  );
+  logger.error(`[${new Date().toISOString()}] ${req.method} ${req.url} - ${errorMessage}`);
 
   if ([500, 501, 502, 503, 504].includes(statusCode)) {
     res.status(statusCode).render('main/error', {

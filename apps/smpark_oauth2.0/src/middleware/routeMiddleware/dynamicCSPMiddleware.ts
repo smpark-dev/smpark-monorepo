@@ -1,21 +1,15 @@
 import { Response, NextFunction } from 'express';
-import createError from 'http-errors';
 import helmet from 'helmet';
+import createError from 'http-errors';
 
-import { ERROR_MESSAGES } from '@constants/errorMessages';
 import { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
+import { ERROR_MESSAGES } from '@constants/errorMessages';
 
-const dynamicCSPMiddleware = (
-  req: IOauthRequest,
-  res: Response,
-  next: NextFunction,
-): void => {
+const dynamicCSPMiddleware = (req: IOauthRequest, res: Response, next: NextFunction): void => {
   const refererUri = req.session.verifiedRefererUri;
 
   if (!refererUri) {
-    return next(
-      createError(401, ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI),
-    );
+    return next(createError(401, ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI));
   }
 
   const directives = helmet.contentSecurityPolicy.getDefaultDirectives();

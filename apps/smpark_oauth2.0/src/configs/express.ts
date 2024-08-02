@@ -1,17 +1,19 @@
-import cors from 'cors';
-import morgan from 'morgan';
-import helmet from 'helmet';
-import express from 'express';
-import compression from 'compression';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import cookieParser from 'cookie-parser';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import rateLimiterMiddleware from '@middleware/globalMiddleware/rateLimiterMiddleware';
-import errorHandlerMiddleware from '@middleware/globalMiddleware/errorHandlerMiddleware';
+import compression from 'compression';
+import MongoStore from 'connect-mongo';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express from 'express';
+import session from 'express-session';
+import helmet from 'helmet';
+import morgan from 'morgan';
+
 import { stream } from '@configs/winston';
+import errorHandlerMiddleware from '@middleware/globalMiddleware/errorHandlerMiddleware';
+import rateLimiterMiddleware from '@middleware/globalMiddleware/rateLimiterMiddleware';
+
 import type { EnvConfig } from '@lib/dotenv-env';
 
 const __filename = fileURLToPath(import.meta.url);

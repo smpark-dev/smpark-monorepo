@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import express from 'express';
 import MongoStore from 'connect-mongo';
+import express from 'express';
 
 import env from '@configs/env';
 import configureExpress from '@configs/express';

@@ -1,12 +1,12 @@
-import xss from 'xss';
 import createError from 'http-errors';
 import { injectable } from 'inversify';
+import xss from 'xss';
 
-import { AuthorizeRequestDTO, TokenRequestDTO, TokenValidateDTO } from '@dtos/OAuthDTO';
-import { RequestValidDTO, ResponseValidDTO } from '@dtos/ClientsDTO';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
-import { GrantType } from '@enums/oauth';
 import { IOAuthRequestValidService } from '@domain-interfaces/services/IOAuthRequestValidService';
+import { RequestValidDTO, ResponseValidDTO } from '@dtos/ClientsDTO';
+import { AuthorizeRequestDTO, TokenRequestDTO, TokenValidateDTO } from '@dtos/OAuthDTO';
+import { GrantType } from '@enums/oauth';
 
 @injectable()
 class OAuthRequestValidService implements IOAuthRequestValidService {
@@ -70,7 +70,7 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
     };
   }
 
-  private validateField(
+  protected validateField(
     missingErrorMsg: string,
     mismatchErrorMsg: string,
     requestValue?: string,
@@ -87,7 +87,7 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
     return requestValue;
   }
 
-  private validateReferer(refererUri?: string, addressUri?: string): string {
+  protected validateReferer(refererUri?: string, addressUri?: string): string {
     if (!refererUri) {
       throw createError(400, ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI);
     }
@@ -99,7 +99,7 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
     return refererUri;
   }
 
-  private validateResponseType(responseType?: string): string {
+  protected validateResponseType(responseType?: string): string {
     if (responseType && responseType.toLowerCase() !== 'code') {
       throw createError(401, ERROR_MESSAGES.VALIDATION.UNSUPPORTED.RESPONSE_TYPE);
     }
@@ -111,7 +111,7 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
     return responseType;
   }
 
-  private validateGrantType(grantType?: string): GrantType {
+  protected validateGrantType(grantType?: string): GrantType {
     if (!grantType) {
       throw createError(400, ERROR_MESSAGES.VALIDATION.MISSING.GRANT_TYPE);
     }
@@ -122,7 +122,7 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
     return grantType;
   }
 
-  private normalizeUri(uri: string): string {
+  protected normalizeUri(uri: string): string {
     const filteredUri = xss(uri);
     return filteredUri.endsWith('/') ? filteredUri.slice(0, -1) : filteredUri;
   }

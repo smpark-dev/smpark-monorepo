@@ -1,5 +1,6 @@
-import CodeService from '@services/CodeService';
 import { v4 as uuidv4 } from 'uuid';
+
+import CodeService from '@services/CodeService';
 
 jest.mock('uuid');
 
@@ -20,9 +21,7 @@ describe('CodeService', () => {
   it('코드 만료시간 생성', () => {
     const expirationTime = service.calculateExpiryTime(5); // 5분
     expect(expirationTime).toBeGreaterThanOrEqual(new Date().getTime() / 1000); // 현재 시간보다 큰가?
-    expect(expirationTime).toBeLessThanOrEqual(
-      new Date().getTime() / 1000 + 300,
-    ); // 5분 보다 큰가?
+    expect(expirationTime).toBeLessThanOrEqual(new Date().getTime() / 1000 + 300); // 5분 보다 큰가?
   });
 
   it('코드 만료시간 검증', () => {

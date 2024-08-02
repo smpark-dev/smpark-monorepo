@@ -1,14 +1,41 @@
-import OAuthRequestValidService from '@services/OAuthRequestValidService';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
-import { AuthorizeRequestDTO, TokenRequestDTO } from '@dtos/OAuthDTO';
 import { RequestValidDTO } from '@dtos/ClientsDTO';
+import { AuthorizeRequestDTO, TokenRequestDTO } from '@dtos/OAuthDTO';
 import { GrantType } from '@enums/oauth';
+import OAuthRequestValidService from '@services/OAuthRequestValidService';
 
-describe('OAuthRequestValidService', () => {
-  let service: OAuthRequestValidService;
+class TestableService extends OAuthRequestValidService {
+  public testValidateField(
+    missingErrorMsg: string,
+    mismatchErrorMsg: string,
+    requestValue?: string,
+    clientValue?: string,
+  ): string {
+    return this.validateField(missingErrorMsg, mismatchErrorMsg, requestValue, clientValue);
+  }
+
+  public testValidateReferer(refererUri?: string, addressUri?: string): string {
+    return this.validateReferer(refererUri, addressUri);
+  }
+
+  public testValidateResponseType(responseType?: string): string {
+    return this.validateResponseType(responseType);
+  }
+
+  public testValidateGrantType(grantType?: string): GrantType {
+    return this.validateGrantType(grantType);
+  }
+
+  public testNormalizeUri(uri: string): string {
+    return this.normalizeUri(uri);
+  }
+}
+
+describe('TestableService', () => {
+  let service: TestableService;
 
   beforeEach(() => {
-    service = new OAuthRequestValidService();
+    service = new TestableService();
   });
 
   describe('validateAuthorizationRequest', () => {
@@ -25,9 +52,7 @@ describe('OAuthRequestValidService', () => {
         address_uri: 'http://localhost:3000',
       };
 
-      expect(() =>
-        service.validateAuthorizationRequest(request, clients),
-      ).toThrow(
+      expect(() => service.validateAuthorizationRequest(request, clients)).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.MISSING.CLIENT_ID,
           statusCode: 400,
@@ -48,9 +73,7 @@ describe('OAuthRequestValidService', () => {
         address_uri: 'http://localhost:3000',
       };
 
-      expect(() =>
-        service.validateAuthorizationRequest(request, clients),
-      ).toThrow(
+      expect(() => service.validateAuthorizationRequest(request, clients)).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.MISSING.REDIRECT_URI,
           statusCode: 400,
@@ -71,9 +94,7 @@ describe('OAuthRequestValidService', () => {
         address_uri: 'http://localhost:3000',
       };
 
-      expect(() =>
-        service.validateAuthorizationRequest(request, clients),
-      ).toThrow(
+      expect(() => service.validateAuthorizationRequest(request, clients)).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI,
           statusCode: 400,
@@ -94,9 +115,7 @@ describe('OAuthRequestValidService', () => {
         address_uri: 'http://localhost:3000',
       };
 
-      expect(() =>
-        service.validateAuthorizationRequest(request, clients),
-      ).toThrow(
+      expect(() => service.validateAuthorizationRequest(request, clients)).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.UNSUPPORTED.RESPONSE_TYPE,
           statusCode: 401,
@@ -117,9 +136,7 @@ describe('OAuthRequestValidService', () => {
         address_uri: 'http://localhost:3000',
       };
 
-      expect(() =>
-        service.validateAuthorizationRequest(request, clients),
-      ).toThrow(
+      expect(() => service.validateAuthorizationRequest(request, clients)).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.MISSING.RESPONSE_TYPE,
           statusCode: 400,
@@ -140,9 +157,7 @@ describe('OAuthRequestValidService', () => {
         address_uri: 'http://localhost:3000',
       };
 
-      expect(() =>
-        service.validateAuthorizationRequest(request, clients),
-      ).not.toThrow();
+      expect(() => service.validateAuthorizationRequest(request, clients)).not.toThrow();
     });
   });
 
@@ -290,56 +305,32 @@ describe('OAuthRequestValidService', () => {
   describe('validateField', () => {
     it('requestValue 누락 시 에러 발생(400, 메시지)', () => {
       expect(() =>
-        service['validateField'](
-          'missingError',
-          'mismatchError',
-          undefined,
-          'clientValue',
-        ),
-      ).toThrow(
-        expect.objectContaining({ message: 'missingError', statusCode: 400 }),
-      );
+        service.testValidateField('missingError', 'mismatchError', undefined, 'clientValue'),
+      ).toThrow(expect.objectContaining({ message: 'missingError', statusCode: 400 }));
     });
 
     it('requestValue, clientValue 불일치 시 에러발생(401, 메시지)', () => {
       expect(() =>
-        service['validateField'](
-          'missingError',
-          'mismatchError',
-          'requestValue',
-          'clientValue',
-        ),
-      ).toThrow(
-        expect.objectContaining({ message: 'mismatchError', statusCode: 401 }),
-      );
+        service.testValidateField('missingError', 'mismatchError', 'requestValue', 'clientValue'),
+      ).toThrow(expect.objectContaining({ message: 'mismatchError', statusCode: 401 }));
     });
 
     it('requestValue, clientValue 일치 시 에러 미발생', () => {
       expect(() =>
-        service['validateField'](
-          'missingError',
-          'mismatchError',
-          'value',
-          'value',
-        ),
+        service.testValidateField('missingError', 'mismatchError', 'value', 'value'),
       ).not.toThrow();
     });
 
     it('clientValue가 undefined 시 에러 미발생', () => {
       expect(() =>
-        service['validateField'](
-          'missingError',
-          'mismatchError',
-          'value',
-          undefined,
-        ),
+        service.testValidateField('missingError', 'mismatchError', 'value', undefined),
       ).not.toThrow();
     });
   });
 
   describe('validateReferer', () => {
     it('referer_uri 누락 시 에러발생(400, 메시지)', () => {
-      expect(() => service['validateReferer'](undefined, 'addressUri')).toThrow(
+      expect(() => service.testValidateReferer(undefined, 'addressUri')).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI,
           statusCode: 400,
@@ -349,10 +340,7 @@ describe('OAuthRequestValidService', () => {
 
     it('refererUri, addressUri 불일치 시 에러발생(401, 메시지)', () => {
       expect(() =>
-        service['validateReferer'](
-          'http://localhost:3000',
-          'http://localhost:9999',
-        ),
+        service.testValidateReferer('http://localhost:3000', 'http://localhost:9999'),
       ).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.MISMATCH.ADDRESS_URI,
@@ -363,23 +351,18 @@ describe('OAuthRequestValidService', () => {
 
     it('refererUri, addressUri 일치 시 에러 미발생', () => {
       expect(() =>
-        service['validateReferer'](
-          'http://localhost:3000',
-          'http://localhost:3000',
-        ),
+        service.testValidateReferer('http://localhost:3000', 'http://localhost:3000'),
       ).not.toThrow();
     });
 
     it('addressUri가 undefined 시 에러 미발생', () => {
-      expect(() =>
-        service['validateReferer']('http://localhost:3000', undefined),
-      ).not.toThrow();
+      expect(() => service.testValidateReferer('http://localhost:3000', undefined)).not.toThrow();
     });
   });
 
   describe('validateResponseType', () => {
     it('responseType이 "code"가 아닐 시 에러발생(401, 메시지)', () => {
-      expect(() => service['validateResponseType']('token')).toThrow(
+      expect(() => service.testValidateResponseType('token')).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.UNSUPPORTED.RESPONSE_TYPE,
           statusCode: 401,
@@ -388,7 +371,7 @@ describe('OAuthRequestValidService', () => {
     });
 
     it('responseType 누락 시 에러발생(400, 메시지)', () => {
-      expect(() => service['validateResponseType'](undefined)).toThrow(
+      expect(() => service.testValidateResponseType(undefined)).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.MISSING.RESPONSE_TYPE,
           statusCode: 400,
@@ -397,13 +380,13 @@ describe('OAuthRequestValidService', () => {
     });
 
     it('responseType이 "code"일 시 에러 미발생', () => {
-      expect(() => service['validateResponseType']('code')).not.toThrow();
+      expect(() => service.testValidateResponseType('code')).not.toThrow();
     });
   });
 
   describe('validateGrantType', () => {
     it('grantType이 누락 시 에러발생(400, 메시지)', () => {
-      expect(() => service['validateGrantType'](undefined)).toThrow(
+      expect(() => service.testValidateGrantType(undefined)).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.MISSING.GRANT_TYPE,
           statusCode: 400,
@@ -412,7 +395,7 @@ describe('OAuthRequestValidService', () => {
     });
 
     it('grantType이 "authorization_code" 또는 "refresh_token"이 아닐 시 에러발생(401, 메시지)', () => {
-      expect(() => service['validateGrantType']('invalid_grant_type')).toThrow(
+      expect(() => service.testValidateGrantType('invalid_grant_type')).toThrow(
         expect.objectContaining({
           message: ERROR_MESSAGES.VALIDATION.UNSUPPORTED.GRANT_TYPE,
           statusCode: 401,
@@ -421,24 +404,18 @@ describe('OAuthRequestValidService', () => {
     });
 
     it('grantType이 "authorization_code" 또는 "refresh_token"일 시 에러 미발생', () => {
-      expect(() =>
-        service['validateGrantType']('authorization_code'),
-      ).not.toThrow();
-      expect(() => service['validateGrantType']('refresh_token')).not.toThrow();
+      expect(() => service.testValidateGrantType('authorization_code')).not.toThrow();
+      expect(() => service.testValidateGrantType('refresh_token')).not.toThrow();
     });
   });
 
   describe('normalizeUri', () => {
     it('URI의 끝 슬래시 제거 함', () => {
-      expect(service['normalizeUri']('http://example.com/')).toBe(
-        'http://example.com',
-      );
+      expect(service.testNormalizeUri('http://example.com/')).toBe('http://example.com');
     });
 
     it('URI에 끝 슬래시 없을 시 반환', () => {
-      expect(service['normalizeUri']('http://example.com')).toBe(
-        'http://example.com',
-      );
+      expect(service.testNormalizeUri('http://example.com')).toBe('http://example.com');
     });
   });
 });

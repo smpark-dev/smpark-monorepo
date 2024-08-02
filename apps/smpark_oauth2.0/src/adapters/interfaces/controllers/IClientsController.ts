@@ -1,6 +1,6 @@
+import { Response, NextFunction } from 'express';
 
 import { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
-import { Response, NextFunction } from 'express';
 
 export interface IClientsController {
   renderClientRegistrationPage(

@@ -1,11 +1,11 @@
 import createError from 'http-errors';
-import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
+import { v4 as uuidv4 } from 'uuid';
 
-import Clients from '@entities/Clients';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 import { IClientsService } from '@domain-interfaces/services/IClientsService';
 import { ClientsRequestDTO, ClientsDTO, CredentialRequestDTO } from '@dtos/ClientsDTO';
+import Clients from '@entities/Clients';
 
 @injectable()
 class ClientsService implements IClientsService {

@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import ClientsService from '@services/ClientsService';
-import Clients from '@entities/Clients';
+
 import { ERROR_MESSAGES } from '@constants/errorMessages';
+import Clients from '@entities/Clients';
+import ClientsService from '@services/ClientsService';
 
 jest.mock('uuid');
 jest.mock('@entities/Clients');

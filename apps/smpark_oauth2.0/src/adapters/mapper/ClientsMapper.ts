@@ -1,6 +1,5 @@
 import { injectable } from 'inversify';
 
-import Clients from '@entities/Clients';
 import {
   ClientsDTO,
   CredentialResponseDTO,
@@ -8,6 +7,7 @@ import {
   RequestValidDTO,
   ClientsRequestDTO,
 } from '@dtos/ClientsDTO';
+import Clients from '@entities/Clients';
 
 @injectable()
 class ClientsMapper {

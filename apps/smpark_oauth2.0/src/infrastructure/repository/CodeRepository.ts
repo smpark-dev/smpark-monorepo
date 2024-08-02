@@ -2,8 +2,8 @@ import { injectable, inject } from 'inversify';
 import { Collection } from 'mongodb';
 
 import MongoDB from '@database/MongoDB';
-import { CodeDTO } from '@dtos/CodeDTO';
 import { ICodeRepository } from '@domain-interfaces/repository/ICodeRepository';
+import { CodeDTO } from '@dtos/CodeDTO';
 
 @injectable()
 class CodeRepository implements ICodeRepository {

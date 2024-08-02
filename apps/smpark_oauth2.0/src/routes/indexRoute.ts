@@ -9,7 +9,11 @@ route.use('/', auth);
 route.use('/oauth', oauth);
 
 route.get('/', (req: Request, res: Response) => {
-  req.session.user ? res.redirect('/oauth/register') : res.render('main');
+  if (req.session.user) {
+    res.redirect('/oauth/register');
+  } else {
+    res.render('main');
+  }
 });
 
 export default route;

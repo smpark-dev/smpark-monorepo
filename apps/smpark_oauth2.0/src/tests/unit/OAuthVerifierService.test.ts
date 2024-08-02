@@ -1,9 +1,9 @@
-import OAuthVerifierService from '@services/OAuthVerifierService';
+import { ERROR_MESSAGES } from '@constants/errorMessages';
 import { ClientsDTO } from '@dtos/ClientsDTO';
 import { CodeDTO } from '@dtos/CodeDTO';
-import { UserDTO } from '@dtos/UserDTO';
 import { ScopeDTO } from '@dtos/TokenDTO';
-import { ERROR_MESSAGES } from '@constants/errorMessages';
+import { UserDTO } from '@dtos/UserDTO';
+import OAuthVerifierService from '@services/OAuthVerifierService';
 
 describe('OAuthVerifierService', () => {
   let service: OAuthVerifierService;

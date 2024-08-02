@@ -1,9 +1,10 @@
 import { injectable, inject } from 'inversify';
 
+import { IClientDetailsLoaderUseCase } from '@application-interfaces/usecases/IClientsUseCase';
 import { ClientsDTO } from '@dtos/ClientsDTO';
+
 import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
-import { IClientDetailsLoaderUseCase } from '@application-interfaces/usecases/IClientsUseCase';
 
 @injectable()
 class ClientDetailsLoaderUseCase implements IClientDetailsLoaderUseCase {

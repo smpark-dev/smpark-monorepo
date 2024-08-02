@@ -1,12 +1,12 @@
 import createError from 'http-errors';
 import { injectable } from 'inversify';
 
-import { ClientsDTO } from '@dtos/ClientsDTO';
-import { CodeDTO } from '@dtos/CodeDTO';
-import { UserDTO } from '@dtos/UserDTO';
-import { ScopeDTO } from '@dtos/TokenDTO';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 import { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
+import { ClientsDTO } from '@dtos/ClientsDTO';
+import { CodeDTO } from '@dtos/CodeDTO';
+import { ScopeDTO } from '@dtos/TokenDTO';
+import { UserDTO } from '@dtos/UserDTO';
 
 @injectable()
 class OAuthVerifierService implements IOAuthVerifierService {

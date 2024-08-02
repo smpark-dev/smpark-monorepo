@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import { container } from '@configs/inversify';
 import authBlockMiddleware from '@middleware/routeMiddleware/authBlockMiddleware';
+
 import type { IAuthenticationController } from '@adapters-interfaces/controllers/IAuthenticationController';
 
 const authenticationController = container.get<IAuthenticationController>(
@@ -34,9 +35,6 @@ auth.post(
   authenticationController.userLogin.bind(authenticationController),
 );
 
-auth.post(
-  '/logout',
-  authenticationController.userLogout.bind(authenticationController),
-);
+auth.post('/logout', authenticationController.userLogout.bind(authenticationController));
 
 export default auth;

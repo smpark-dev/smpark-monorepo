@@ -2,16 +2,16 @@ import { injectable, inject } from 'inversify';
 import { ClientSession, Collection } from 'mongodb';
 
 import MongoDB from '@database/MongoDB';
-import ClientsMapper from '@mapper/ClientsMapper';
-import { ClientsDTO, CredentialResponseDTO } from '@dtos/ClientsDTO';
 import { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
+import { ClientsDTO, CredentialResponseDTO } from '@dtos/ClientsDTO';
+import ClientsMapper from '@mapper/ClientsMapper';
 
 @injectable()
 class ClientsRepository implements IClientsRepository<ClientSession> {
   private collection: Collection<ClientsDTO>;
 
   constructor(
-    @inject(MongoDB) database: MongoDB,
+    @inject(MongoDB) public database: MongoDB,
     @inject(ClientsMapper) private clientsMapper: ClientsMapper,
   ) {
     this.collection = database.getCollection('clients');

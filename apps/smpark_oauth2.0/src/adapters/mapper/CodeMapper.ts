@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+
 import { CodeDTO } from '@dtos/CodeDTO';
 
 @injectable()

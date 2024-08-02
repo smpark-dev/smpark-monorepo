@@ -1,5 +1,6 @@
-import { TokenResponseDTO } from '@dtos/TokenDTO';
 import { injectable } from 'inversify';
+
+import { TokenResponseDTO } from '@dtos/TokenDTO';
 
 @injectable()
 class TokenMapper {

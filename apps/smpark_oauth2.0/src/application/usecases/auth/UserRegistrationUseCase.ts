@@ -1,11 +1,12 @@
 import { injectable, inject } from 'inversify';
 
-import UserMapper from '@mapper/UserMapper';
+import { IUserRegistrationUseCase } from '@application-interfaces/usecases/IAuthUseCase';
 import { RegisterDTO } from '@dtos/UserDTO';
+import UserMapper from '@mapper/UserMapper';
+
 import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
 import type { IAuthenticationService } from '@domain-interfaces/services/IAuthenticationService';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
-import { IUserRegistrationUseCase } from '@application-interfaces/usecases/IAuthUseCase';
 
 @injectable()
 class UserRegistrationUseCase implements IUserRegistrationUseCase {

@@ -1,5 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
+import { v4 as uuidv4 } from 'uuid';
+
 import { ICodeService } from '@domain-interfaces/services/ICodeService';
 
 @injectable()

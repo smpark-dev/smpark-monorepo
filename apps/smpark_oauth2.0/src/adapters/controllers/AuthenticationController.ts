@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { injectable, inject } from 'inversify';
 
-import { authSerialize } from '@utils/serialize';
 import { IAuthenticationController } from '@adapters-interfaces/controllers/IAuthenticationController';
-import type { EnvConfig } from '@lib/dotenv-env';
+import UserMapper from '@mapper/UserMapper';
+import { authSerialize } from '@utils/serialize';
+
 import type {
   IUserLoginUseCase,
   IUserRegistrationUseCase,
 } from '@application-interfaces/usecases/IAuthUseCase';
-import UserMapper from '@mapper/UserMapper';
+import type { EnvConfig } from '@lib/dotenv-env';
 
 @injectable()
 class AuthenticationController implements IAuthenticationController {
@@ -21,11 +22,19 @@ class AuthenticationController implements IAuthenticationController {
   ) {}
 
   renderLoginPage(req: Request, res: Response): void {
-    req.session.user ? res.redirect('/oauth/register') : res.render('auth/login');
+    if (req.session.user) {
+      res.redirect('/oauth/register');
+    } else {
+      res.render('auth/login');
+    }
   }
 
   renderRegisterPage(req: Request, res: Response): void {
-    req.session.user ? res.redirect('/oauth/register') : res.render('auth/register');
+    if (req.session.user) {
+      res.redirect('/oauth/register');
+    } else {
+      res.render('auth/register');
+    }
   }
 
   async userLogin(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
@@ -49,6 +58,7 @@ class AuthenticationController implements IAuthenticationController {
       return next(error);
     }
   }
+
   async userRegister(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     const userRegisterInfo = req.body;
 

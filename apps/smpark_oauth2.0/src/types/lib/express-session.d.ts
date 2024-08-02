@@ -9,7 +9,7 @@ declare module 'express-session' {
     codeValidatedIds: { id: string; client_id: string } | null;
     redirect_uri: string;
     unVerifiedRefererUri: string;
-    verifiedRefererUri:string;
+    verifiedRefererUri: string;
     scope: ScopeDTO;
     updated: boolean;
   }

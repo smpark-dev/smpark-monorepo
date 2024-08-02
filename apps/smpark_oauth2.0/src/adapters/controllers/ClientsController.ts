@@ -1,14 +1,15 @@
-import { injectable, inject } from 'inversify';
 import { Response, NextFunction } from 'express';
+import { injectable, inject } from 'inversify';
 
 import { IClientsController } from '@adapters-interfaces/controllers/IClientsController';
 import { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
+import ClientsMapper from '@mapper/ClientsMapper';
+
 import type {
   IClientDetailsLoaderUseCase,
   IClientGenerationUseCase,
   IClientDetailsRegistrationUseCase,
 } from '@application-interfaces/usecases/IClientsUseCase';
-import ClientsMapper from '@mapper/ClientsMapper';
 
 @injectable()
 class ClientsController implements IClientsController {

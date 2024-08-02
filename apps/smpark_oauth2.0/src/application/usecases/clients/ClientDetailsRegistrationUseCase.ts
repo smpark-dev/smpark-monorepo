@@ -1,8 +1,9 @@
 import { injectable, inject } from 'inversify';
 
-import ClientsMapper from '@mapper/ClientsMapper';
-import { ClientsRequestDTO } from '@dtos/ClientsDTO';
 import { IClientDetailsRegistrationUseCase } from '@application-interfaces/usecases/IClientsUseCase';
+import { ClientsRequestDTO } from '@dtos/ClientsDTO';
+import ClientsMapper from '@mapper/ClientsMapper';
+
 import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
 import type { IClientsService } from '@domain-interfaces/services/IClientsService';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';

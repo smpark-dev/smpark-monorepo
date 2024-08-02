@@ -6,5 +6,6 @@ export interface IOAuthRequestValidService {
     request: AuthorizeRequestDTO,
     clients?: RequestValidDTO | null,
   ): ResponseValidDTO;
+
   validateTokenRequest(request: TokenRequestDTO, oauth?: TokenRequestDTO | null): TokenValidateDTO;
 }

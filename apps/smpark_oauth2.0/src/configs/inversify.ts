@@ -1,45 +1,39 @@
 import { Container } from 'inversify';
 
 import env from '@configs/env';
-import MongoDB from '@database/MongoDB';
-
-import AuthenticationService from '@services/AuthenticationService';
-import OAuthRequestValidService from '@services/OAuthRequestValidService';
-import ClientsService from '@services/ClientsService';
-import CodeService from '@services/CodeService';
-import OAuthVerifierService from '@services/OAuthVerifierService';
-import TokenService from '@services/TokenService';
-
 import AuthenticationController from '@controllers/AuthenticationController';
 import ClientsController from '@controllers/ClientsController';
 import OAuthController from '@controllers/OAuthController';
-
-import ClientDetailsLoaderUseCase from '@usecases/clients/ClientDetailsLoaderUseCase';
-import ClientDetailsRegistrationUseCase from '@usecases/clients/ClientDetailsRegistrationUseCase';
-import ClientGenerationUseCase from '@usecases/clients/ClientGenerationUseCase';
-import CodeGenerationUseCase from '@usecases/oauth/CodeGenerationUseCase';
-import LoadOAuthDataUseCase from '@usecases/clients/ClientDetailsLoaderUseCase';
-import RegisterOAuthDataUseCase from '@usecases/clients/ClientDetailsRegistrationUseCase';
-import ScopeComparatorUseCase from '@usecases/oauth/ScopeComparatorUseCase';
-import TokenGenerationUseCase from '@usecases/token/TokenGenerationUseCase';
-import TokenPreparationUseCase from '@usecases/oauth/TokenPreparationUseCase';
-import UserAuthorizationUseCase from '@usecases/oauth/UserAuthorizationUseCase';
-import UserLoginUseCase from '@usecases/auth/UserLoginUseCase';
-import UserRegistrationUseCase from '@usecases/auth/UserRegistrationUseCase';
-import UserScopeUpdaterUseCase from '@usecases/oauth/UserScopeUpdaterUseCase';
-
+import MongoDB from '@database/MongoDB';
+import ClientsMapper from '@mapper/ClientsMapper';
+import CodeMapper from '@mapper/CodeMapper';
+import OAuthMapper from '@mapper/OAuthMapper';
+import TokenMapper from '@mapper/TokenMapper';
+import UserMapper from '@mapper/UserMapper';
+import AuthenticationMiddleware from '@middleware/routeMiddleware/AuthenticationMiddleware';
 import ClientsRepository from '@repository/ClientsRepository';
 import CodeRepository from '@repository/CodeRepository';
 import TokenRepository from '@repository/TokenRepository';
 import UserRepository from '@repository/UserRepository';
-
-import AuthenticationMiddleware from '@middleware/routeMiddleware/AuthenticationMiddleware';
-
-import ClientsMapper from '@mapper/ClientsMapper';
-import UserMapper from '@mapper/UserMapper';
-import CodeMapper from '@mapper/CodeMapper';
-import OAuthMapper from '@mapper/OAuthMapper';
-import TokenMapper from '@mapper/TokenMapper';
+import AuthenticationService from '@services/AuthenticationService';
+import ClientsService from '@services/ClientsService';
+import CodeService from '@services/CodeService';
+import OAuthRequestValidService from '@services/OAuthRequestValidService';
+import OAuthVerifierService from '@services/OAuthVerifierService';
+import TokenService from '@services/TokenService';
+import UserLoginUseCase from '@usecases/auth/UserLoginUseCase';
+import UserRegistrationUseCase from '@usecases/auth/UserRegistrationUseCase';
+import ClientDetailsLoaderUseCase from '@usecases/clients/ClientDetailsLoaderUseCase';
+import LoadOAuthDataUseCase from '@usecases/clients/ClientDetailsLoaderUseCase';
+import ClientDetailsRegistrationUseCase from '@usecases/clients/ClientDetailsRegistrationUseCase';
+import RegisterOAuthDataUseCase from '@usecases/clients/ClientDetailsRegistrationUseCase';
+import ClientGenerationUseCase from '@usecases/clients/ClientGenerationUseCase';
+import CodeGenerationUseCase from '@usecases/oauth/CodeGenerationUseCase';
+import ScopeComparatorUseCase from '@usecases/oauth/ScopeComparatorUseCase';
+import TokenPreparationUseCase from '@usecases/oauth/TokenPreparationUseCase';
+import UserAuthorizationUseCase from '@usecases/oauth/UserAuthorizationUseCase';
+import UserScopeUpdaterUseCase from '@usecases/oauth/UserScopeUpdaterUseCase';
+import TokenGenerationUseCase from '@usecases/token/TokenGenerationUseCase';
 
 const container = new Container();
 

@@ -1,16 +1,17 @@
 import { injectable, inject } from 'inversify';
 
-import { UserDTO } from '@dtos/UserDTO';
+import { ITokenGenerationUseCase } from '@application-interfaces/usecases/ITokenUseCase';
 import { ValidIdsDTO } from '@dtos/OAuthDTO';
 import { ScopeDTO, TokenResponseDTO } from '@dtos/TokenDTO';
-import type { EnvConfig } from '@lib/dotenv-env';
+import { UserDTO } from '@dtos/UserDTO';
+import TokenMapper from '@mapper/TokenMapper';
+
+import type { ICodeRepository } from '@domain-interfaces/repository/ICodeRepository';
 import type { ITokenRepository } from '@domain-interfaces/repository/ITokenRepository';
 import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
-import type { ICodeRepository } from '@domain-interfaces/repository/ICodeRepository';
-import type { ITokenService } from '@domain-interfaces/services/ITokenService';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
-import { ITokenGenerationUseCase } from '@application-interfaces/usecases/ITokenUseCase';
-import TokenMapper from '@mapper/TokenMapper';
+import type { ITokenService } from '@domain-interfaces/services/ITokenService';
+import type { EnvConfig } from '@lib/dotenv-env';
 
 @injectable()
 class TokenGenerationUseCase implements ITokenGenerationUseCase {

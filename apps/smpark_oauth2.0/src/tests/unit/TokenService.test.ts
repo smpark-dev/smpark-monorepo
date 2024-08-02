@@ -29,21 +29,9 @@ describe('TokenService', () => {
 
   describe('generateToken', () => {
     it('토큰 생성', () => {
-      const loginToken = service.generateToken(
-        loginPayload,
-        jwtSecretKey,
-        expiresIn,
-      );
-      const accessToken = service.generateToken(
-        accessTokenPayload,
-        jwtSecretKey,
-        expiresIn,
-      );
-      const refreshToken = service.generateToken(
-        refreshTokenPayload,
-        jwtSecretKey,
-        expiresIn,
-      );
+      const loginToken = service.generateToken(loginPayload, jwtSecretKey, expiresIn);
+      const accessToken = service.generateToken(accessTokenPayload, jwtSecretKey, expiresIn);
+      const refreshToken = service.generateToken(refreshTokenPayload, jwtSecretKey, expiresIn);
 
       expect(typeof loginToken).toBe('string');
       expect(typeof accessToken).toBe('string');
@@ -53,15 +41,8 @@ describe('TokenService', () => {
 
   describe('verifyToken', () => {
     it('토큰 검증', () => {
-      const token = service.generateToken(
-        loginPayload,
-        jwtSecretKey,
-        expiresIn,
-      );
-      const decoded = service.verifyToken<typeof loginPayload>(
-        token,
-        jwtSecretKey,
-      );
+      const token = service.generateToken(loginPayload, jwtSecretKey, expiresIn);
+      const decoded = service.verifyToken<typeof loginPayload>(token, jwtSecretKey);
       expect(decoded).toMatchObject(loginPayload);
     });
   });

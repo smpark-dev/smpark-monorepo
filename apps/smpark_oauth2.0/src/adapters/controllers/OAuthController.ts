@@ -1,15 +1,16 @@
+import { Request, Response, NextFunction } from 'express';
 import createError from 'http-errors';
 import { injectable, inject } from 'inversify';
-import { Request, Response, NextFunction } from 'express';
 
-import { authSerialize } from '@utils/serialize';
-import UserMapper from '@mapper/UserMapper';
-import OAuthMapper from '@mapper/OAuthMapper';
-
-import { ERROR_MESSAGES } from '@constants/errorMessages';
-import { TRANSLATIONS } from '@constants/scopes';
 import { IOAuthController } from '@adapters-interfaces/controllers/IOAuthController';
 import { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
+import { ERROR_MESSAGES } from '@constants/errorMessages';
+import { TRANSLATIONS } from '@constants/scopes';
+import OAuthMapper from '@mapper/OAuthMapper';
+import TokenMapper from '@mapper/TokenMapper';
+import UserMapper from '@mapper/UserMapper';
+import { authSerialize } from '@utils/serialize';
+
 import type { IUserLoginUseCase } from '@application-interfaces/usecases/IAuthUseCase';
 import type {
   ICodeGenerationUseCase,
@@ -19,7 +20,6 @@ import type {
   IScopeComparatorUseCase,
 } from '@application-interfaces/usecases/IOAuthUseCase';
 import type { ITokenGenerationUseCase } from '@application-interfaces/usecases/ITokenUseCase';
-import TokenMapper from '@mapper/TokenMapper';
 
 @injectable()
 class OAuthController implements IOAuthController {
@@ -142,7 +142,7 @@ class OAuthController implements IOAuthController {
     res: Response,
     next: NextFunction,
   ): Promise<void | Response> {
-    const authHeader = req.headers['authorization'];
+    const authHeader = req.headers?.authorization;
 
     if (!authHeader || !authHeader.startsWith('Basic ')) {
       return next(createError(401, ERROR_MESSAGES.VALIDATION.FORMAT.AUTHENTICATION));

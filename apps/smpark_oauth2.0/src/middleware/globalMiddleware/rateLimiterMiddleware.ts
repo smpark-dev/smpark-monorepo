@@ -1,5 +1,6 @@
-import { ERROR_MESSAGES } from '@constants/errorMessages';
 import rateLimit from 'express-rate-limit';
+
+import { ERROR_MESSAGES } from '@constants/errorMessages';
 
 // 1분을 밀리초로 변환한 값 (60,000 밀리초)
 const rateLimitWindowMs = 1 * 60 * 1000;

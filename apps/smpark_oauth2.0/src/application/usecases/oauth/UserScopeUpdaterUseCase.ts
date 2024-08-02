@@ -1,9 +1,10 @@
 import { injectable, inject } from 'inversify';
 
+import { IUserScopeUpdaterUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
 import { ScopeRequestDTO } from '@dtos/OAuthDTO';
+
 import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
-import { IUserScopeUpdaterUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
 
 @injectable()
 class UserScopeUpdaterUseCase implements IUserScopeUpdaterUseCase {

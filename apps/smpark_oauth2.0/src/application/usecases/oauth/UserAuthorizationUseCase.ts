@@ -1,10 +1,11 @@
 import { injectable, inject } from 'inversify';
 
+import { IUserAuthorizationUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
 import { AuthorizeRequestDTO } from '@dtos/OAuthDTO';
 import ClientsMapper from '@mapper/ClientsMapper';
+
 import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
 import type { IOAuthRequestValidService } from '@domain-interfaces/services/IOAuthRequestValidService';
-import { IUserAuthorizationUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
 
 @injectable()
 class UserAuthorizationUseCase implements IUserAuthorizationUseCase {

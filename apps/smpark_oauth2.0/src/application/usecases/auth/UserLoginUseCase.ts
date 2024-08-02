@@ -1,13 +1,14 @@
 import { injectable, inject } from 'inversify';
 
-import UserMapper from '@mapper/UserMapper';
+import { IUserLoginUseCase } from '@application-interfaces/usecases/IAuthUseCase';
 import { LoginDTO, UserResponseDTO } from '@dtos/UserDTO';
-import type { EnvConfig } from '@lib/dotenv-env';
+import UserMapper from '@mapper/UserMapper';
+
 import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
 import type { IAuthenticationService } from '@domain-interfaces/services/IAuthenticationService';
-import type { ITokenService } from '@domain-interfaces/services/ITokenService';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
-import { IUserLoginUseCase } from '@application-interfaces/usecases/IAuthUseCase';
+import type { ITokenService } from '@domain-interfaces/services/ITokenService';
+import type { EnvConfig } from '@lib/dotenv-env';
 
 @injectable()
 class UserLoginUseCase implements IUserLoginUseCase {

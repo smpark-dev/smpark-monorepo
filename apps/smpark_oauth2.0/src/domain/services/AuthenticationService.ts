@@ -2,19 +2,19 @@ import argon2 from 'argon2';
 import createError from 'http-errors';
 import { injectable } from 'inversify';
 
-import User from '@entities/User';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 import { IAuthenticationService } from '@domain-interfaces/services/IAuthenticationService';
 import { UserDTO, LoginDTO, RegisterDTO } from '@dtos/UserDTO';
+import User from '@entities/User';
 
 @injectable()
 class AuthenticationService implements IAuthenticationService {
   async hashedPassword(password: string): Promise<string> {
-    return await argon2.hash(password);
+    return argon2.hash(password);
   }
 
   async comparePassword(password: string, hashedPassword: string): Promise<boolean> {
-    return await argon2.verify(hashedPassword, password);
+    return argon2.verify(hashedPassword, password);
   }
 
   validSignUpInfo(user: User): void {

@@ -11,7 +11,7 @@ export interface IOAuthVerifierService {
   };
   verifyUser(user: UserDTO | null): UserDTO;
   verifyRegUser(user: UserDTO | null): boolean;
-  verifyClientId(clientId?: string): string 
+  verifyClientId(clientId?: string): string;
   verifyClient(clients: ClientsDTO | null): ClientsDTO;
   verifyCodeExists(code: CodeDTO | null): CodeDTO;
   verifyCodeExpiration(expired: boolean): void;

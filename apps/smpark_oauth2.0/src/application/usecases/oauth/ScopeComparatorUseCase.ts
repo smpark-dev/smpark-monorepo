@@ -1,14 +1,15 @@
 import { injectable, inject } from 'inversify';
 
+import { IScopeComparatorUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
+import { ScopeRequestDTO, ScopeResponseDTO } from '@dtos/OAuthDTO';
 import { ScopeDTO } from '@dtos/TokenDTO';
+import OAuthMapper from '@mapper/OAuthMapper';
 import { deepEqual } from '@utils/deepEqual';
+
 import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
 import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
 import type { ITokenService } from '@domain-interfaces/services/ITokenService';
-import { IScopeComparatorUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
-import { ScopeRequestDTO, ScopeResponseDTO } from '@dtos/OAuthDTO';
-import OAuthMapper from '@mapper/OAuthMapper';
 
 @injectable()
 class ScopeComparatorUseCase implements IScopeComparatorUseCase {
@@ -19,6 +20,7 @@ class ScopeComparatorUseCase implements IScopeComparatorUseCase {
     @inject('ITokenService') private tokenService: ITokenService,
     @inject('IOAuthVerifierService') private oAuthVerifierService: IOAuthVerifierService,
   ) {}
+
   async execute(
     requestScope: ScopeRequestDTO,
   ): Promise<{ scope: Partial<ScopeDTO>; updated: boolean }> {

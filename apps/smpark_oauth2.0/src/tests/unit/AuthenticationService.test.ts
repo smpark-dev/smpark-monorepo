@@ -1,7 +1,8 @@
-import AuthenticationService from '@services/AuthenticationService';
-import User from '@entities/User';
-import { ERROR_MESSAGES } from '@constants/errorMessages';
 import argon2 from 'argon2';
+
+import { ERROR_MESSAGES } from '@constants/errorMessages';
+import User from '@entities/User';
+import AuthenticationService from '@services/AuthenticationService';
 
 jest.mock('argon2');
 jest.mock('@entities/User');
@@ -33,10 +34,7 @@ describe('AuthenticationService', () => {
   describe('comparePassword', () => {
     it('패스워드 비교', async () => {
       jest.mocked(argon2.verify).mockImplementation(async () => true);
-      const result = await authService.comparePassword(
-        'password',
-        'hashedPassword',
-      );
+      const result = await authService.comparePassword('password', 'hashedPassword');
       expect(result).toBe(true);
       expect(argon2.verify).toHaveBeenCalledWith('hashedPassword', 'password');
     });

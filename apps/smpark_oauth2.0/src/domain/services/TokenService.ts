@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
 import { injectable } from 'inversify';
+import jwt from 'jsonwebtoken';
 
-import { ScopeDTO } from '@dtos/TokenDTO';
 import { DEFAULT_SCOPE } from '@constants/scopes';
 import { ITokenService } from '@domain-interfaces/services/ITokenService';
+import { ScopeDTO } from '@dtos/TokenDTO';
 
 @injectable()
 class TokenService implements ITokenService {

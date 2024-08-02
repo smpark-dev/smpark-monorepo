@@ -1,10 +1,11 @@
 import { injectable, inject } from 'inversify';
 
+import { IClientGenerationUseCase } from '@application-interfaces/usecases/IClientsUseCase';
 import { CredentialRequestDTO, CredentialResponseDTO } from '@dtos/ClientsDTO';
+
 import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
 import type { IClientsService } from '@domain-interfaces/services/IClientsService';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
-import { IClientGenerationUseCase } from '@application-interfaces/usecases/IClientsUseCase';
 
 @injectable()
 class ClientGenerationUseCase implements IClientGenerationUseCase {

@@ -2,8 +2,8 @@ import { injectable, inject } from 'inversify';
 import { Collection, ClientSession, DeleteResult } from 'mongodb';
 
 import MongoDB from '@database/MongoDB';
-import { TokenDTO } from '@dtos/TokenDTO';
 import { ITokenRepository } from '@domain-interfaces/repository/ITokenRepository';
+import { TokenDTO } from '@dtos/TokenDTO';
 
 @injectable()
 class TokenRepository implements ITokenRepository<ClientSession> {
@@ -28,14 +28,11 @@ class TokenRepository implements ITokenRepository<ClientSession> {
       { $set: token },
       { upsert: true, session },
     );
-    return (
-      result.acknowledged &&
-      (result.modifiedCount > 0 || result.upsertedCount > 0)
-    );
+    return result.acknowledged && (result.modifiedCount > 0 || result.upsertedCount > 0);
   }
 
   async delete(code: string): Promise<DeleteResult> {
-    return await this.collection.deleteOne({ code });
+    return this.collection.deleteOne({ code });
   }
 }
 
