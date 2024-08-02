@@ -12,7 +12,6 @@
     "isolatedModules": true,
     "incremental": true,
     "skipLibCheck": true,
-    "moduleResolution": "node",
     
     "plugins": [
       {
