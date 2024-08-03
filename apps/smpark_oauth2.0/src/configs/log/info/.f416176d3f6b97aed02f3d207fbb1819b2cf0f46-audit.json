@@ -9,6 +9,11 @@
             "date": 1722429081673,
             "name": "/Users/smpark/Projects/smpark/apps/smpark_oauth2.0/src/configs/log/info/application-2024-07-31.log",
             "hash": "fdd86bedfe64fb158856f4401e5b7900d679ee60400af201fa2a0e21881489bc"
+        },
+        {
+            "date": 1722582811326,
+            "name": "/Users/smpark/Projects/smpark/apps/smpark_oauth2.0/src/configs/log/info/application-2024-08-02.log",
+            "hash": "2fd0bfcac7203d72ac183a7a0d0274a0b6fb4bba3e070c90b3346b0745b7b691"
         }
     ],
     "hashType": "sha256"
