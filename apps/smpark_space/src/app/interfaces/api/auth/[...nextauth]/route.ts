@@ -1,8 +1,8 @@
 import NextAuth from 'next-auth';
-import Google from 'next-auth/providers/google';
-import GitHub from 'next-auth/providers/github';
-import Credentials from 'next-auth/providers/credentials';
 import { NextAuthOptions } from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import GitHub from 'next-auth/providers/github';
+import Google from 'next-auth/providers/google';
 import { v4 as uuidv4 } from 'uuid';
 
 const options: NextAuthOptions = {
@@ -67,7 +67,7 @@ const options: NextAuthOptions = {
     maxAge: 8000, // 1분 (60초)로 세션 만료 시간 설정
   },
   callbacks: {
-    async jwt({ token, account, profile, user }) {
+    async jwt({ token, account }) {
       console.log('token', token);
       if (account) {
         if (account?.provider === 'google') {

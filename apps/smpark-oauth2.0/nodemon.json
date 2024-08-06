@@ -1,0 +1,6 @@
+{
+  "watch": ["src/**/*.ts", "src/**/*.js"],
+  "ignore": [],
+  "exec": "tsx --tsconfig apps/smpark-oauth2.0/tsconfig.json apps/smpark-oauth2.0/src/index.ts",
+  "ext": "ts,js"
+}

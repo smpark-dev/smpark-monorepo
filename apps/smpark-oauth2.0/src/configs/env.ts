@@ -2,9 +2,9 @@ import dotenv from 'dotenv';
 
 import type { EnvConfig } from '@lib/dotenv-env';
 if (process.env.NODE_ENV === 'production') {
-  dotenv.config({ path: 'apps/smpark_oauth2.0/.env.production' });
+  dotenv.config({ path: 'apps/smpark-oauth2.0/.env.production' });
 } else {
-  dotenv.config({ path: 'apps/smpark_oauth2.0/.env.development' });
+  dotenv.config({ path: 'apps/smpark-oauth2.0/.env.development' });
 }
 
 const env: EnvConfig = {

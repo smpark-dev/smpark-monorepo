@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const defaultLogDir = path.join(__dirname, '/log');
-const logDir = env.nodeEnv === 'production' ? 'dist/apps/smpark_oauth2.0/logs' : defaultLogDir;
+const logDir = env.nodeEnv === 'production' ? 'dist/apps/smpark-oauth2.0/logs' : defaultLogDir;
 
 const { combine, colorize, simple, printf } = winston.format;
 

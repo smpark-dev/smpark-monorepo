@@ -1,6 +1,0 @@
-{
-  "watch": ["src/**/*.ts", "src/**/*.js"],
-  "ignore": [],
-  "exec": "nx lint smpark_oauth2.0 && tsx --tsconfig apps/smpark_oauth2.0/tsconfig.json apps/smpark_oauth2.0/src/index.ts",
-  "ext": "ts,js"
-}

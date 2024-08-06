@@ -1,0 +1,61 @@
+{
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "no-console": "warn",
+        "no-multiple-empty-lines": ["error", { "max": 1 }],
+        "arrow-spacing": ["error", { "before": true, "after": true }]
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "extends": [],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/array-type": ["error", { "default": "array-simple" }],
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["../*", "*.test", "src/legacy/*"]
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "varsIgnorePattern": "^_",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/lines-between-class-members": [
+          "error",
+          {
+            "enforce": [
+              { "blankLine": "always", "prev": "method", "next": "*" },
+              { "blankLine": "always", "prev": "*", "next": "method" }
+            ]
+          }
+        ]
+      },
+      "env": {
+        "node": true
+      }
+    },
+    {
+      "files": ["cypress/**/*.js", "cypress/**/*.ts", "**/*.cy.js", "**/*.cy.ts"],
+      "plugins": ["cypress"],
+      "env": {
+        "browser": true,
+        "cypress/globals": true
+      },
+      "extends": ["plugin:cypress/recommended"],
+      "rules": {
+        "cypress/assertion-before-screenshot": "warn",
+        "cypress/no-force": "warn"
+      }
+    }
+  ]
+}

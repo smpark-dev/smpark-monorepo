@@ -24,14 +24,8 @@ const configureExpress = async (
   sessionStore: MongoStore,
   env: EnvConfig,
 ): Promise<void> => {
-  const viewsPath = path.join(
-    __dirname,
-    env.nodeEnv === 'production' ? 'apps/smpark_oauth2.0/src/views' : '../views',
-  );
-  const staticPath = path.join(
-    __dirname,
-    env.nodeEnv === 'production' ? 'apps/smpark_oauth2.0/src/' : '../',
-  );
+  const viewsPath = path.join(__dirname, env.nodeEnv === 'production' ? 'src/views' : '../views');
+  const staticPath = path.join(__dirname, env.nodeEnv === 'production' ? 'src/' : '../');
 
   app.set('views', viewsPath);
   app.set('view engine', 'pug');

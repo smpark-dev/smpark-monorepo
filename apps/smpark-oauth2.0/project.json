@@ -1,0 +1,81 @@
+{
+  "name": "smpark-oauth2.0",
+  "version": "1.0.0",
+  "private": true,
+  "sourceRoot": "apps/smpark-oauth2.0",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cross-env NODE_ENV=development nodemon --config apps/smpark-oauth2.0/nodemon.json"
+      }
+    },
+    "prod": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "production",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "smpark-oauth2.0:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "smpark-oauth2.0:build:development"
+        },
+        "production": {
+          "buildTarget": "smpark-oauth2.0:build:production"
+        }
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "main": "src/index.ts",
+        "outputPath": "dist",
+        "outputFileName": "apps/smpark-oauth2.0/index.js",
+        "tsConfig": "apps/smpark-oauth2.0/tsconfig.app.json",
+        "format": ["esm"],
+        "bundle": true,
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/smpark-oauth2.0/src/views",
+            "output": "apps/smpark-oauth2.0/src/views"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/smpark-oauth2.0/src/public",
+            "output": "apps/smpark-oauth2.0/src/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/smpark-oauth2.0/src/script",
+            "output": "apps/smpark-oauth2.0/src/script"
+          }
+        ],
+        "platform": "node"
+      },
+      "configurations": {
+        "development": {
+          "minify": false
+        },
+        "production": {
+          "minify": true
+        },
+        "define": {
+          "process.env.NODE_ENV": "'production'"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/smpark-oauth2.0/**/*.ts"]
+      }
+    }
+  }
+}
