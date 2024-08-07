@@ -37,7 +37,7 @@ class OAuthVerifierService implements IOAuthVerifierService {
   }
 
   verifyRegUser(user: UserDTO | null): boolean {
-    return this.verify(user ? false : true, ERROR_MESSAGES.VALIDATION.DUPLICATE.ID, 409);
+    return this.verify(!user, ERROR_MESSAGES.VALIDATION.DUPLICATE.ID, 409);
   }
 
   verifyClientId(clientId?: string): string {
@@ -53,7 +53,7 @@ class OAuthVerifierService implements IOAuthVerifierService {
   }
 
   verifyCodeExpiration(expired: boolean): void {
-    this.verify(expired ? false : true, ERROR_MESSAGES.VALIDATION.EXPIRED.CODE);
+    this.verify(!expired, ERROR_MESSAGES.VALIDATION.EXPIRED.CODE);
   }
 
   verifyOperation(success: boolean | null): void {
@@ -66,7 +66,7 @@ class OAuthVerifierService implements IOAuthVerifierService {
 
   verifyUpdated(updated?: boolean): boolean {
     return this.verify(
-      typeof updated === 'boolean' ? true : false,
+      typeof updated === 'boolean',
       ERROR_MESSAGES.VALIDATION.MISSING.CONSENT_UPDATE,
       500,
     );

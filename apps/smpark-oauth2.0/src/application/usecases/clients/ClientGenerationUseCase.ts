@@ -42,7 +42,7 @@ class ClientGenerationUseCase implements IClientGenerationUseCase {
 
     const fetchedClients = await this.clientsRepository.update(verifiedId, updatedClients);
 
-    this.oAuthVerifierService.verifyOperation(fetchedClients ? true : false);
+    this.oAuthVerifierService.verifyOperation(!!fetchedClients);
 
     return fetchedClients;
   }

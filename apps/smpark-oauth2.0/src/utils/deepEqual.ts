@@ -14,11 +14,5 @@ export const deepEqual = <T>(obj1: T, obj2: T): boolean => {
     return false;
   }
 
-  for (const key of keys1) {
-    if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
-      return false;
-    }
-  }
-
-  return true;
+  return keys1.every((key) => keys2.includes(key) && deepEqual(obj1[key], obj2[key]));
 };

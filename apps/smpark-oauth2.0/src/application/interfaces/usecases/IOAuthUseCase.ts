@@ -1,5 +1,10 @@
-import { AuthorizeRequestDTO, TokenRequestDTO } from '@dtos/OAuthDTO';
-import { ScopeRequestDTO, ScopeResponseDTO, ValidIdsDTO } from '@dtos/OAuthDTO';
+import {
+  AuthorizeRequestDTO,
+  TokenRequestDTO,
+  ScopeRequestDTO,
+  ScopeResponseDTO,
+  ValidIdsDTO,
+} from '@dtos/OAuthDTO';
 
 export interface ICodeGenerationUseCase {
   execute(id?: string): Promise<string>;

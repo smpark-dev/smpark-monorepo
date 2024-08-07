@@ -26,7 +26,7 @@ class UserRepository implements IUserRepository<ClientSession> {
   }
 
   async findByEmail(email: string): Promise<UserDTO | null> {
-    const result = await this.collection.findOne({ email: email });
+    const result = await this.collection.findOne({ email });
     return result
       ? this.userMapper.toUserDTO(this.userMapper.toEntity(result), result.password)
       : null;

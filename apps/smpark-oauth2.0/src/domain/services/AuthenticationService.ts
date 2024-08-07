@@ -56,7 +56,12 @@ class AuthenticationService implements IAuthenticationService {
       throw createError(400, ERROR_MESSAGES.VALIDATION.MISSING.EMAIL);
     }
 
-    return { id, password, name, email };
+    return {
+      id,
+      password,
+      name,
+      email,
+    };
   }
 
   verifySignInInfo(user: LoginDTO): { id: string; password: string } {

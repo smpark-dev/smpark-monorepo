@@ -7,7 +7,7 @@ import configureExpress from '@configs/express';
 import { container, registerAllDependencies } from '@configs/inversify';
 import MongoDB from '@database/MongoDB';
 
-const mongoDBName = env.mongoDBName;
+const { mongoDBName } = env;
 registerAllDependencies(env.mongoDBUri, mongoDBName);
 
 const database = container.get<MongoDB>(MongoDB);

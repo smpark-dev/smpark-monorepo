@@ -1,7 +1,6 @@
 import 'winston-daily-rotate-file';
 import fs from 'fs';
-import path from 'path';
-import { dirname } from 'path';
+import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 import winston from 'winston';
@@ -21,27 +20,31 @@ if (!fs.existsSync(logDir)) {
 }
 
 // 한국 시간 적용을 위한 함수
-const appendTimestamp = winston.format((info, opts) => {
-  if (opts.tz)
-    info.timestamp = new Date().toLocaleString('ko-KR', {
-      timeZone: 'Asia/Seoul',
-    });
-  return info;
-});
+const appendTimestamp = winston.format(
+  (info: winston.Logform.TransformableInfo, opts: { tz?: string }) => {
+    if (opts.tz) {
+      return {
+        ...info,
+        timestamp: new Date().toLocaleString('ko-KR', {
+          timeZone: 'Asia/Seoul',
+        }),
+      };
+    }
+    return info;
+  },
+);
 
 // 커스텀 로그 포맷
-const customFormat = printf((info) => {
-  return `${info.level.toUpperCase()}: ${info.timestamp} ${info.message}`;
-});
+const customFormat = printf(
+  (info) => `${info.level.toUpperCase()}: ${info.timestamp} ${info.message}`,
+);
 
 // 필터 설정
-const infoAndWarnFilter = winston.format((info) => {
-  return info.level === 'info' || info.level === 'warn' ? info : false;
-});
+const infoAndWarnFilter = winston.format((info) =>
+  info.level === 'info' || info.level === 'warn' ? info : false,
+);
 
-const errorFilter = winston.format((info) => {
-  return info.level === 'error' ? info : false;
-});
+const errorFilter = winston.format((info) => (info.level === 'error' ? info : false));
 
 // info와 warn 레벨 파일 트랜스포트
 const infoAndWarnTransport = new winston.transports.DailyRotateFile({

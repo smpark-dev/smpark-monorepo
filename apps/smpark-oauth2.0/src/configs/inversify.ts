@@ -24,9 +24,7 @@ import TokenService from '@services/TokenService';
 import UserLoginUseCase from '@usecases/auth/UserLoginUseCase';
 import UserRegistrationUseCase from '@usecases/auth/UserRegistrationUseCase';
 import ClientDetailsLoaderUseCase from '@usecases/clients/ClientDetailsLoaderUseCase';
-import LoadOAuthDataUseCase from '@usecases/clients/ClientDetailsLoaderUseCase';
 import ClientDetailsRegistrationUseCase from '@usecases/clients/ClientDetailsRegistrationUseCase';
-import RegisterOAuthDataUseCase from '@usecases/clients/ClientDetailsRegistrationUseCase';
 import ClientGenerationUseCase from '@usecases/clients/ClientGenerationUseCase';
 import CodeGenerationUseCase from '@usecases/oauth/CodeGenerationUseCase';
 import ScopeComparatorUseCase from '@usecases/oauth/ScopeComparatorUseCase';
@@ -41,8 +39,6 @@ const registerUseCaseDependencies = (): void => {
   container.bind('ITokenGenerationUseCase').to(TokenGenerationUseCase);
   container.bind('IClientGenerationUseCase').to(ClientGenerationUseCase);
   container.bind('ICodeGenerationUseCase').to(CodeGenerationUseCase);
-  container.bind('ILoadOAuthDataUseCase').to(LoadOAuthDataUseCase);
-  container.bind('IRegisterOAuthDataUseCase').to(RegisterOAuthDataUseCase);
   container.bind('IScopeComparatorUseCase').to(ScopeComparatorUseCase);
   container.bind('ITokenPreparationUseCase').to(TokenPreparationUseCase);
   container.bind('IUserAuthorizationUseCase').to(UserAuthorizationUseCase);

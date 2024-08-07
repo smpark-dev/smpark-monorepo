@@ -27,13 +27,9 @@ class TokenService implements ITokenService {
     const requestScopesArray = requestScope.toLowerCase().split(' ');
     const resultScope: Partial<ScopeDTO> = {};
 
-    for (const key in allowedScope) {
-      if (allowedScope[key] === true && requestScopesArray.includes(key)) {
-        resultScope[key] = true;
-      } else {
-        resultScope[key] = false;
-      }
-    }
+    Object.keys(allowedScope).forEach((key) => {
+      resultScope[key] = allowedScope[key] === true && requestScopesArray.includes(key);
+    });
 
     if (!resultScope.id) {
       resultScope.id = true;

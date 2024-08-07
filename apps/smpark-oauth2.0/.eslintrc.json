@@ -1,7 +1,60 @@
 {
-  "extends": ["../../.eslintrc.json"],
+  "plugins": ["@typescript-eslint", "import"],
+  "extends": [
+    "../../.eslintrc.json",
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
   "ignorePatterns": ["!**/*"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
   "overrides": [
+    {
+      "files": ["*.js", "*.ts"],
+      "rules": {
+        "import/order": [
+          "warn",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              "parent",
+              "sibling",
+              "index",
+              "object",
+              "type"
+            ],
+            "pathGroups": [
+              {
+                "pattern": "react*",
+                "group": "builtin"
+              },
+              {
+                "pattern": "@/**",
+                "group": "internal"
+              },
+              {
+                "pattern": "@*/**",
+                "group": "internal"
+              }
+            ],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            },
+            "pathGroupsExcludedImportTypes": ["type"]
+          }
+        ]
+      }
+    },
     {
       "files": ["*.js"],
       "rules": {
@@ -12,7 +65,12 @@
     },
     {
       "files": ["*.ts"],
-      "extends": [],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module",
+        "project": ["tsconfig.base.json"]
+      },
       "rules": {
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/array-type": ["error", { "default": "array-simple" }],
@@ -29,6 +87,7 @@
             "argsIgnorePattern": "^_"
           }
         ],
+        "no-underscore-dangle": ["warn", { "allow": ["__filename", "__dirname"] }],
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/lines-between-class-members": [
           "error",
@@ -38,23 +97,12 @@
               { "blankLine": "always", "prev": "*", "next": "method" }
             ]
           }
-        ]
-      },
-      "env": {
-        "node": true
-      }
-    },
-    {
-      "files": ["cypress/**/*.js", "cypress/**/*.ts", "**/*.cy.js", "**/*.cy.ts"],
-      "plugins": ["cypress"],
-      "env": {
-        "browser": true,
-        "cypress/globals": true
-      },
-      "extends": ["plugin:cypress/recommended"],
-      "rules": {
-        "cypress/assertion-before-screenshot": "warn",
-        "cypress/no-force": "warn"
+        ],
+        "class-methods-use-this": "off",
+        "consistent-return": "off",
+        "max-classes-per-file": "off",
+        "import/prefer-default-export": "off",
+        "no-console": "off"
       }
     }
   ]

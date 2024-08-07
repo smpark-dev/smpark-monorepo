@@ -31,7 +31,12 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
     const address_uri = this.validateReferer(request.referer_uri, clients?.address_uri);
     const response_type = this.validateResponseType(request.response_type);
 
-    return { client_id, redirect_uri, address_uri, response_type };
+    return {
+      client_id,
+      redirect_uri,
+      address_uri,
+      response_type,
+    };
   }
 
   validateTokenRequest(request: TokenRequestDTO, oauth?: TokenRequestDTO | null): TokenValidateDTO {

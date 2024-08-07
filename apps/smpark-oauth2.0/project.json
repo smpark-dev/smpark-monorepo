@@ -74,7 +74,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/smpark-oauth2.0/**/*.ts"]
+        "lintFilePatterns": ["apps/smpark-oauth2.0/src/**/*.ts"]
       }
     }
   }

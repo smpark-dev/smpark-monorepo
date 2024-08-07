@@ -1,20 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "files": [],
-
   "type": "module",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
-    "strict": true,
-    "pretty": true,
-    "allowJs": true,
-    "isolatedModules": true,
     "outDir": "./dist",
-    "forceConsistentCasingInFileNames": true,
-    "types": ["jest"],
+    "types": ["jest", "node"],
     "baseUrl": ".",
     "paths": {
       "@controllers/*": ["src/adapters/controllers/*"],
@@ -36,8 +28,7 @@
       "@lib/*": ["src/types/lib/*"],
       "@errors/*": ["src/types/errors/*"],
       "@constants/*": ["src/constants/*"]
-    },
-    
+    }
   },
   "references": [
     {
