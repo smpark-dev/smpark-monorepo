@@ -1,0 +1,1 @@
+export { nextAuthOptions } from './nextAuthOptions';
