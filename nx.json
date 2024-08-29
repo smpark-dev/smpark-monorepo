@@ -1,29 +1,31 @@
 {
-  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
+      "!{projectRoot}/cypress/**/*",
+      "!{projectRoot}/**/*.cy.[jt]s?(x)",
+      "!{projectRoot}/cypress.config.[jt]s",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/test-setup.[jt]s",
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/eslint.config.js"
     ],
-    "sharedGlobals": [
-      "{workspaceRoot}/.github/workflows/ci.yml"
-    ]
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "."
   },
-  "nxCloudAccessToken": "NzE0MDBhZDQtOGYwOC00YmQzLWIzMmUtOWY2NWM4Yzc5YWNmfHJlYWQtd3JpdGU=",
   "plugins": [
+    "nx/plugins/package-json",
     {
       "plugin": "@nx/next/plugin",
       "options": {
-        "startTargetName": "start",
+        "startTargetName": "prod",
         "buildTargetName": "build",
         "devTargetName": "dev",
         "serveStaticTargetName": "serve-static"
@@ -35,5 +37,25 @@
         "targetName": "lint"
       }
     }
-  ]
+  ],
+  "cacheDirectory": ".nx-cache",
+  "targetDefaults": {
+    "build": {
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "e2e": {
+      "cache": true
+    },
+    "@nx/esbuild:esbuild": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  }
 }

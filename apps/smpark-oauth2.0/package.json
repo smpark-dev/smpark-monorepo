@@ -1,5 +1,6 @@
 {
   "name": "smpark-oauth2.0",
+  "version": "1.0.0",
   "dependencies": {
     "argon2": "^0.40.3",
     "compression": "^1.7.4",
@@ -66,7 +67,6 @@
     "eslint-config-airbnb-typescript": "18.0.0",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-cypress": "^3.4.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsdoc": "^48.10.2",
@@ -92,7 +92,6 @@
   "type": "module",
   "scripts": {
     "test": "jest && cypress run",
-    "lint": "eslint .",
     "start:dev": "yarn docker:dev-build && yarn docker:dev-up",
     "start:prod": "yarn build && yarn docker:prod-build && yarn docker:prod-push && yarn docker:prod-up",
     "docker:dev-build": "docker-compose -f docker-compose.dev.yml --env-file .env.development build",
