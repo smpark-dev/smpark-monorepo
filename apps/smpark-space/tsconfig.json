@@ -2,37 +2,41 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "incremental": true,
     "skipLibCheck": true,
-
+    "allowSyntheticDefaultImports": true,
+    "types": ["jest", "node"],
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "types": ["jest", "node"],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./apps/smpark-space/src/*"]
-    }
+      "@/*": ["./src/*"],
+      "@public/*": ["public/*"]
+    },
+    "outDir": "../../dist/apps/smpark-space",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noEmit": true,
+    "strictNullChecks": true
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-    "../../apps/next-test/.next/types/**/*.ts",
-    "../../dist/apps/next-test/.next/types/**/*.ts",
+    "app/**/*.tsx",
+    "app/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "../../apps/smpark-space/.next/types/**/*.ts",
+    "../../dist/apps/smpark-space/.next/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    "../../dist/apps/smpark-space/.next/types/**/*.ts"
+    "middleware.ts",
+    "index.d.ts",
   ],
   "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }
