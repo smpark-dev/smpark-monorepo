@@ -3,6 +3,8 @@
     "nrwl.angular-console",
     // "esbenp.prettier-vscode",
     "arcanis.vscode-zipfs",
-    "firsttris.vscode-jest-runner"
+    "firsttris.vscode-jest-runner",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
   ]
 }

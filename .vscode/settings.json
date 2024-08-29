@@ -1,15 +1,17 @@
 {
   "search.exclude": {
-    "**/node_modules": true
+    // "**/node_modules": true,
+    "**/.yarn": true,
+    "**/.pnp.*": true
   },
-  "eslint.nodePath": "node_modules",
-  "prettier.prettierPath": "node_modules/prettier",
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  // "eslint.nodePath": "node_modules",
+  // "prettier.prettierPath": "node_modules/prettier",
+  // "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+
   "prettier.requireConfig": true,
   "tsimporter.filesToScan": ["src/**/*.ts"],
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  }
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
