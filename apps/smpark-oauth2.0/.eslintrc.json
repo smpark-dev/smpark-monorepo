@@ -1,12 +1,12 @@
 {
   "plugins": ["@typescript-eslint", "import"],
   "extends": [
-    "../../.eslintrc.json",
+    "eslint:recommended",
     "airbnb-base",
     "airbnb-typescript/base",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "../../.eslintrc.json"
   ],
   "ignorePatterns": ["!**/*"],
   "env": {
