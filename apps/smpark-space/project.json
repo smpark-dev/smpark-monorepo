@@ -1,39 +1,15 @@
 {
   "name": "smpark-space",
+  "version": "1.0.0",
+  "private": true,
   "sourceRoot": "apps/smpark-space",
   "projectType": "application",
   "targets": {
-    "dev": {
-      "executor": "nx:run-commands",
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "command": "next dev"
-      }
-    },
-    "serve": {
-      "executor": "@nx/next:server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "smpark-space:build",
-        "dev": true
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "smpark-space:build:development",
-          "dev": true
-        },
-        "production": {
-          "buildTarget": "smpark-space:build:production",
-          "dev": false
-        }
-      }
-    },
-    "build": {
-      "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "development",
-      "options": {
-        "root": "apps/smpark-space",
-        "outputPath": "dist/apps/smpark-space"
+        "lintFilePatterns": ["apps/smpark-space/**/*.{ts,tsx,js,jsx}", "libs/**/*.{ts,tsx,js,jsx}"]
       }
     }
   }

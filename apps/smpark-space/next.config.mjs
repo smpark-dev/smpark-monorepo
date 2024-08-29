@@ -1,4 +1,3 @@
-
 // @ts-check
 
 import { composePlugins, withNx } from '@nx/next';
@@ -7,17 +6,17 @@ import { composePlugins, withNx } from '@nx/next';
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: '/interfaces/api/:path*',
-      },
-      {
-        source: '/:path*',
-        destination: '/ui/pages/:path*',
-      },
-    ];
+  reactStrictMode: false,
+  images: {
+    formats: ['image/webp'],
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+
+    return config;
   },
   nx: {
     // Set this to true if you would like to use SVGR
@@ -26,9 +25,6 @@ const nextConfig = {
   },
 };
 
-const plugins = [
-  // Add more Next.js plugins to this list if needed.
-  withNx,
-];
+const plugins = [withNx];
 
 export default composePlugins(...plugins)(nextConfig);
