@@ -1,9 +1,10 @@
 version: '3.8'
 
 services:
-  oauth:
+  smpark-oauth2.0:
     build:
-      context: .
+      context: ../../
+      dockerfile: apps/smpark-oauth2.0/Dockerfile
       target: production
     image: smpark9596/oauth2.0:${VERSION}
     container_name: oauth2.0_${VERSION}
@@ -14,12 +15,12 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - smpark_log:/usr/src/oauth_log
-    command: yarn prod
+      - smpark-log:/usr/src/oauth-log
+    command: yarn oauth2.0:prod
 
 networks:
   default:
     name: smpark_oauth_network_prod
 
 volumes:
-  smpark_log:
+  smpark-log:

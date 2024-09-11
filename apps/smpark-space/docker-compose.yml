@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  smpark-space:
+    build:
+      context: ../../
+      dockerfile: apps/smpark-space/Dockerfile
+      target: production
+    image: smpark9596/space:${VERSION}
+    container_name: space_${VERSION}
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    environment:
+      - NODE_ENV=production
+    command: yarn space:prod
+
+networks:
+  default:
+    name: smpark_space_network_prod
