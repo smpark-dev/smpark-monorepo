@@ -3,13 +3,13 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'http://localhost:3000',
+      url: 'https://smpark.dev',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'http://localhost:3000/login',
+      url: 'https://smpark.dev/login',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.3,
