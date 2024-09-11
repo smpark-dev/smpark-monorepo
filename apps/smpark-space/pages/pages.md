@@ -1,1 +1,1 @@
-이 폴더는 Next.js가 `src/pages`를 페이지 라우터로 취급하지 못하도록 하기 위해 존재합니다. src/pages`는 [기능 슬라이스 디자인]에서 페이지 레이어로 사용됩니다(https://feature-sliced.design).
+이 폴더는 Next.js가 `src/pages`를 페이지 라우터로 취급하지 못하도록 하기 위해 존재합니다. src/pages`는 [Feature Sliced Design]에서 페이지 레이어로 사용됩니다(https://feature-sliced.design).

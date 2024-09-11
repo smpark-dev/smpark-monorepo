@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "smpark's space",
   description: 'smpark의 개인 웹페이지 입니다.',
   keywords: ['Web', 'App', 'JavaScript', 'TypeScript', 'React', 'Next.js'],
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL('https://smpark.dev'),
   openGraph: {
     title: "smpark's space",
     description: 'smpark의 포트폴리오 페이지입니다. 소개, 스킬, 경력 등을 알 수 있어요. :)',

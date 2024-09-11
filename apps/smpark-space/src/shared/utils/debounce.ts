@@ -10,4 +10,3 @@ export const debounce = <T extends unknown[]>(func: (...args: T) => unknown, wai
     }, wait);
   };
 };
-
