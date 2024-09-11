@@ -8,12 +8,10 @@ COPY .pnp.* ./
 COPY package.json yarn.lock ./
 
 # 설정 파일들
-COPY nodemon.json .prettierrc ./
-COPY *.config.js *.config.mjs ./
-COPY tsconfig.json ./
-
-# 소스 코드
-COPY src ./src
+COPY apps/smpark-oauth2.0/nodemon.json ./
+COPY apps/smpark-oauth2.0/*.config.js apps/smpark-oauth2.0/*.config.mjs ./
+COPY tsconfig.base.json ./
+COPY apps/smpark-oauth2.0/tsconfig*.json ./tsconfig/sub-config/
 
 FROM base AS production
 # 빌드 파일
@@ -24,7 +22,7 @@ RUN corepack enable
 
 ENV NODE_ENV=production
 EXPOSE 5555
-CMD ["yarn", "prod"]
+CMD ["yarn", "oauth2.0:prod"]
 
 FROM base AS development
 
