@@ -76,6 +76,50 @@
       "options": {
         "lintFilePatterns": ["apps/smpark-oauth2.0/src/**/*.ts"]
       }
+    },
+    "start:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn nx build smpark-oauth2.0",
+          "yarn nx docker:prod-build smpark-oauth2.0",
+          "yarn nx docker:prod-push smpark-oauth2.0",
+          "yarn nx docker:prod-up smpark-oauth2.0"
+        ],
+        "parallel": false
+      }
+    },
+    "docker:prod-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.yml --env-file apps/smpark-oauth2.0/.env.production build"
+      }
+    },
+    "docker:prod-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": ".",
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.yml --env-file apps/smpark-oauth2.0/.env.production push"
+      }
+    },
+    "docker:prod-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": ".",
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.yml --env-file apps/smpark-oauth2.0/.env.production up -d"
+      }
+    },
+    "docker:prod-down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.yml --env-file apps/smpark-oauth2.0/.env.production down"
+      }
+    },
+    "docker:prod-pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.yml --env-file apps/smpark-oauth2.0/.env.production pull"
+      }
     }
   }
 }
