@@ -1,8 +1,7 @@
 'use client';
 
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft, faHome } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ArrayLeft from '@public/imgs/icons/arrow-left.svg';
+import Home from '@public/imgs/icons/house.svg';
 import { useRouter } from 'next/navigation';
 
 interface INavigationButtonProps {
@@ -25,23 +24,19 @@ export const NavigationButton = ({ type, move }: INavigationButtonProps) => {
     }
   };
 
-  const getIcon = (): IconDefinition => {
-    return type === 'back' ? faArrowLeft : faHome;
-  };
-
   const getAriaLabel = (): string => {
     return type === 'back' ? 'go back' : 'go home';
   };
 
   return (
     <button
-      className='w-full h-full flex items-center justify-center cursor-pointer p-[15px] text-lg'
+      className='w-full h-full flex items-center justify-center cursor-pointer text-lg'
       onClick={handleNavigation}
       aria-label={getAriaLabel()}
       onKeyDown={(e) => e.key === 'Enter' && handleNavigation()}
       type='button'
     >
-      <FontAwesomeIcon icon={getIcon()} />
+      {type === 'back' ? <ArrayLeft /> : <Home />}
     </button>
   );
 };

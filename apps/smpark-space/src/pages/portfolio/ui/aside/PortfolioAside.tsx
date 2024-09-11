@@ -1,7 +1,6 @@
 'use client';
 
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Menu from '@public/imgs/icons/menu.svg';
 import React, { useEffect, useState, useCallback } from 'react';
 
 import { useAsideStore } from '@/pages/portfolio/model';
@@ -53,7 +52,7 @@ export const PortfolioAside = () => {
         aria-label='navigation'
         onClick={toggleMenu}
       >
-        <FontAwesomeIcon icon={faBars} className='h-4' />
+        <Menu />
       </Button>
 
       <Navigation activeSection={activeSection} />
