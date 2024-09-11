@@ -11,6 +11,48 @@
       "options": {
         "lintFilePatterns": ["apps/smpark-space/**/*.{ts,tsx,js,jsx}", "libs/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "start:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn nx build smpark-space",
+          "yarn nx docker:prod-build smpark-space",
+          "yarn nx docker:prod-push smpark-space",
+          "yarn nx docker:prod-up smpark-space"
+        ],
+        "parallel": false
+      }
+    },
+    "docker:prod-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.yml --env-file apps/smpark-space/.env.production build"
+      }
+    },
+    "docker:prod-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.yml --env-file apps/smpark-space/.env.production push"
+      }
+    },
+    "docker:prod-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.yml --env-file apps/smpark-space/.env.production up -d"
+      }
+    },
+    "docker:prod-down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.yml --env-file apps/smpark-space/.env.production down"
+      }
+    },
+    "docker:prod-pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.yml --env-file apps/smpark-space/.env.production pull"
+      }
     }
   }
 }

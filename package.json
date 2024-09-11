@@ -103,6 +103,8 @@
   },
   "packageManager": "yarn@4.4.0",
   "scripts": {
-    "dev-all": "nx run-many --target=dev --projects=smpark-oauth2.0,smpark-space --parallel"
+    "dev-all": "nx run-many --target=dev --projects=smpark-oauth2.0,smpark-space --parallel",
+    "oauth2.0:prod": "cross-env NODE_ENV=production node ./dist/apps/smpark-oauth2.0/index.js",
+    "space:prod": "next start"
   }
 }
