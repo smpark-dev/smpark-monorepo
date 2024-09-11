@@ -1,7 +1,7 @@
 import { ABOUT } from '@/pages/portfolio/constants';
 
 const getColorForIndex = (index: number): string => {
-  const colors = ['yellow', 'forestGreen', 'red', 'gray', 'paleTurquoise', 'dodgerBlue'];
+  const colors = ['#EAB308', '#86EFAC', '#ff6863', 'gray', 'paleTurquoise', 'dodgerBlue'];
   return colors[index % colors.length];
 };
 

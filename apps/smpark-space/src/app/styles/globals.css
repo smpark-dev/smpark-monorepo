@@ -26,6 +26,10 @@
   .canvas-layer {
     @apply fixed top-0 left-0 w-screen h-screen -z-50;
   }
+
+  .odd-mr-6:nth-child(odd) {
+    @apply mr-6;
+  }
   
   ::-webkit-scrollbar {
     width: 10px;
