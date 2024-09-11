@@ -1,4 +1,4 @@
-import { CONTACT_INFOS, CONTACT } from '@/pages/portfolio/constants';
+import { CONTACT } from '@/pages/portfolio/constants';
 
 import { Info } from './Info';
 
@@ -13,7 +13,7 @@ export const Contact = () => {
       </h2>
       <p className='mt-14 mb-12 text-text font-thin leading-[25px] font-noto'>
         {CONTACT.DESCRIPTION[0]}
-        <span className='text-secondary font-thin'>{CONTACT.DESCRIPTION[1]}</span>
+        <span className='text-secondary font-thin ml-1'>{CONTACT.DESCRIPTION[1]}</span>
         {CONTACT.DESCRIPTION[2]}
         <br />
         {/* <a href='/login' className={styles.loginButton}>
@@ -25,8 +25,8 @@ export const Contact = () => {
         {CONTACT.DESCRIPTION[3]}
       </p>
       <div className='justify-evenly bg-transparency-primary rounded-[15px] py-[60px] px-[50px] mt-[30px] flex max-md:py-[25px] max-md:px-[15px] max-md:flex-col max-md:mb-9 font-josefin'>
-        {CONTACT_INFOS.map((item) => (
-          <Info key={item.ID} INFO={item} />
+        {CONTACT.CONTACT_INFOS.map((info) => (
+          <Info key={info.ID} info={info} />
         ))}
       </div>
     </section>

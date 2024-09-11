@@ -6,7 +6,7 @@ export const Skills = () => {
       <div className='portfolioTitleContainer'>
         <h1 className='text-5xl font-josefin'>{SKILLS.TITLE}</h1>
       </div>
-      <h2 className='mt-10 mb-[25px] text-2xl font-josefin'>{SKILLS.SUBTITLE}</h2>
+      <h2 className='mt-8 mb-[25px] text-xl font-josefin'>{SKILLS.SUBTITLE}</h2>
       <div className='p-6 rounded-lg mb-4 bg-transparency-primary'>
         <div className='w-1/2 m-auto  flex pt-4 pb-8 items-center justify-evenly max-lg:w-3/4 max-md:w-full max-sm:flex-col max-sm:pt-2 max-sm:pb-3'>
           {SKILLS.LEGEND.map((LEGEND) => (
@@ -32,7 +32,7 @@ export const Skills = () => {
               {SECTIONS.SKILLS.map((SKILL) => (
                 <div
                   key={SKILL.NAME}
-                  className={`flex w-fit ${SKILL.PROFICIENCY ? 'bg-[#0d5b91]' : 'bg-bg-secondary'} py-[3px] px-3 items-center justify-center rounded-2xl mr-4 mb-4 whitespace-nowrap`}
+                  className={`flex w-fit border-2 ${SKILL.PROFICIENCY ? 'border-yellow-500' : 'border-bg-secondary'} py-[6px] px-3 items-center justify-center rounded-2xl mr-4 mb-4 whitespace-nowrap`}
                 >
                   <SKILL.ICON
                     className='mr-2'
