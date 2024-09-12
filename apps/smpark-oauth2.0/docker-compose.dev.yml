@@ -5,8 +5,8 @@ services:
     build:
       context: .
       target: development
-    image: smpark9596/oauth2.0:${VERSION}
-    container_name: oauth2.0-dev_${VERSION}
+    image: smpark9596/oauth2.0:${OAUTH_VERSION}
+    container_name: oauth2.0-dev_${OAUTH_VERSION}
     ports:
       - '4000:4000'
     env_file:

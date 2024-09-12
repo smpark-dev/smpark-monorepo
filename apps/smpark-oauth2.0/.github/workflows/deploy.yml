@@ -43,7 +43,7 @@ jobs:
           OAUTH_ISSUER=${{ vars.OAUTH_ISSUER }}
           NGINX_PORT=${{ vars.NGINX_PORT }}
           APP_PORT=${{ vars.APP_PORT }}
-          VERSION=${{ vars.VERSION }}
+          OAUTH_VERSION=${{ vars.OAUTH_VERSION }}
           EOF
 
       - name: Build, push, and deploy
