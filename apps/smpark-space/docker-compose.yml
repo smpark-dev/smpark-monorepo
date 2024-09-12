@@ -6,8 +6,8 @@ services:
       context: ../../
       dockerfile: apps/smpark-space/Dockerfile
       target: production
-    image: smpark9596/space:${VERSION}
-    container_name: space_${VERSION}
+    image: smpark9596/space:${SPACE_VERSION}
+    container_name: space_${SPACE_VERSION}
     ports:
       - "3000:3000"
     env_file:
