@@ -6,10 +6,6 @@ on:
       - main
   pull_request:
 
-permissions:
-  actions: read
-  contents: read
-
 jobs:
   main:
     runs-on: self-hosted
