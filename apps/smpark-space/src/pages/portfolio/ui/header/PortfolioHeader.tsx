@@ -41,7 +41,7 @@ export const PortfolioHeader = () => {
           data-id='guide'
           ref={guideRef}
         >
-          <Image src='/imgs/earth.webp' alt='지구 표시' width={50} height={50} data-id='earth' />
+          <Image src='imgs/earth.webp' alt='지구 표시' width={50} height={50} data-id='earth' />
           <Image
             src='/imgs/space_ship.webp'
             alt='우주선 표시'
@@ -52,7 +52,7 @@ export const PortfolioHeader = () => {
             unoptimized
           />
 
-          <Image src='/imgs/mars.webp' alt='화성 표시' width={50} height={50} data-id='mars' />
+          <Image src='imgs/mars.webp' alt='화성 표시' width={50} height={50} data-id='mars' />
         </div>
       </nav>
     </header>
