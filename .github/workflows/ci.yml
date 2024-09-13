@@ -59,12 +59,13 @@ jobs:
             echo "Contents of .env.${{ vars.NODE_ENV }}:"
             cat .env.${{ vars.NODE_ENV }} | sed 's/^/  /'
       
-      - name: Restore Cache
+      - name: Restore Next.js Build Cache
         uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}/apps/smpark-space/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ github.workspace }}/프로젝트-경로/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/.yarn/cache/**/*') }}-${{ github.sha }}
           restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/.yarn/cache/**/*') }}-
             ${{ runner.os }}-nextjs-
 
       - run: yarn nx affected -t build:prod
