@@ -59,13 +59,16 @@ jobs:
             echo "Contents of .env.${{ vars.NODE_ENV }}:"
             cat .env.${{ vars.NODE_ENV }} | sed 's/^/  /'
       
-      - name: Restore Next.js Build Cache
+      - name: Fix .next folder permissions
+        run: sudo mkdir -p .next && sudo chmod -R 777 .next
+      
+      - name: Cache Next.js build output
         uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}/프로젝트-경로/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/.yarn/cache/**/*') }}-${{ github.sha }}
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/.yarn/cache/**/*') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}-
             ${{ runner.os }}-nextjs-
 
       - run: yarn nx affected -t build:prod
