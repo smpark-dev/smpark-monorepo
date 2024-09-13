@@ -16,8 +16,8 @@ COPY apps/smpark-space/tsconfig*.json ./tsconfig/sub-config/
 FROM base AS production
 
 COPY apps/smpark-space/.next ./.next
-COPY apps/smpark-space/public/imgs/space_ship.webp ./public/imgs/
-COPY apps/smpark-space/public/imgs/loading.webp ./public/imgs/
+COPY apps/smpark-space/public/imgs/ ./public/imgs/
+COPY apps/smpark-space/public/imgs/ ./public/imgs/
 
 RUN corepack enable 
 
