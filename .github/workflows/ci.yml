@@ -60,7 +60,7 @@ jobs:
             cat .env.${{ vars.NODE_ENV }} | sed 's/^/  /'
       
       - name: Fix .next folder permissions
-        run: sudo mkdir -p .next && sudo chmod -R 777 .next
+        run: mkdir -p .next && sudo chmod -R 777 .next
       
       - name: Cache Next.js build output
         uses: actions/cache@v3
