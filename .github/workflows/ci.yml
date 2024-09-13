@@ -6,12 +6,6 @@ on:
       - main
   pull_request:
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
-
 jobs:
   main:
     runs-on: self-hosted
@@ -72,10 +66,6 @@ jobs:
           SPACE_VERSION=${{ vars.SPACE_VERSION }}
           EOF
 
-      - name: Display environment file (for debugging)
-        run: |
-            echo "Contents of .env.${{ vars.NODE_ENV }}:"
-            cat .env.${{ vars.NODE_ENV }} | sed 's/^/  /'
       
       - name: Cache Next.js build output
         uses: actions/cache@v3
