@@ -31,7 +31,7 @@ jobs:
         run: corepack enable
         
 
-      - name: Create environment file
+      - name: Create oauth2.0 environment file
         run: |
           cat << EOF > apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
           LOGIN_EXPIRES_IN=${{ secrets.LOGIN_EXPIRES_IN }}
@@ -52,6 +52,24 @@ jobs:
           NGINX_PORT=${{ vars.NGINX_PORT }}
           APP_PORT=${{ vars.APP_PORT }}
           OAUTH_VERSION=${{ vars.OAUTH_VERSION }}
+          EOF
+
+      - name: Create space environment file   
+        run: |
+          cat << EOF > apps/smpark-space/.env.${{ vars.NODE_ENV }}
+          SPACE_GOOGLE_CLIENT_ID=${{ secrets.SPACE_GOOGLE_CLIENT_ID }}
+          SPACE_GOOGLE_CLIENT_SECRET=${{ secrets.SPACE_GOOGLE_CLIENT_SECRET }}
+          SPACE_GITHUB_CLIENT_ID=${{ secrets.SPACE_GITHUB_CLIENT_ID }}
+          SPACE_GITHUB_CLIENT_SECRET=${{ secrets.SPACE_GITHUB_CLIENT_SECRET }}
+          SPACE_NEXTAUTH_SECRET=${{ secrets.SPACE_NEXTAUTH_SECRET }}
+          SPACE_SMPARK_CLIENT_ID=${{ secrets.SPACE_SMPARK_CLIENT_ID }}
+          SPACE_SMPARK_CLIENT_SECRET=${{ secrets.SPACE_SMPARK_CLIENT_SECRET }}
+          NODE_ENV=${{ vars.NODE_ENV }}
+          NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
+          SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}
+          SMPARK_RESOURCE_BASE_URI=${{ vars.SMPARK_RESOURCE_BASE_URI }}
+          SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}
+          SPACE_VERSION=${{ vars.SPACE_VERSION }}
           EOF
 
       - name: Display environment file (for debugging)
