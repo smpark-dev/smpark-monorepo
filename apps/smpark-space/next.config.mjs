@@ -23,6 +23,7 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  presets: ['next/babel'],
 };
 
 const plugins = [withNx];
