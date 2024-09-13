@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
 export const authMiddleware = async (req: NextRequest) => {
-  const token = await getToken({ req, secret: process.env.SPACE_NEXTAUTH_SECRET });
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
   const { pathname } = req.nextUrl;
 
   // path외 정적파일 경로가 나타남에 필터링

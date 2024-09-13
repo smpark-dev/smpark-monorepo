@@ -55,9 +55,9 @@ jobs:
           SPACE_GOOGLE_CLIENT_SECRET=${{ secrets.SPACE_GOOGLE_CLIENT_SECRET }}
           SPACE_GITHUB_CLIENT_ID=${{ secrets.SPACE_GITHUB_CLIENT_ID }}
           SPACE_GITHUB_CLIENT_SECRET=${{ secrets.SPACE_GITHUB_CLIENT_SECRET }}
-          SPACE_NEXTAUTH_SECRET=${{ secrets.SPACE_NEXTAUTH_SECRET }}
           SPACE_SMPARK_CLIENT_ID=${{ secrets.SPACE_SMPARK_CLIENT_ID }}
           SPACE_SMPARK_CLIENT_SECRET=${{ secrets.SPACE_SMPARK_CLIENT_SECRET }}
+          NEXTAUTH_SECRET=${{ secrets.SPACE_NEXTAUTH_SECRET }}
           NODE_ENV=${{ vars.NODE_ENV }}
           NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
           SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}
@@ -78,5 +78,5 @@ jobs:
 
       - name: Install dependencies using Yarn
         run: yarn install
-        
+
       - run: yarn nx affected -t build:prod
