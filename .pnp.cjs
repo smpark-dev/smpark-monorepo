@@ -5251,6 +5251,24 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@next/swc-darwin-arm64", [\
+      ["npm:14.2.3", {\
+        "packageLocation": "./.yarn/unplugged/@next-swc-darwin-arm64-npm-14.2.3-a4a36e8f73/node_modules/@next/swc-darwin-arm64/",\
+        "packageDependencies": [\
+          ["@next/swc-darwin-arm64", "npm:14.2.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@next/swc-darwin-x64", [\
+      ["npm:14.2.3", {\
+        "packageLocation": "./.yarn/unplugged/@next-swc-darwin-x64-npm-14.2.3-bb811d66d3/node_modules/@next/swc-darwin-x64/",\
+        "packageDependencies": [\
+          ["@next/swc-darwin-x64", "npm:14.2.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@next/swc-linux-arm64-gnu", [\
       ["npm:14.2.3", {\
         "packageLocation": "./.yarn/unplugged/@next-swc-linux-arm64-gnu-npm-14.2.3-8a1a464ce1/node_modules/@next/swc-linux-arm64-gnu/",\
@@ -17170,6 +17188,8 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["next", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:14.2.3"],\
           ["@next/env", "npm:14.2.3"],\
+          ["@next/swc-darwin-arm64", "npm:14.2.3"],\
+          ["@next/swc-darwin-x64", "npm:14.2.3"],\
           ["@next/swc-linux-arm64-gnu", "npm:14.2.3"],\
           ["@next/swc-linux-arm64-musl", "npm:14.2.3"],\
           ["@next/swc-linux-x64-gnu", "npm:14.2.3"],\

@@ -3275,6 +3275,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/swc-darwin-arm64@npm:14.2.3":
+  version: 14.2.3
+  resolution: "@next/swc-darwin-arm64@npm:14.2.3"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@next/swc-darwin-x64@npm:14.2.3":
+  version: 14.2.3
+  resolution: "@next/swc-darwin-x64@npm:14.2.3"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@next/swc-linux-arm64-gnu@npm:14.2.3":
   version: 14.2.3
   resolution: "@next/swc-linux-arm64-gnu@npm:14.2.3"
@@ -12942,6 +12956,8 @@ __metadata:
   resolution: "next@npm:14.2.3"
   dependencies:
     "@next/env": "npm:14.2.3"
+    "@next/swc-darwin-arm64": "npm:14.2.3"
+    "@next/swc-darwin-x64": "npm:14.2.3"
     "@next/swc-linux-arm64-gnu": "npm:14.2.3"
     "@next/swc-linux-arm64-musl": "npm:14.2.3"
     "@next/swc-linux-x64-gnu": "npm:14.2.3"
@@ -12962,6 +12978,10 @@ __metadata:
     react-dom: ^18.2.0
     sass: ^1.3.0
   dependenciesMeta:
+    "@next/swc-darwin-arm64":
+      optional: true
+    "@next/swc-darwin-x64":
+      optional: true
     "@next/swc-linux-arm64-gnu":
       optional: true
     "@next/swc-linux-arm64-musl":

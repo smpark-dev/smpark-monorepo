@@ -1,8 +1,6 @@
 # Dependencies
 # node_modules
 .yarn/install-state.gz
-.yarn/cache/@next-swc-darwin-arm64-npm-14.2.3-a4a36e8f73-10c0.zip
-.yarn/unplugged/@next-swc-darwin-arm64-npm-14.2.3-a4a36e8f73
 
 # Build outputs
 /dist
