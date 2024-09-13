@@ -23,7 +23,15 @@ jobs:
       
       - name: Enable Corepack
         run: corepack enable
-        
+
+      - name: Get affected projects
+        id: affected
+        run: echo "projects=$(yarn nx print-affected --type=app --select=projects)" >> $GITHUB_OUTPUT
+
+      - name: Display affected projects
+        run: |
+          echo "Affected projects:"
+          echo "${{ steps.affected.outputs.projects }}"
 
       - name: Create environment file
         run: |
