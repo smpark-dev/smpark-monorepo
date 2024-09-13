@@ -24,17 +24,15 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
-      - name: Display current project name
+      - name: Generate project identifier
+        id: project-id
         run: |
-          echo "Current project: ${{ env.NX_TASK_TARGET_PROJECT }}"
+          IDENTIFIER=$(git rev-parse --short HEAD)-$(date +%s)
+          echo "identifier=$IDENTIFIER" >> $GITHUB_OUTPUT
 
-      - name: Display current project name
+      - name: Display project identifier
         run: |
-          if [ -n "${{ env.NX_TASK_TARGET_PROJECT }}" ]; then
-            echo "Current project: ${{ env.NX_TASK_TARGET_PROJECT }}"
-          else
-            echo "NX_TASK_TARGET_PROJECT is not set"
-          fi
+          echo Project Identifier: ${{ steps.project-id.outputs.identifier }}
 
       
 
