@@ -58,5 +58,13 @@ jobs:
         run: |
             echo "Contents of .env.${{ vars.NODE_ENV }}:"
             cat .env.${{ vars.NODE_ENV }} | sed 's/^/  /'
+      
+      - name: Restore Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/apps/smpark-space/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
 
       - run: yarn nx affected -t build:prod
