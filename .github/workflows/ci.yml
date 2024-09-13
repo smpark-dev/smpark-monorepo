@@ -47,4 +47,9 @@ jobs:
           OAUTH_VERSION=${{ vars.OAUTH_VERSION }}
           EOF
 
-      - run: yarn nx affected -t start:prod
+      - name: Display environment file (for debugging)
+        run: |
+            echo "Contents of .env.${{ vars.NODE_ENV }}:"
+            cat .env.${{ vars.NODE_ENV }} | sed 's/^/  /'
+            
+      - run: yarn nx affected -t build:prod

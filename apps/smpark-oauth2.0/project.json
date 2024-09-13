@@ -77,7 +77,7 @@
         "lintFilePatterns": ["apps/smpark-oauth2.0/src/**/*.ts"]
       }
     },
-    "start:prod": {
+    "build:prod": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [

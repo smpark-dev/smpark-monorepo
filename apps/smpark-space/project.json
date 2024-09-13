@@ -12,7 +12,7 @@
         "lintFilePatterns": ["apps/smpark-space/**/*.{ts,tsx,js,jsx}", "libs/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "start:prod": {
+    "build:prod": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
