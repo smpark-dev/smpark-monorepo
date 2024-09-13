@@ -26,7 +26,7 @@ jobs:
       - name: Affected project
         id: affected
         run: |
-          affected=$(yarn nx print-affected --select=projects)
+          affected=$(yarn nx show projects --affected)
           echo "영향받은 프로젝트: $affected"
           echo "affected=$affected" >> $GITHUB_OUTPUT
 
