@@ -20,17 +20,17 @@ jobs:
       
       - uses: nrwl/nx-set-shas@v4
       
-      - name: Corepack 활성화
+      - name: Enable Corepack
         run: corepack enable
 
-      - name: 영향받은 프로젝트 확인
+      - name: Affected project
         id: affected
         run: |
           affected=$(yarn nx print-affected --select=projects)
           echo "영향받은 프로젝트: $affected"
           echo "affected=$affected" >> $GITHUB_OUTPUT
 
-      - name: 영향받은 프로젝트에 대한 환경 변수 파일 생성
+      - name: Create environment file
         run: |
           affected_projects=${{ steps.affected.outputs.affected }}
           if echo "$affected_projects" | grep -q "space"; then
@@ -63,7 +63,7 @@ jobs:
             EOF
           fi
 
-      - name: 환경 변수 파일 내용 표시 (디버깅용)
+      - name: Display environment file (for debugging)
         run: |
           if [ -f apps/space/.env.${{ vars.NODE_ENV }} ]; then
             echo "space .env.${{ vars.NODE_ENV }} 파일 내용:"
