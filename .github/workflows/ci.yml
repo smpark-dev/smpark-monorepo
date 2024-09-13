@@ -24,16 +24,19 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
-      - name: Get affected projects
-        id: affected
+      - name: Display current project name
         run: |
-          AFFECTED=$(yarn nx show projects --affected --json | jq -r '.projects | join(",")')
-          echo "projects=$AFFECTED" >> $GITHUB_OUTPUT
+          echo "Current project: ${{ env.NX_TASK_TARGET_PROJECT }}"
 
-      - name: Display affected projects
+      - name: Display current project name
         run: |
-          echo "Affected projects:"
-          echo "${{ steps.affected.outputs.projects }}"
+          if [ -n "${{ env.NX_TASK_TARGET_PROJECT }}" ]; then
+            echo "Current project: ${{ env.NX_TASK_TARGET_PROJECT }}"
+          else
+            echo "NX_TASK_TARGET_PROJECT is not set"
+          fi
+
+      
 
       - name: Create environment file
         run: |
