@@ -59,9 +59,4 @@ jobs:
             echo "Contents of .env.${{ vars.NODE_ENV }}:"
             cat .env.${{ vars.NODE_ENV }} | sed 's/^/  /'
 
-      - name: Build
-        run: NEXT_TELEMETRY_DISABLED=1 NEXT_SWC_TEMP_DIRECTORY=/tmp/next-swc npm run build
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-
       - run: yarn nx affected -t build:prod
