@@ -26,7 +26,9 @@ jobs:
 
       - name: Get affected projects
         id: affected
-        run: echo "projects=$(yarn nx print-affected --type=app --select=projects)" >> $GITHUB_OUTPUT
+        run: |
+          AFFECTED=$(yarn nx show projects --affected --json | jq -r '.projects | join(",")')
+          echo "projects=$AFFECTED" >> $GITHUB_OUTPUT
 
       - name: Display affected projects
         run: |
