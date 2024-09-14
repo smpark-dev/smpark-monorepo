@@ -36,6 +36,7 @@ jobs:
     strategy:
       matrix:
         project: ${{ fromJson(needs.setup.outputs.affected) }}
+      max-parallel: 2
     steps:
       - uses: actions/checkout@v4
         with:
@@ -86,10 +87,7 @@ jobs:
             echo "SPACE_VERSION=${{ vars.SPACE_VERSION }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             
             # LFS setup for smpark-space
-            git lfs install
-            git lfs fetch
-            git lfs checkout
-            git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
+            git lfs pull
           fi
 
       - name: Cache LFS
@@ -97,7 +95,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .git/lfs/objects
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.gitattributes') }}
           restore-keys: |
             ${{ runner.os }}-lfs-
 
