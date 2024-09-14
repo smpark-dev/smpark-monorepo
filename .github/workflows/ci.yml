@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  NEXT_TELEMETRY_DISABLED: 1
+  
 jobs:
   main:
     runs-on: self-hosted
@@ -23,8 +26,8 @@ jobs:
       
       - name: Enable Corepack
         run: corepack enable
-        
 
+      
       - name: Create oauth2.0 environment file
         run: |
           echo "LOGIN_EXPIRES_IN=${{ secrets.LOGIN_EXPIRES_IN }}" > apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
@@ -79,5 +82,9 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
 
       - uses: nrwl/nx-set-shas@v4
+
+      - run: node -e "console.log(process.arch, process.platform)"
+
+      - run: yarn why @next/swc-darwin-arm64
 
       - run: yarn nx affected -t build:prod --parallel=3
