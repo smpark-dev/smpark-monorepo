@@ -20,11 +20,14 @@ jobs:
           lfs: true
           fetch-depth: 0
 
-      - name: Cache LFS objects
+      - name: Create LFS file list
+        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
+    
+      - name: LFS Cache
         uses: actions/cache@v4
         with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfsconfig') }}
+          path: .git/lfs/objects
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
           restore-keys: |
             ${{ runner.os }}-lfs-
       
@@ -93,9 +96,5 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
 
       - uses: nrwl/nx-set-shas@v4
-
-      - run: node -e "console.log(process.arch, process.platform)"
-
-      - run: yarn why @next/swc-darwin-arm64
 
       - run: yarn nx affected -t build:prod --parallel=3
