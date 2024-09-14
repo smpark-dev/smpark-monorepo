@@ -20,20 +20,6 @@ jobs:
           lfs: true
           fetch-depth: 0
 
-      - name: Create LFS file list
-        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
-    
-      - name: LFS Cache
-        uses: actions/cache@v4
-        with:
-          path: .git/lfs/objects
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-          restore-keys: |
-            ${{ runner.os }}-lfs-
-      
-      - name: Pull LFS objects
-        run: git lfs pull
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20.14.0
@@ -79,6 +65,17 @@ jobs:
           echo "SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
           echo "SPACE_VERSION=${{ vars.SPACE_VERSION }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
 
+      - name: Create LFS file list
+        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
+
+      - name: Cache LFS
+        uses: actions/cache@v4
+        with:
+          path: .git/lfs/objects
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+          restore-keys: |
+            ${{ runner.os }}-lfs-
+
       - name: Cache NX
         uses: actions/cache@v4
         with:
@@ -94,6 +91,9 @@ jobs:
           path: |
             apps/smpark-space/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+
+      - name: Pull LFS objects
+        run: git lfs pull
 
       - uses: nrwl/nx-set-shas@v4
 
