@@ -16,7 +16,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn nx build smpark-space",
+          "NODE_OPTIONS='--max_old_space_size=4096' yarn nx build smpark-space",
           "yarn nx docker:prod-build smpark-space",
           "yarn nx docker:prod-push smpark-space",
           "yarn nx docker:prod-up smpark-space"
