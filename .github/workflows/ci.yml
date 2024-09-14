@@ -62,19 +62,14 @@ jobs:
           echo "SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
           echo "SPACE_VERSION=${{ vars.SPACE_VERSION }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
 
-      - name: Cache Yarn and NX
+      - name: Cache NX
         uses: actions/cache@v4
         with:
           path: |
-            .yarn/cache
-            .yarn/unplugged
-            .yarn/build-state.yml
-            .yarn/install-state.gz
-            .pnp.*
             .nx-cache
-          key: ${{ runner.os }}-yarn-nx-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-nx-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-nx-
+            ${{ runner.os }}-nx-
 
       - name: Cache Next.js
         uses: actions/cache@v4
@@ -82,11 +77,6 @@ jobs:
           path: |
             apps/smpark-space/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          
-      
-
-      - name: Install dependencies
-        run: yarn install --immutable
 
       - uses: nrwl/nx-set-shas@v4
 
