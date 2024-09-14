@@ -51,7 +51,7 @@ export const PortfolioHeader = () => {
             className='absolute left-[50px]'
             unoptimized
           />
-
+          <div></div>
           <Image src='/imgs/mars.webp' alt='화성 표시' width={50} height={50} data-id='mars' />
         </div>
       </nav>
