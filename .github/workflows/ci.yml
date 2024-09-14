@@ -10,13 +10,14 @@ on:
 
 env:
   NEXT_TELEMETRY_DISABLED: 1
-  
+
 jobs:
   main:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
         with:
+          lfs: true
           fetch-depth: 0
       
     
