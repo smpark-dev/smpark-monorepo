@@ -12,63 +12,88 @@ env:
   NEXT_TELEMETRY_DISABLED: 1
 
 jobs:
-  main:
+  setup:
     runs-on: self-hosted
+    outputs:
+      affected: ${{ steps.set-affected.outputs.affected }}
     steps:
       - uses: actions/checkout@v4
         with:
-          lfs: true
           fetch-depth: 0
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20.14.0
-      
       - name: Enable Corepack
         run: corepack enable
+      - uses: nrwl/nx-set-shas@v4
+      - id: set-affected
+        run: echo "affected=$(yarn nx show projects --affected --json)" >> $GITHUB_OUTPUT
 
+  build:
+    needs: setup
+    if: needs.setup.outputs.affected != '[]'
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        project: ${{ fromJson(needs.setup.outputs.affected) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.14.0
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: nrwl/nx-set-shas@v4
       
-      - name: Create oauth2.0 environment file
+      - name: Setup project
         run: |
-          echo "LOGIN_EXPIRES_IN=${{ secrets.LOGIN_EXPIRES_IN }}" > apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "LOGIN_JWT_SECRET_KEY=${{ secrets.LOGIN_JWT_SECRET_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "MONGO_DATABASE_NAME=${{ secrets.MONGO_DATABASE_NAME }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "MONGO_DATABASE_PASSWORD=${{ secrets.MONGO_DATABASE_PASSWORD }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "MONGO_DATABASE_SESSION_COLLECTION=${{ secrets.MONGO_DATABASE_SESSION_COLLECTION }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "MONGO_DATABASE_SESSION_KEY=${{ secrets.MONGO_DATABASE_SESSION_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "MONGO_DATABASE_URI=${{ secrets.MONGO_DATABASE_URI }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "MONGO_DATABASE_USER=${{ secrets.MONGO_DATABASE_USER }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "OAUTH_ACCESS_SECRET_KEY=${{ secrets.OAUTH_ACCESS_SECRET_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "OAUTH_ACCESS_TOKEN_EXPIRES_IN=${{ secrets.OAUTH_ACCESS_TOKEN_EXPIRES_IN }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "OAUTH_CODE_EXPIRES_IN=${{ secrets.OAUTH_CODE_EXPIRES_IN }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "OAUTH_REFRESH_SECRET_KEY=${{ secrets.OAUTH_REFRESH_SECRET_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "OAUTH_REFRESH_TOKEN_EXPIRES_IN=${{ secrets.OAUTH_REFRESH_TOKEN_EXPIRES_IN }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "OAUTH_ISSUER=${{ vars.OAUTH_ISSUER }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "NGINX_PORT=${{ vars.NGINX_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "APP_PORT=${{ vars.APP_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          echo "OAUTH_VERSION=${{ vars.OAUTH_VERSION }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-      
-      - name: Create space environment file   
-        run: |
-          echo "SPACE_GOOGLE_CLIENT_ID=${{ secrets.SPACE_GOOGLE_CLIENT_ID }}" > apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SPACE_GOOGLE_CLIENT_SECRET=${{ secrets.SPACE_GOOGLE_CLIENT_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SPACE_GITHUB_CLIENT_ID=${{ secrets.SPACE_GITHUB_CLIENT_ID }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SPACE_GITHUB_CLIENT_SECRET=${{ secrets.SPACE_GITHUB_CLIENT_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SPACE_SMPARK_CLIENT_ID=${{ secrets.SPACE_SMPARK_CLIENT_ID }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SPACE_SMPARK_CLIENT_SECRET=${{ secrets.SPACE_SMPARK_CLIENT_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "NEXTAUTH_SECRET=${{ secrets.SPACE_NEXTAUTH_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SMPARK_RESOURCE_BASE_URI=${{ vars.SMPARK_RESOURCE_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-          echo "SPACE_VERSION=${{ vars.SPACE_VERSION }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
-
-      - name: Create LFS file list
-        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
+          if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
+            echo "Setting up smpark-oauth2.0"
+            echo "LOGIN_EXPIRES_IN=${{ secrets.LOGIN_EXPIRES_IN }}" > apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "LOGIN_JWT_SECRET_KEY=${{ secrets.LOGIN_JWT_SECRET_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "MONGO_DATABASE_NAME=${{ secrets.MONGO_DATABASE_NAME }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "MONGO_DATABASE_PASSWORD=${{ secrets.MONGO_DATABASE_PASSWORD }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "MONGO_DATABASE_SESSION_COLLECTION=${{ secrets.MONGO_DATABASE_SESSION_COLLECTION }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "MONGO_DATABASE_SESSION_KEY=${{ secrets.MONGO_DATABASE_SESSION_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "MONGO_DATABASE_URI=${{ secrets.MONGO_DATABASE_URI }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "MONGO_DATABASE_USER=${{ secrets.MONGO_DATABASE_USER }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_ACCESS_SECRET_KEY=${{ secrets.OAUTH_ACCESS_SECRET_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_ACCESS_TOKEN_EXPIRES_IN=${{ secrets.OAUTH_ACCESS_TOKEN_EXPIRES_IN }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_CODE_EXPIRES_IN=${{ secrets.OAUTH_CODE_EXPIRES_IN }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_REFRESH_SECRET_KEY=${{ secrets.OAUTH_REFRESH_SECRET_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_REFRESH_TOKEN_EXPIRES_IN=${{ secrets.OAUTH_REFRESH_TOKEN_EXPIRES_IN }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_ISSUER=${{ vars.OAUTH_ISSUER }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "NGINX_PORT=${{ vars.NGINX_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "APP_PORT=${{ vars.APP_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_VERSION=${{ vars.OAUTH_VERSION }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+          elif [ "${{ matrix.project }}" == "smpark-space" ]; then
+            echo "Setting up smpark-space"
+            echo "SPACE_GOOGLE_CLIENT_ID=${{ secrets.SPACE_GOOGLE_CLIENT_ID }}" > apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SPACE_GOOGLE_CLIENT_SECRET=${{ secrets.SPACE_GOOGLE_CLIENT_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SPACE_GITHUB_CLIENT_ID=${{ secrets.SPACE_GITHUB_CLIENT_ID }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SPACE_GITHUB_CLIENT_SECRET=${{ secrets.SPACE_GITHUB_CLIENT_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SPACE_SMPARK_CLIENT_ID=${{ secrets.SPACE_SMPARK_CLIENT_ID }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SPACE_SMPARK_CLIENT_SECRET=${{ secrets.SPACE_SMPARK_CLIENT_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "NEXTAUTH_SECRET=${{ secrets.SPACE_NEXTAUTH_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SMPARK_RESOURCE_BASE_URI=${{ vars.SMPARK_RESOURCE_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SPACE_VERSION=${{ vars.SPACE_VERSION }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            
+            # LFS setup for smpark-space
+            git lfs install
+            git lfs fetch
+            git lfs checkout
+            git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
+          fi
 
       - name: Cache LFS
+        if: matrix.project == 'smpark-space'
         uses: actions/cache@v4
         with:
           path: .git/lfs/objects
@@ -76,25 +101,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-lfs-
 
+      - name: Cache Next.js
+        if: matrix.project == 'smpark-space'
+        uses: actions/cache@v4
+        with:
+          path: apps/smpark-space/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('apps/smpark-space/**.[jt]s', 'apps/smpark-space/**.[jt]sx') }}
+
       - name: Cache NX
         uses: actions/cache@v4
         with:
-          path: |
-            .nx-cache
+          path: .nx-cache
           key: ${{ runner.os }}-nx-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nx-
 
-      - name: Cache Next.js
-        uses: actions/cache@v4
-        with:
-          path: |
-            apps/smpark-space/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-
-      - name: Pull LFS objects
-        run: git lfs pull
-
-      - uses: nrwl/nx-set-shas@v4
-
-      - run: yarn nx affected -t build:prod --parallel=3
+      - name: Build
+        run: yarn nx build:prod ${{ matrix.project }}
