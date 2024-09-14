@@ -23,7 +23,6 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
-  output: 'standalone',
 };
 
 const plugins = [withNx];
