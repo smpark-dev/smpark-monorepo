@@ -13,9 +13,6 @@ jobs:
     runs-on: self-hosted
     outputs:
       affected: ${{ steps.set-affected.outputs.affected }}
-    defaults:
-      run:
-        shell: 'C:\Program Files\Git\bin\bash.exe --login -i {0}'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -27,7 +24,7 @@ jobs:
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
-        shell: bash
+        shell: 'C:\Program Files\Git\bin\bash.exe --login -i {0}'
         run: echo "affected=$(yarn nx show projects --affected --json)" >> $GITHUB_OUTPUT
 
   build:
