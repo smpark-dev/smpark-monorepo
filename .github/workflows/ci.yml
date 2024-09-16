@@ -21,15 +21,15 @@ jobs:
         with:
           node-version: 20.14.0
       - name: Enable Corepack
-        shell: pwsh
+        shell: powershell  # PowerShell로 실행
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
-        shell: pwsh
+        shell: powershell  # PowerShell로 실행
         run: |
           $affected = yarn nx show projects --type app --affected --json
           echo "affected=$affected" >> $env:GITHUB_OUTPUT
-
+          
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
@@ -42,56 +42,49 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}      
-      
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          
       - name: Setup project
-        shell: pwsh
+        shell: powershell  # PowerShell로 실행
         run: |
-          if ("${{ matrix.project }}" -eq "smpark-oauth2.0") {
-            Write-Output "Setting up smpark-oauth2.0"
-            @"
-            LOGIN_EXPIRES_IN=${{ secrets.LOGIN_EXPIRES_IN }}
-            LOGIN_JWT_SECRET_KEY=${{ secrets.LOGIN_JWT_SECRET_KEY }}
-            MONGO_DATABASE_NAME=${{ secrets.MONGO_DATABASE_NAME }}
-            MONGO_DATABASE_PASSWORD=${{ secrets.MONGO_DATABASE_PASSWORD }}
-            MONGO_DATABASE_SESSION_COLLECTION=${{ secrets.MONGO_DATABASE_SESSION_COLLECTION }}
-            MONGO_DATABASE_SESSION_KEY=${{ secrets.MONGO_DATABASE_SESSION_KEY }}
-            MONGO_DATABASE_URI=${{ secrets.MONGO_DATABASE_URI }}
-            MONGO_DATABASE_USER=${{ secrets.MONGO_DATABASE_USER }}
-            OAUTH_ACCESS_SECRET_KEY=${{ secrets.OAUTH_ACCESS_SECRET_KEY }}
-            OAUTH_ACCESS_TOKEN_EXPIRES_IN=${{ secrets.OAUTH_ACCESS_TOKEN_EXPIRES_IN }}
-            OAUTH_CODE_EXPIRES_IN=${{ secrets.OAUTH_CODE_EXPIRES_IN }}
-            OAUTH_REFRESH_SECRET_KEY=${{ secrets.OAUTH_REFRESH_SECRET_KEY }}
-            OAUTH_REFRESH_TOKEN_EXPIRES_IN=${{ secrets.OAUTH_REFRESH_TOKEN_EXPIRES_IN }}
-            NODE_ENV=${{ vars.NODE_ENV }}
-            OAUTH_ISSUER=${{ vars.OAUTH_ISSUER }}
-            NGINX_PORT=${{ vars.NGINX_PORT }}
-            APP_PORT=${{ vars.APP_PORT }}
-            OAUTH_VERSION=${{ vars.OAUTH_VERSION }}
-            "@ | Set-Content apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          }
-          elseif ("${{ matrix.project }}" -eq "smpark-space") {
-            Write-Output "Setting up smpark-space"
-            @"
-            SPACE_GOOGLE_CLIENT_ID=${{ secrets.SPACE_GOOGLE_CLIENT_ID }}
-            SPACE_GOOGLE_CLIENT_SECRET=${{ secrets.SPACE_GOOGLE_CLIENT_SECRET }}
-            SPACE_GITHUB_CLIENT_ID=${{ secrets.SPACE_GITHUB_CLIENT_ID }}
-            SPACE_GITHUB_CLIENT_SECRET=${{ secrets.SPACE_GITHUB_CLIENT_SECRET }}
-            SPACE_SMPARK_CLIENT_ID=${{ secrets.SPACE_SMPARK_CLIENT_ID }}
-            SPACE_SMPARK_CLIENT_SECRET=${{ secrets.SPACE_SMPARK_CLIENT_SECRET }}
-            NEXTAUTH_SECRET=${{ secrets.SPACE_NEXTAUTH_SECRET }}
-            NODE_ENV=${{ vars.NODE_ENV }}
-            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
-            SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}
-            SMPARK_RESOURCE_BASE_URI=${{ vars.SMPARK_RESOURCE_BASE_URI }}
-            SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}
-            SPACE_VERSION=${{ vars.SPACE_VERSION }}
-            "@ | Set-Content apps/smpark-space/.env.${{ vars.NODE_ENV }}
-            
-            # LFS setup for smpark-space
+          if ($env:matrix_project -eq "smpark-oauth2.0") {
+            echo "Setting up smpark-oauth2.0"
+            Set-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "LOGIN_EXPIRES_IN=$($env:secrets_LOGIN_EXPIRES_IN)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "LOGIN_JWT_SECRET_KEY=$($env:secrets_LOGIN_JWT_SECRET_KEY)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "MONGO_DATABASE_NAME=$($env:secrets_MONGO_DATABASE_NAME)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "MONGO_DATABASE_PASSWORD=$($env:secrets_MONGO_DATABASE_PASSWORD)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "MONGO_DATABASE_SESSION_COLLECTION=$($env:secrets_MONGO_DATABASE_SESSION_COLLECTION)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "MONGO_DATABASE_SESSION_KEY=$($env:secrets_MONGO_DATABASE_SESSION_KEY)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "MONGO_DATABASE_URI=$($env:secrets_MONGO_DATABASE_URI)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "MONGO_DATABASE_USER=$($env:secrets_MONGO_DATABASE_USER)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "OAUTH_ACCESS_SECRET_KEY=$($env:secrets_OAUTH_ACCESS_SECRET_KEY)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "OAUTH_ACCESS_TOKEN_EXPIRES_IN=$($env:secrets_OAUTH_ACCESS_TOKEN_EXPIRES_IN)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "OAUTH_CODE_EXPIRES_IN=$($env:secrets_OAUTH_CODE_EXPIRES_IN)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "OAUTH_REFRESH_SECRET_KEY=$($env:secrets_OAUTH_REFRESH_SECRET_KEY)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "OAUTH_REFRESH_TOKEN_EXPIRES_IN=$($env:secrets_OAUTH_REFRESH_TOKEN_EXPIRES_IN)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "NODE_ENV=$($env:vars_NODE_ENV)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "OAUTH_ISSUER=$($env:vars_OAUTH_ISSUER)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "NGINX_PORT=$($env:vars_NGINX_PORT)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "APP_PORT=$($env:vars_APP_PORT)"
+            Add-Content -Path "apps/smpark-oauth2.0/.env.$($env:vars_NODE_ENV)" -Value "OAUTH_VERSION=$($env:vars_OAUTH_VERSION)"
+          } elseif ($env:matrix_project -eq "smpark-space") {
+            echo "Setting up smpark-space"
+            Set-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SPACE_GOOGLE_CLIENT_ID=$($env:secrets_SPACE_GOOGLE_CLIENT_ID)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SPACE_GOOGLE_CLIENT_SECRET=$($env:secrets_SPACE_GOOGLE_CLIENT_SECRET)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SPACE_GITHUB_CLIENT_ID=$($env:secrets_SPACE_GITHUB_CLIENT_ID)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SPACE_GITHUB_CLIENT_SECRET=$($env:secrets_SPACE_GITHUB_CLIENT_SECRET)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SPACE_SMPARK_CLIENT_ID=$($env:secrets_SPACE_SMPARK_CLIENT_ID)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SPACE_SMPARK_CLIENT_SECRET=$($env:secrets_SPACE_SMPARK_CLIENT_SECRET)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "NEXTAUTH_SECRET=$($env:secrets_SPACE_NEXTAUTH_SECRET)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "NODE_ENV=$($env:vars_NODE_ENV)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "NEXT_PUBLIC_API_URL=$($env:vars_NEXT_PUBLIC_API_URL)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SMPARK_OAUTH_BASE_URI=$($env:vars_SMPARK_OAUTH_BASE_URI)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SMPARK_RESOURCE_BASE_URI=$($env:vars_SMPARK_RESOURCE_BASE_URI)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SMPARK_CLIENT_REDIRECT_URI=$($env:vars_SMPARK_CLIENT_REDIRECT_URI)"
+            Add-Content -Path "apps/smpark-space/.env.$($env:vars_NODE_ENV)" -Value "SPACE_VERSION=$($env:vars_SPACE_VERSION)"
             git lfs pull
           }
-
+          
       - name: Cache LFS
         if: matrix.project == 'smpark-space'
         uses: actions/cache@v4
@@ -100,14 +93,14 @@ jobs:
           key: ${{ runner.os }}-lfs-${{ hashFiles('.gitattributes') }}
           restore-keys: |
             ${{ runner.os }}-lfs-
-
+            
       - name: Cache Next.js
         if: matrix.project == 'smpark-space'
         uses: actions/cache@v4
         with:
           path: apps/smpark-space/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('apps/smpark-space/**.[jt]s', 'apps/smpark-space/**.[jt]sx') }}
-
+          
       - name: Cache NX
         uses: actions/cache@v4
         with:
