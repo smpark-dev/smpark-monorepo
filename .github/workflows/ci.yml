@@ -10,7 +10,7 @@ on:
 
 jobs:
   setup:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       affected: ${{ steps.set-affected.outputs.affected }}
     steps:
@@ -22,14 +22,11 @@ jobs:
           node-version: 20.14.0
       - name: Enable Corepack
         run: corepack enable
-      - name: Set affected projects
-        id: set-affected
-        shell: cmd
-        run: |
-          FOR /F "tokens=*" %%i IN ('yarn nx show projects --affected --json') DO (
-            SET "affected=%%i"
-          )
-          echo affected=%affected% >> %GITHUB_OUTPUT%
+      - uses: nrwl/nx-set-shas@v4
+      - id: set-affected
+        shell: bash
+        run: echo "affected=$(yarn nx show projects --affected --json)" >> $GITHUB_OUTPUT
+
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
@@ -41,7 +38,7 @@ jobs:
       - name: Setup project
         shell: bash
         run: |
-          if [ "${{ matrix.project }}" = "smpark-oauth2.0" ]; then
+          if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
             echo "Setting up smpark-oauth2.0"
             echo "LOGIN_EXPIRES_IN=${{ secrets.LOGIN_EXPIRES_IN }}" > apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "LOGIN_JWT_SECRET_KEY=${{ secrets.LOGIN_JWT_SECRET_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
