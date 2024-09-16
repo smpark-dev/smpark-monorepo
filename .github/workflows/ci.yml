@@ -35,6 +35,7 @@ jobs:
         project: ${{ fromJson(needs.setup.outputs.affected) }}
     steps:      
       - name: Setup project
+        shell: bash
         run: |
           if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
             echo "Setting up smpark-oauth2.0"
