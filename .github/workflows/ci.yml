@@ -25,8 +25,8 @@ jobs:
       - id: set-affected
         shell: /bin/bash {0}
         run: |
-          FOR /F "tokens=*" %%i IN ('yarn nx show projects --type app --affected --json') DO SET affected=%%i
-          echo affected=%affected% >> %GITHUB_OUTPUT%
+          $affected = (yarn nx show projects --type app --affected --json | Out-String).Trim()
+          echo "affected=$affected" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
