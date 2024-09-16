@@ -24,7 +24,7 @@ jobs:
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
-        shell: /bin/bash {0}
+        shell: C:\Program Files\Git\bin\bash.exe --login -i {0}
         run: |
           affected=$(yarn nx show projects --type app --affected --json)
           echo "affected=$affected" >> $GITHUB_OUTPUT
