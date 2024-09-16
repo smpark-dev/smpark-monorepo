@@ -8,42 +8,23 @@ on:
     branches:
       - main
 
-env:
-  WORK_DIR: /mnt/d/actions-runner/_work/smpark-monorepo
-
 jobs:
   setup:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       affected: ${{ steps.set-affected.outputs.affected }}
     steps:
-      - name: Set up WSL working directory
-        run: |
-          WIN_PATH="D:\actions-runner\_work\smpark-monorepo"
-          WSL_PATH=$(wslpath -u "$WIN_PATH")
-          echo "WORK_DIR=$WSL_PATH" >> $GITHUB_ENV
-        shell: bash
-
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          path: ${{ env.WORK_DIR }}
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20.14.0
-
       - name: Enable Corepack
         run: corepack enable
-        working-directory: ${{ env.WORK_DIR }}
-
       - uses: nrwl/nx-set-shas@v4
-        with:
-          working-directory: ${{ env.WORK_DIR }}
-
       - id: set-affected
         run: echo "affected=$(yarn nx show projects --affected --json)" >> $GITHUB_OUTPUT
-        working-directory: ${{ env.WORK_DIR }}
 
   build:
     needs: setup
@@ -54,7 +35,6 @@ jobs:
         project: ${{ fromJson(needs.setup.outputs.affected) }}
     steps:      
       - name: Setup project
-        shell: bash
         run: |
           if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
             echo "Setting up smpark-oauth2.0"
