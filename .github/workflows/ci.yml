@@ -23,10 +23,9 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
-      - id: set-affected
-        run: |
-          affected=$(yarn nx show projects --type app --affected --json)
-          echo "affected=$affected" >> $GITHUB_OUTPUT
+      - run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
