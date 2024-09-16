@@ -11,6 +11,8 @@ on:
 jobs:
   setup:
     runs-on: self-hosted
+    container:
+      image: ubuntu:latest
     outputs:
       affected: ${{ steps.set-affected.outputs.affected }}
     steps:
