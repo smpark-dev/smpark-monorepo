@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 20.14.0
       - name: Enable Corepack
-        shell: pwsh
+        shell: powershell
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
