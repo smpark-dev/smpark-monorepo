@@ -18,7 +18,6 @@
         "commands": [
           "yarn nx build smpark-space",
           "yarn nx docker:prod-build smpark-space",
-          "yarn nx docker:prod-push smpark-space",
           "yarn nx docker:prod-up smpark-space"
         ],
         "parallel": false
