@@ -18,14 +18,14 @@
   },
   "workspaceLayout": {
     "appsDir": "apps",
-    "libsDir": "."
+    "libsDir": "libs"
   },
   "plugins": [
     "nx/plugins/package-json",
     {
       "plugin": "@nx/next/plugin",
       "options": {
-        "startTargetName": "prod",
+        "startTargetName": "start",
         "buildTargetName": "build",
         "devTargetName": "dev",
         "serveStaticTargetName": "serve-static"
