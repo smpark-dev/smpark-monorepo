@@ -11,8 +11,6 @@ on:
 jobs:
   setup:
     runs-on: self-hosted
-    container:
-      image: ubuntu:latest
     outputs:
       affected: ${{ steps.set-affected.outputs.affected }}
     steps:
@@ -24,10 +22,11 @@ jobs:
           node-version: 20.14.0
       - name: Enable Corepack
         run: corepack enable
-      - uses: nrwl/nx-set-shas@v4
-      - run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
+      - id: set-affected
+        shell: /bin/bash {0}
+        run: |
+          affected=$(yarn nx show projects --type app --affected --json)
+          echo "affected=$affected" >> $GITHUB_OUTPUT
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
@@ -42,6 +41,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}      
       - name: Setup project
+        shell: /bin/bash {0}
         run: |
           if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
             echo "Setting up smpark-oauth2.0"
