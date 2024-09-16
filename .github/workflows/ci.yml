@@ -25,8 +25,8 @@ jobs:
       - id: set-affected
         shell: /bin/bash {0}
         run: |
-          affected=$(yarn nx show projects --type app --affected --json)
-          echo "affected=$affected" >> $GITHUB_OUTPUT
+          FOR /F "tokens=*" %%i IN ('yarn nx show projects --type app --affected --json') DO SET affected=%%i
+          echo affected=%affected% >> %GITHUB_OUTPUT%
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
