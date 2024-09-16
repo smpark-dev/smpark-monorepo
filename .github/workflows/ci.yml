@@ -28,6 +28,7 @@ jobs:
         run: |
           affected=$(yarn nx show projects --type app --affected --json)
           echo "affected=$affected" >> $GITHUB_OUTPUT
+          
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
