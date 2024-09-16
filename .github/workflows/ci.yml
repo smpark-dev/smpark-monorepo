@@ -35,8 +35,9 @@ jobs:
         project: ${{ fromJson(needs.setup.outputs.affected) }}
     steps:      
       - name: Setup project
+        shell: pwsh
         run: |
-          if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
+          if ("${{ matrix.project }}" -eq "smpark-oauth2.0") {
             echo "Setting up smpark-oauth2.0"
             echo "LOGIN_EXPIRES_IN=${{ secrets.LOGIN_EXPIRES_IN }}" > apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "LOGIN_JWT_SECRET_KEY=${{ secrets.LOGIN_JWT_SECRET_KEY }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
@@ -56,7 +57,8 @@ jobs:
             echo "NGINX_PORT=${{ vars.NGINX_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "APP_PORT=${{ vars.APP_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "OAUTH_VERSION=${{ vars.OAUTH_VERSION }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          elif [ "${{ matrix.project }}" == "smpark-space" ]; then
+          }
+          elseif ("${{ matrix.project }}" -eq "smpark-space") {
             echo "Setting up smpark-space"
             echo "SPACE_GOOGLE_CLIENT_ID=${{ secrets.SPACE_GOOGLE_CLIENT_ID }}" > apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "SPACE_GOOGLE_CLIENT_SECRET=${{ secrets.SPACE_GOOGLE_CLIENT_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
@@ -74,7 +76,7 @@ jobs:
             
             # LFS setup for smpark-space
             git lfs pull
-          fi
+          }
 
       - name: Cache LFS
         if: matrix.project == 'smpark-space'
