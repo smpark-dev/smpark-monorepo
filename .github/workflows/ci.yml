@@ -101,7 +101,7 @@ jobs:
             ${{ runner.os }}-nx-
 
       - name: Lint 
-        run: yarn nx lint ${{ matrix.project }} --fix
+        run: yarn nx lint ${{ matrix.project }}
       
       - name: Build
         run: yarn nx build:prod ${{ matrix.project }}
