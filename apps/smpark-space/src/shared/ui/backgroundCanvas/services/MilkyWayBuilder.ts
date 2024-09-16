@@ -1,4 +1,5 @@
 import { DEFAULT_MILKY_WAY } from '../constants';
+
 import { MilkyWay } from './MilkyWay';
 
 class MilkyWayBuilder {

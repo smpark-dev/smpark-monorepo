@@ -155,7 +155,7 @@ export const WorkExperience = ({ experience }: IWorkExperienceProps) => {
                 href={stack.URL}
                 target='_blank'
                 rel='noopener noreferrer'
-                className={`inline-flex items-center bg-gray-900 text-primary px-3 py-1 rounded-full mr-2 mb-2 text-sm hover:bg-gray-700 hover:text-blue-400 transition duration-300`}
+                className='inline-flex items-center bg-gray-900 text-primary px-3 py-1 rounded-full mr-2 mb-2 text-sm hover:bg-gray-700 hover:text-blue-400 transition duration-300'
               >
                 {stack.TEXT}
               </a>

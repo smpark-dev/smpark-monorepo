@@ -206,7 +206,7 @@ export const WORK = {
           'Feature Sliced Design 방식과 re-export 패턴을 적용하여 모듈별 캡슐화를 통한 결합도 감소 및 기능별 확장성 향상을 위한 리팩토링 수행',
           'OAuth2.0 프로젝트와 연계하여 smpark 소셜 로그인 기능 적용',
           'Image blur, Font swap 등을 이용한 이미지와 폰트 최적화, 스크롤 이벤트 대신 Intersection Observer를 이용한 스크롤 이벤트 최적화, requestAnimationFrame을 이용한 canvas 렌더링 최적화 등 적용',
-          'Lighthouse를 활용한 웹 성능 분석을 통해 성능, 접근성, 모범 사례 및 검색엔진 최적화(SEO) 영역에서 고득점 달성'
+          'Lighthouse를 활용한 웹 성능 분석을 통해 성능, 접근성, 모범 사례 및 검색엔진 최적화(SEO) 영역에서 고득점 달성',
         ],
       },
       TECH_STACK: {

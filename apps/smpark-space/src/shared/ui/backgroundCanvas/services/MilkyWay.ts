@@ -1,7 +1,7 @@
 import { debounce } from '@/shared/utils';
 
-import * as starFunc from '../helpers';
 import { BACKGROUND_COLOR } from '../constants';
+import * as starFunc from '../helpers';
 
 interface IStar {
   x: number;
