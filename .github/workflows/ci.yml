@@ -25,7 +25,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
         shell: 'C:\Program Files\Git\bin\bash.exe --login -i {0}'
-        run: echo "affected=$(yarn nx show projects --affected --json)" >> $GITHUB_OUTPUT
+        run: echo "affected=$(\"C:/Program Files/Git/bin/bash.exe\" -c 'yarn nx show projects --affected --json')" >> $GITHUB_OUTPUT
 
   build:
     needs: setup
