@@ -25,10 +25,10 @@ jobs:
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
-        shell: powershell  # PowerShell로 실행
+        shell: powershell
         run: |
           $affected = yarn nx show projects --type app --affected --json
-          echo "affected=$affected" >> $env:GITHUB_OUTPUT
+          echo "affected=$affected" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
           
   build:
     needs: setup
