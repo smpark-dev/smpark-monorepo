@@ -100,5 +100,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nx-
 
+      - name: Lint 
+        run: yarn nx lint ${{ matrix.project }} --fix
+      
       - name: Build
         run: yarn nx build:prod ${{ matrix.project }}
