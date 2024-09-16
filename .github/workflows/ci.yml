@@ -10,7 +10,7 @@ on:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       affected: ${{ steps.set-affected.outputs.affected }}
     steps:
@@ -24,17 +24,19 @@ jobs:
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
+        shell: bash
         run: echo "affected=$(yarn nx show projects --affected --json)" >> $GITHUB_OUTPUT
 
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       matrix:
         project: ${{ fromJson(needs.setup.outputs.affected) }}
     steps:      
       - name: Setup project
+        shell: bash
         run: |
           if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
             echo "Setting up smpark-oauth2.0"
