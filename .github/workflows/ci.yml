@@ -27,6 +27,7 @@ jobs:
         run: | 
           $affected = yarn nx show projects --affected --json
           echo "affected=$affected" >> $env:GITHUB_OUTPUT
+        shell: pwsh
 
   build:
     needs: setup
