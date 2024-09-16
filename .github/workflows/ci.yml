@@ -22,6 +22,10 @@ jobs:
           node-version: 20.14.0
       - name: Enable Corepack
         run: corepack enable
+      - name: Set Directory as Safe
+        run: |
+          git config --system --add safe.directory "$GITHUB_WORKSPACE"
+        shell: bash
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
         run: echo "affected=$(yarn nx show projects --affected --json)" >> $GITHUB_OUTPUT
