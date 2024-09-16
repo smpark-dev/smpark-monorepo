@@ -10,7 +10,7 @@ on:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       affected: ${{ steps.set-affected.outputs.affected }}
     steps:
@@ -20,6 +20,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20.14.0
+      - name: Grant WSL permissions
+        run: |
+          $currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+          Add-LocalGroupMember -Group "docker-users" -Member $currentUser
+        shell: powershell
       - name: Enable Corepack
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
