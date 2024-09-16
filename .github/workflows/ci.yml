@@ -10,7 +10,7 @@ on:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       affected: ${{ steps.set-affected.outputs.affected }}
     steps:
@@ -24,6 +24,7 @@ jobs:
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
+        shell: bash
         run: echo "affected=$(yarn nx show projects --affected --json)" >> $GITHUB_OUTPUT
 
   build:
