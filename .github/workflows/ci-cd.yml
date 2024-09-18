@@ -112,9 +112,10 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            echo Running commands...
             set DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
             set PROJECT=${{ matrix.project }}
-            echo %DOCKER_USERNAME%
-            echo %PROJECT%
+            echo DOCKER_USERNAME: %DOCKER_USERNAME%
+            echo PROJECT: %PROJECT%
             echo TEST
-                      
+          debug: true
