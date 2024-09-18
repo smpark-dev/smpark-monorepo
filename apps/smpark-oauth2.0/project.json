@@ -83,7 +83,7 @@
         "commands": [
           "yarn nx build smpark-oauth2.0",
           "yarn nx docker:prod-build smpark-oauth2.0",
-          "yarn nx docker:prod-up smpark-oauth2.0"
+          "yarn nx docker:prod-push smpark-oauth2.0"
         ],
         "parallel": false
       }

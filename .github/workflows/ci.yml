@@ -24,7 +24,6 @@ jobs:
         run: corepack enable
       - uses: nrwl/nx-set-shas@v4
       - id: set-affected
-        shell: /bin/bash {0}
         run: |
           affected=$(yarn nx show projects --type app --affected --json)
           echo "affected=$affected" >> $GITHUB_OUTPUT
@@ -42,7 +41,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}      
       - name: Setup project
-        shell: /bin/bash {0}
         run: |
           if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
             echo "Setting up smpark-oauth2.0"
@@ -108,3 +106,15 @@ jobs:
         run: yarn nx lint ${{ matrix.project }}
       - name: Build
         run: yarn nx build:prod ${{ matrix.project }}
+      - name: Deploy to Windows Desktop
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.NOIP_HOSTNAME }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:[1.0.0]
+            docker stop ${{ matrix.project }}-container || true
+            docker rm ${{ matrix.project }}-container || true
+            docker run -d --name ${{ matrix.project }}-container ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:[1.0.0]
+          script_stop: true
