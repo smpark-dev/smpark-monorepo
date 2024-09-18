@@ -112,6 +112,5 @@ jobs:
           host: ${{ secrets.SSH_NOIP_HOSTNAME }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          
           script: |
             deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}"
