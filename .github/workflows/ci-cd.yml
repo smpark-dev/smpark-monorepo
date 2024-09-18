@@ -128,5 +128,4 @@ jobs:
           port: 22
           envs: DOCKER_TOKEN,DOCKER_USERNAME,MATRIX_PROJECT
           script: |
-            echo | set /p=%DOCKER_TOKEN% | docker login -u %DOCKER_USERNAME% --password-stdin
-            docker pull %DOCKER_USERNAME%/%MATRIX_PROJECT%:1.0.0
+            C:\deploy.bat
