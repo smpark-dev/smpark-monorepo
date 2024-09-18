@@ -31,4 +31,4 @@ RUN corepack enable
 
 ENV NODE_ENV=development
 EXPOSE 4000
-CMD ["yarn", "dev1"]
+CMD ["yarn", "dev"]
