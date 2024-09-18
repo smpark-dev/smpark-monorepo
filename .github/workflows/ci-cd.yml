@@ -114,6 +114,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           
           script: |
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
             docker stop ${{ matrix.project }}-container || true
             docker rm ${{ matrix.project }}-container || true
