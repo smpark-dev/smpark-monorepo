@@ -118,4 +118,3 @@ jobs:
             docker stop ${{ matrix.project }}-container 2>nul
             docker rm ${{ matrix.project }}-container 2>nul
             
-          script_stop: true
