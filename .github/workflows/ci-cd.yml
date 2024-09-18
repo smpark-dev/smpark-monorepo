@@ -116,7 +116,7 @@ jobs:
           script: |
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
-            docker stop ${{ matrix.project }}-container || true
-            docker rm ${{ matrix.project }}-container || true
+            docker stop ${{ matrix.project }}-container -ErrorAction SilentlyContinue
+            docker rm ${{ matrix.project }}-container -ErrorAction SilentlyContinue
             docker run -d --name ${{ matrix.project }}-container ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
-          script_stop: true
+          
