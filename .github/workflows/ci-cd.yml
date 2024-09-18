@@ -119,5 +119,5 @@ jobs:
           port: 22
           envs: DOCKER_TOKEN,DOCKER_USERNAME,MATRIX_PROJECT
           script: |
-              C:\deploy.
+            C:\deploy.
 
