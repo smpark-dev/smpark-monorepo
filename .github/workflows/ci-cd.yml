@@ -116,8 +116,6 @@ jobs:
           host: ${{ secrets.SSH_NOIP_HOSTNAME }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          envs: DOCKER_TOKEN,DOCKER_USERNAME,MATRIX_PROJECT
           script: |
             C:\deploy.
 
