@@ -6,16 +6,16 @@ services:
       context: ../../
       dockerfile: apps/smpark-space/Dockerfile
       target: production
-    image: smpark9596/smpark_space:${SPACE_VERSION}
-    container_name: smpark_space_${SPACE_VERSION}
+    image: smpark9596/smpark-space:${SPACE_VERSION}
+    container_name: smpark-space-${SPACE_VERSION}
     ports:
       - "3000:3000"
     env_file:
       - .env.production
     environment:
       - NODE_ENV=production
-    command: yarn smpark_space:prod
+    command: yarn smpark-space:prod
 
 networks:
   default:
-    name: smpark_space_network_prod
+    name: smpark-space-network-prod
