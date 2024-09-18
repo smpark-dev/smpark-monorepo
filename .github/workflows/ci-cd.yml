@@ -112,6 +112,7 @@ jobs:
           host: ${{ secrets.SSH_NOIP_HOSTNAME }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
             docker stop ${{ matrix.project }}-container || true
