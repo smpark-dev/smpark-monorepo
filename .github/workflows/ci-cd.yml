@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -113,8 +113,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:[1.0.0]
+            docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
             docker stop ${{ matrix.project }}-container || true
             docker rm ${{ matrix.project }}-container || true
-            docker run -d --name ${{ matrix.project }}-container ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:[1.0.0]
+            docker run -d --name ${{ matrix.project }}-container ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
           script_stop: true
