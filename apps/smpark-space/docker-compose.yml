@@ -15,7 +15,7 @@ services:
       - .env.production
     environment:
       - NODE_ENV=production
-    command: yarn space:prod
+    command: yarn smpark-space:prod
 
 networks:
   default:

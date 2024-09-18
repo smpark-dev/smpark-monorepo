@@ -22,7 +22,7 @@ RUN corepack enable
 
 ENV NODE_ENV=production
 EXPOSE 5555
-CMD ["yarn", "oauth2.0:prod"]
+CMD ["yarn", "smpark-oauth2.0:prod"]
 
 FROM base AS development
 

@@ -112,11 +112,16 @@ jobs:
           host: ${{ secrets.SSH_NOIP_HOSTNAME }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          
           script: |
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
             docker stop ${{ matrix.project }}-container -ErrorAction SilentlyContinue
             docker rm ${{ matrix.project }}-container -ErrorAction SilentlyContinue
             docker run -d --name ${{ matrix.project }}-container ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
-          
+            docker run -d \
+              --name ${{ matrix.project }}-1.0.0 \
+              -p 3000:3000 \
+              -e NODE_ENV=production \
+              --network ${{ matrix.project }}-network-prod \
+              smpark9596/${{ matrix.project }}:1.0.0 \
+              yarn ${{ matrix.project }}:prod

@@ -17,7 +17,7 @@ services:
       - NODE_ENV=production
     volumes:
       - smpark-log:/usr/src/oauth-log
-    command: yarn oauth2.0:prod
+    command: yarn smpark-oauth2.0:prod
 
 networks:
   default:
