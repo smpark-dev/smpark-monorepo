@@ -107,12 +107,16 @@ jobs:
         run: yarn nx build:prod ${{ matrix.project }}
       - name: Deploy to Windows Desktop
         uses: appleboy/ssh-action@master
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          PROJECT: ${{ matrix.project }}
         with:
           host: ${{ secrets.SSH_NOIP_HOSTNAME }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo ${{ secrets.DOCKER_USERNAME }}
-            echo ${{ matrix.project }}
-            echo "TEST"
+            echo %DOCKER_USERNAME%
+            echo %DOCKER_USERNAME%
+            echo %PROJECT%
+      
           
