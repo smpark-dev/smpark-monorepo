@@ -115,8 +115,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo %DOCKER_USERNAME%
-            echo %DOCKER_USERNAME%
-            echo %PROJECT%
+            echo $DOCKER_USERNAME
+            echo $PROJECT
+            echo "TEST"
       
           
