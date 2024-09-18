@@ -106,15 +106,6 @@ jobs:
         run: yarn nx lint ${{ matrix.project }}
       - name: Build
         run: yarn nx build:prod ${{ matrix.project }}
-
-  deploy:
-    needs: setup
-    if: needs.setup.outputs.affected != '[]'
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        project: ${{ fromJson(needs.setup.outputs.affected) }}
-    steps:
       - name: Deploy to Windows Desktop
         env: 
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
@@ -128,4 +119,5 @@ jobs:
           port: 22
           envs: DOCKER_TOKEN,DOCKER_USERNAME,MATRIX_PROJECT
           script: |
-            C:\deploy.bat
+              C:\deploy.
+
