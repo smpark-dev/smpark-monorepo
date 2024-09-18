@@ -113,25 +113,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker login
+            set /p="${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
             docker stop ${{ matrix.project }}-container 2>nul
             docker rm ${{ matrix.project }}-container 2>nul
-            if "${{ matrix.project }}"=="smpark-oauth2.0" (
-                set PORT_MAPPING=-p 3333:5555
-            ) else if "${{ matrix.project }}"=="smpark-space" (
-                set PORT_MAPPING=-p 3000:3000
-            ) else (
-                echo Unknown project: ${{ matrix.project }}
-                exit /b 1
-            )
-            docker network create ${{ matrix.project }}-network-prod 2>nul
-            docker run -d ^
-                --name ${{ matrix.project }}-1.0.0 ^
-                %PORT_MAPPING% ^
-                -e NODE_ENV=production ^
-                --network ${{ matrix.project }}-network-prod ^
-                ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0 ^
-                yarn ${{ matrix.project }}:prod
             
-            echo Deployment completed for ${{ matrix.project }}
           script_stop: true
