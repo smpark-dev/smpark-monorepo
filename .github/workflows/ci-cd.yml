@@ -112,6 +112,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            echo "${{ secrets.DOCKER_USERNAME }}"
+            echo "${{ matrix.project }}"
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
             docker stop ${{ matrix.project }}-container 2>nul
             docker rm ${{ matrix.project }}-container 2>nul 
