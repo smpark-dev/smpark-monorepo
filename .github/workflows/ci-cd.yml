@@ -113,6 +113,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set /p="${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+            echo "Docker Login Complete. Now Pulling the Image."
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
+            docker stop ${{ matrix.project }}-container 2>nul
+            docker rm ${{ matrix.project }}-container 2>nul
             
           script_stop: true
