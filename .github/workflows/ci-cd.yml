@@ -113,15 +113,10 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            set DOCKER_TOKEN=${{ secrets.DOCKER_TOKEN }}
-            set DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
-            echo %DOCKER_TOKEN% | docker login --username %DOCKER_USERNAME% --password-stdin
-            
+            docker login
             docker pull %DOCKER_USERNAME%/${{ matrix.project }}:1.0.0
-            
             docker stop ${{ matrix.project }}-container 2>nul
             docker rm ${{ matrix.project }}-container 2>nul
-            
             if "${{ matrix.project }}"=="smpark-oauth2.0" (
                 set PORT_MAPPING=-p 3333:5555
             ) else if "${{ matrix.project }}"=="smpark-space" (
@@ -130,9 +125,7 @@ jobs:
                 echo Unknown project: ${{ matrix.project }}
                 exit /b 1
             )
-            
             docker network create ${{ matrix.project }}-network-prod 2>nul
-            
             docker run -d ^
                 --name ${{ matrix.project }}-1.0.0 ^
                 %PORT_MAPPING% ^
