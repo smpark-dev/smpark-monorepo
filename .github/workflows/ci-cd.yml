@@ -119,4 +119,3 @@ jobs:
             docker stop ${{ matrix.project }}-container || true
             docker rm ${{ matrix.project }}-container || true
             docker run -d --name ${{ matrix.project }}-container ${{ secrets.DOCKER_USERNAME }}/${{ matrix.project }}:1.0.0
-          script_stop: true
