@@ -31,4 +31,4 @@ RUN corepack enable
 
 ENV NODE_ENV=development
 EXPOSE 4000
-CMD ["yarn", "smpark-oauth2.0:dev"]
+CMD ["yarn", "dev2"]

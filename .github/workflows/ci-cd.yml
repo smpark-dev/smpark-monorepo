@@ -134,4 +134,4 @@ jobs:
                 yarn ${{ matrix.project }}:prod
             
             echo Deployment completed for ${{ matrix.project }}
-
+          script_stop: true
