@@ -40,6 +40,27 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Setup project
+        run: |
+          if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
+            echo "Setting up smpark-oauth2.0"
+            echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_ISSUER=${{ vars.OAUTH_ISSUER }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "NGINX_PORT=${{ vars.NGINX_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "APP_PORT=${{ vars.APP_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "OAUTH_VERSION=${{ vars.OAUTH_VERSION }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+          elif [ "${{ matrix.project }}" == "smpark-space" ]; then
+            echo "Setting up smpark-space"
+            echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SMPARK_RESOURCE_BASE_URI=${{ vars.SMPARK_RESOURCE_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "SPACE_VERSION=${{ vars.SPACE_VERSION }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            
+            # LFS setup for smpark-space
+            git lfs pull
+          fi
       - name: Cache LFS
         if: matrix.project == 'smpark-space'
         uses: actions/cache@v4
