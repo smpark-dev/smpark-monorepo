@@ -113,4 +113,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}"
+            deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "${{ vars.OAUTH_VERSION }}" "${{ vars.SPACE_VERSION }}"
