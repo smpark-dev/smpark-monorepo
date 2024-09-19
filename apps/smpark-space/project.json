@@ -26,13 +26,13 @@
     "docker:prod-build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker-compose -f apps/smpark-space/docker-compose.yml build"
+        "command": "docker-compose -f apps/smpark-space/docker-compose.yml --env-file apps/smpark-space/.env.production build"
       }
     },
     "docker:prod-push": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker-compose -f apps/smpark-space/docker-compose.yml push"
+        "command": "docker-compose -f apps/smpark-space/docker-compose.yml --env-file apps/smpark-space/.env.production push"
       }
     },
     "docker:prod-up": {
