@@ -30,7 +30,7 @@ jobs:
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         project: ${{ fromJson(needs.setup.outputs.affected) }}
