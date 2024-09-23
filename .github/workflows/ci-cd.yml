@@ -93,4 +93,36 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            deploy.bat ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_TOKEN }} ${{ matrix.project }} ${{ vars.OAUTH_VERSION }} ${{ vars.SPACE_VERSION }} ${{ vars.NODE_ENV }} ${{ secrets.LOGIN_EXPIRES_IN }} ${{ secrets.LOGIN_JWT_SECRET_KEY }} ${{ secrets.MONGO_DATABASE_NAME }} ${{ secrets.MONGO_DATABASE_PASSWORD }} ${{ secrets.MONGO_DATABASE_SESSION_COLLECTION }} ${{ secrets.MONGO_DATABASE_SESSION_KEY }} ${{ secrets.MONGO_DATABASE_URI }} ${{ secrets.MONGO_DATABASE_USER }} ${{ secrets.OAUTH_ACCESS_SECRET_KEY }} ${{ secrets.OAUTH_ACCESS_TOKEN_EXPIRES_IN }} ${{ secrets.OAUTH_CODE_EXPIRES_IN }} ${{ secrets.OAUTH_REFRESH_SECRET_KEY }} ${{ secrets.OAUTH_REFRESH_TOKEN_EXPIRES_IN }} ${{ vars.OAUTH_ISSUER }} ${{ vars.NGINX_PORT }} ${{ vars.APP_PORT }} ${{ secrets.SPACE_GOOGLE_CLIENT_ID }} ${{ secrets.SPACE_GOOGLE_CLIENT_SECRET }} ${{ secrets.SPACE_GITHUB_CLIENT_ID }} ${{ secrets.SPACE_GITHUB_CLIENT_SECRET }} ${{ secrets.SPACE_SMPARK_CLIENT_ID }} ${{ secrets.SPACE_SMPARK_CLIENT_SECRET }} ${{ secrets.SPACE_NEXTAUTH_SECRET }} ${{ vars.NEXT_PUBLIC_API_URL }} ${{ vars.SMPARK_OAUTH_BASE_URI }} ${{ vars.SMPARK_RESOURCE_BASE_URI }} ${{ vars.SMPARK_CLIENT_REDIRECT_URI }}
+            ./deploy.bat ${{ secrets.DOCKER_USERNAME }} \
+            ${{ secrets.DOCKER_TOKEN }} \
+            ${{ matrix.project }} \
+            ${{ vars.OAUTH_VERSION }} \
+            ${{ vars.SPACE_VERSION }} \
+            ${{ vars.NODE_ENV }} \
+            ${{ secrets.LOGIN_EXPIRES_IN }} \
+            ${{ secrets.LOGIN_JWT_SECRET_KEY }} \
+            ${{ secrets.MONGO_DATABASE_NAME }} \
+            ${{ secrets.MONGO_DATABASE_PASSWORD }} \
+            ${{ secrets.MONGO_DATABASE_SESSION_COLLECTION }} \
+            ${{ secrets.MONGO_DATABASE_SESSION_KEY }} \
+            ${{ secrets.MONGO_DATABASE_URI }} \
+            ${{ secrets.MONGO_DATABASE_USER }} \
+            ${{ secrets.OAUTH_ACCESS_SECRET_KEY }} \
+            ${{ secrets.OAUTH_ACCESS_TOKEN_EXPIRES_IN }} \
+            ${{ secrets.OAUTH_CODE_EXPIRES_IN }} \
+            ${{ secrets.OAUTH_REFRESH_SECRET_KEY }} \
+            ${{ secrets.OAUTH_REFRESH_TOKEN_EXPIRES_IN }} \
+            ${{ vars.OAUTH_ISSUER }} \
+            ${{ vars.NGINX_PORT }} \
+            ${{ vars.APP_PORT }} \
+            ${{ secrets.SPACE_GOOGLE_CLIENT_ID }} \
+            ${{ secrets.SPACE_GOOGLE_CLIENT_SECRET }} \
+            ${{ secrets.SPACE_GITHUB_CLIENT_ID }} \
+            ${{ secrets.SPACE_GITHUB_CLIENT_SECRET }} \
+            ${{ secrets.SPACE_SMPARK_CLIENT_ID }} \
+            ${{ secrets.SPACE_SMPARK_CLIENT_SECRET }} \
+            ${{ secrets.SPACE_NEXTAUTH_SECRET }} \
+            ${{ vars.NEXT_PUBLIC_API_URL }} \
+            ${{ vars.SMPARK_OAUTH_BASE_URI }} \
+            ${{ vars.SMPARK_RESOURCE_BASE_URI }} \
+            ${{ vars.SMPARK_CLIENT_REDIRECT_URI }}
