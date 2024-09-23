@@ -107,13 +107,14 @@ jobs:
       - name: Build
         run: yarn nx build:prod ${{ matrix.project }}
       - name: Transfer .env files to Windows Desktop
-        uses: appleboy/scp-action@master
-        with: 
+        uses: nogsantos/scp-deploy@master
+        with:
+          src: apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}.${{ matrix.project }}
           host: ${{ secrets.SSH_NOIP_HOSTNAME }}
-          username: ${{ secrets.SSH_USERNAME }}
+          remote: ./
+          user: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source:  
-            apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}.${{ matrix.project }}
+
       - name: Deploy to Windows Desktop
         uses: appleboy/ssh-action@master
         with:
