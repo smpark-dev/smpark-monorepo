@@ -30,7 +30,7 @@ jobs:
   build:
     needs: setup
     if: needs.setup.outputs.affected != '[]'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       matrix:
         project: ${{ fromJson(needs.setup.outputs.affected) }}
@@ -107,19 +107,11 @@ jobs:
       - name: Build
         run: yarn nx build:prod ${{ matrix.project }}
       - name: Transfer .env files to Windows Desktop
-        uses: appleboy/scp-action@master
-        with: 
-          host: ${{ secrets.SSH_NOIP_HOSTNAME }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source:  "apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}.${{ matrix.project }}"
-          target: "/Users/smaprk"
-
+        run: |
+          scp "apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}.${{ matrix.project }}" ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:/Users/smaprk/
+      
       - name: Deploy to Windows Desktop
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_NOIP_HOSTNAME }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "${{ vars.OAUTH_VERSION }}" "${{ vars.SPACE_VERSION }}" "${{ vars.NODE_ENV }}"
+        run: |
+          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }} '
+          deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "${{ vars.OAUTH_VERSION }}" "${{ vars.SPACE_VERSION }}" "${{ vars.NODE_ENV }}"
+          '
