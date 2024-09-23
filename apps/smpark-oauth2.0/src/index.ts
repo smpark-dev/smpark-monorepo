@@ -5,6 +5,7 @@ import express from 'express';
 import env from '@configs/env';
 import configureExpress from '@configs/express';
 import { container, registerAllDependencies } from '@configs/inversify';
+import configureSwagger from '@configs/swagger';
 import MongoDB from '@database/MongoDB';
 
 const { mongoDBName } = env;
@@ -21,6 +22,7 @@ const sessionStore = new MongoStore({
 const app = express();
 
 await configureExpress(app, sessionStore, env);
+configureSwagger(app);
 
 const port = env.port || 5555;
 app.listen(port, async () => {

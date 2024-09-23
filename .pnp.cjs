@@ -59,6 +59,8 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:22.5.4"],\
           ["@types/react", "npm:18.3.5"],\
           ["@types/react-dom", "npm:18.3.0"],\
+          ["@types/swagger-jsdoc", "npm:6.0.4"],\
+          ["@types/swagger-ui-express", "npm:4.1.6"],\
           ["@types/uuid", "npm:10.0.0"],\
           ["@types/winston", "npm:2.4.4"],\
           ["@typescript-eslint/eslint-plugin", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:7.18.0"],\
@@ -110,6 +112,8 @@ const RAW_RUNTIME_STATE =
           ["reflect-metadata", "npm:0.2.2"],\
           ["sharp", "npm:0.33.5"],\
           ["simple-icons", "npm:13.9.0"],\
+          ["swagger-jsdoc", "npm:6.2.8"],\
+          ["swagger-ui-express", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.0.1"],\
           ["tailwindcss", "npm:3.4.11"],\
           ["ts-jest", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:29.2.5"],\
           ["tslib", "npm:2.7.0"],\
@@ -149,6 +153,65 @@ const RAW_RUNTIME_STATE =
           ["@ampproject/remapping", "npm:2.3.0"],\
           ["@jridgewell/gen-mapping", "npm:0.3.5"],\
           ["@jridgewell/trace-mapping", "npm:0.3.25"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@apidevtools/json-schema-ref-parser", [\
+      ["npm:9.1.2", {\
+        "packageLocation": "./.yarn/cache/@apidevtools-json-schema-ref-parser-npm-9.1.2-563d0b267a-ebf952eb2e.zip/node_modules/@apidevtools/json-schema-ref-parser/",\
+        "packageDependencies": [\
+          ["@apidevtools/json-schema-ref-parser", "npm:9.1.2"],\
+          ["@jsdevtools/ono", "npm:7.1.3"],\
+          ["@types/json-schema", "npm:7.0.15"],\
+          ["call-me-maybe", "npm:1.0.2"],\
+          ["js-yaml", "npm:4.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@apidevtools/openapi-schemas", [\
+      ["npm:2.1.0", {\
+        "packageLocation": "./.yarn/cache/@apidevtools-openapi-schemas-npm-2.1.0-5401d2b368-f4aa0f9df3.zip/node_modules/@apidevtools/openapi-schemas/",\
+        "packageDependencies": [\
+          ["@apidevtools/openapi-schemas", "npm:2.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@apidevtools/swagger-methods", [\
+      ["npm:3.0.2", {\
+        "packageLocation": "./.yarn/cache/@apidevtools-swagger-methods-npm-3.0.2-2f505abefb-8c390e8e50.zip/node_modules/@apidevtools/swagger-methods/",\
+        "packageDependencies": [\
+          ["@apidevtools/swagger-methods", "npm:3.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@apidevtools/swagger-parser", [\
+      ["npm:10.0.3", {\
+        "packageLocation": "./.yarn/cache/@apidevtools-swagger-parser-npm-10.0.3-9e554f93c2-3b43f719c2.zip/node_modules/@apidevtools/swagger-parser/",\
+        "packageDependencies": [\
+          ["@apidevtools/swagger-parser", "npm:10.0.3"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:51abfd6363ba598b3ebd615b95bad5285983ddbd41321584e648eb4a3edbc6b47d6e42a130950a6afca601603c272722db94a177ccb3230fd61d4abbdd2996bf#npm:10.0.3", {\
+        "packageLocation": "./.yarn/__virtual__/@apidevtools-swagger-parser-virtual-1dd28218c1/0/cache/@apidevtools-swagger-parser-npm-10.0.3-9e554f93c2-3b43f719c2.zip/node_modules/@apidevtools/swagger-parser/",\
+        "packageDependencies": [\
+          ["@apidevtools/swagger-parser", "virtual:51abfd6363ba598b3ebd615b95bad5285983ddbd41321584e648eb4a3edbc6b47d6e42a130950a6afca601603c272722db94a177ccb3230fd61d4abbdd2996bf#npm:10.0.3"],\
+          ["@apidevtools/json-schema-ref-parser", "npm:9.1.2"],\
+          ["@apidevtools/openapi-schemas", "npm:2.1.0"],\
+          ["@apidevtools/swagger-methods", "npm:3.0.2"],\
+          ["@jsdevtools/ono", "npm:7.1.3"],\
+          ["@types/openapi-types", null],\
+          ["call-me-maybe", "npm:1.0.2"],\
+          ["openapi-types", null],\
+          ["z-schema", "npm:5.0.5"]\
+        ],\
+        "packagePeers": [\
+          "@types/openapi-types",\
+          "openapi-types"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4890,6 +4953,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@jsdevtools/ono", [\
+      ["npm:7.1.3", {\
+        "packageLocation": "./.yarn/cache/@jsdevtools-ono-npm-7.1.3-cb2313543b-a9f7e3e8e3.zip/node_modules/@jsdevtools/ono/",\
+        "packageDependencies": [\
+          ["@jsdevtools/ono", "npm:7.1.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@jsonjoy.com/base64", [\
       ["npm:1.1.2", {\
         "packageLocation": "./.yarn/cache/@jsonjoy.com-base64-npm-1.1.2-dc65678552-88717945f6.zip/node_modules/@jsonjoy.com/base64/",\
@@ -8161,6 +8233,26 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/swagger-jsdoc", [\
+      ["npm:6.0.4", {\
+        "packageLocation": "./.yarn/cache/@types-swagger-jsdoc-npm-6.0.4-595c64efe2-fbe17d91a1.zip/node_modules/@types/swagger-jsdoc/",\
+        "packageDependencies": [\
+          ["@types/swagger-jsdoc", "npm:6.0.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/swagger-ui-express", [\
+      ["npm:4.1.6", {\
+        "packageLocation": "./.yarn/cache/@types-swagger-ui-express-npm-4.1.6-ce84a377b2-b7d10d04e7.zip/node_modules/@types/swagger-ui-express/",\
+        "packageDependencies": [\
+          ["@types/swagger-ui-express", "npm:4.1.6"],\
+          ["@types/express", "npm:4.17.21"],\
+          ["@types/serve-static", "npm:1.15.7"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/triple-beam", [\
       ["npm:1.3.5", {\
         "packageLocation": "./.yarn/cache/@types-triple-beam-npm-1.3.5-0f1b823630-d5d7f25da6.zip/node_modules/@types/triple-beam/",\
@@ -10232,6 +10324,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["call-me-maybe", [\
+      ["npm:1.0.2", {\
+        "packageLocation": "./.yarn/cache/call-me-maybe-npm-1.0.2-a465269a37-8eff5dbb61.zip/node_modules/call-me-maybe/",\
+        "packageDependencies": [\
+          ["call-me-maybe", "npm:1.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["callsites", [\
       ["npm:3.1.0", {\
         "packageLocation": "./.yarn/cache/callsites-npm-3.1.0-268f989910-fff9227740.zip/node_modules/callsites/",\
@@ -10615,10 +10716,24 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
+      ["npm:6.2.0", {\
+        "packageLocation": "./.yarn/cache/commander-npm-6.2.0-5c82761f33-1b701c6726.zip/node_modules/commander/",\
+        "packageDependencies": [\
+          ["commander", "npm:6.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:7.2.0", {\
         "packageLocation": "./.yarn/cache/commander-npm-7.2.0-19178180f8-8d690ff13b.zip/node_modules/commander/",\
         "packageDependencies": [\
           ["commander", "npm:7.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:9.5.0", {\
+        "packageLocation": "./.yarn/cache/commander-npm-9.5.0-993b3f2434-5f7784fbda.zip/node_modules/commander/",\
+        "packageDependencies": [\
+          ["commander", "npm:9.5.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -13921,6 +14036,19 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
+      ["npm:7.1.6", {\
+        "packageLocation": "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-2575cce930.zip/node_modules/glob/",\
+        "packageDependencies": [\
+          ["glob", "npm:7.1.6"],\
+          ["fs.realpath", "npm:1.0.0"],\
+          ["inflight", "npm:1.0.6"],\
+          ["inherits", "npm:2.0.4"],\
+          ["minimatch", "npm:3.1.2"],\
+          ["once", "npm:1.4.0"],\
+          ["path-is-absolute", "npm:1.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:7.2.3", {\
         "packageLocation": "./.yarn/cache/glob-npm-7.2.3-2d866d17a5-65676153e2.zip/node_modules/glob/",\
         "packageDependencies": [\
@@ -16450,6 +16578,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["lodash.get", [\
+      ["npm:4.4.2", {\
+        "packageLocation": "./.yarn/cache/lodash.get-npm-4.4.2-7bda64ed87-48f40d471a.zip/node_modules/lodash.get/",\
+        "packageDependencies": [\
+          ["lodash.get", "npm:4.4.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["lodash.includes", [\
       ["npm:4.3.0", {\
         "packageLocation": "./.yarn/cache/lodash.includes-npm-4.3.0-3a2f6fa22c-7ca498b9b7.zip/node_modules/lodash.includes/",\
@@ -16464,6 +16601,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/lodash.isboolean-npm-3.0.3-b575b41488-0aac604c1e.zip/node_modules/lodash.isboolean/",\
         "packageDependencies": [\
           ["lodash.isboolean", "npm:3.0.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["lodash.isequal", [\
+      ["npm:4.5.0", {\
+        "packageLocation": "./.yarn/cache/lodash.isequal-npm-4.5.0-f8b0f64d63-dfdb2356db.zip/node_modules/lodash.isequal/",\
+        "packageDependencies": [\
+          ["lodash.isequal", "npm:4.5.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -16518,6 +16664,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/lodash.merge-npm-4.6.2-77cb4416bf-402fa16a1e.zip/node_modules/lodash.merge/",\
         "packageDependencies": [\
           ["lodash.merge", "npm:4.6.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["lodash.mergewith", [\
+      ["npm:4.6.2", {\
+        "packageLocation": "./.yarn/cache/lodash.mergewith-npm-4.6.2-7d2d4201ec-4adbed65ff.zip/node_modules/lodash.mergewith/",\
+        "packageDependencies": [\
+          ["lodash.mergewith", "npm:4.6.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -20586,6 +20741,8 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:22.5.4"],\
           ["@types/react", "npm:18.3.5"],\
           ["@types/react-dom", "npm:18.3.0"],\
+          ["@types/swagger-jsdoc", "npm:6.0.4"],\
+          ["@types/swagger-ui-express", "npm:4.1.6"],\
           ["@types/uuid", "npm:10.0.0"],\
           ["@types/winston", "npm:2.4.4"],\
           ["@typescript-eslint/eslint-plugin", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:7.18.0"],\
@@ -20637,6 +20794,8 @@ const RAW_RUNTIME_STATE =
           ["reflect-metadata", "npm:0.2.2"],\
           ["sharp", "npm:0.33.5"],\
           ["simple-icons", "npm:13.9.0"],\
+          ["swagger-jsdoc", "npm:6.2.8"],\
+          ["swagger-ui-express", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.0.1"],\
           ["tailwindcss", "npm:3.4.11"],\
           ["ts-jest", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:29.2.5"],\
           ["tslib", "npm:2.7.0"],\
@@ -21339,6 +21498,63 @@ const RAW_RUNTIME_STATE =
           ["css-what", "npm:6.1.0"],\
           ["csso", "npm:5.0.5"],\
           ["picocolors", "npm:1.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["swagger-jsdoc", [\
+      ["npm:6.2.8", {\
+        "packageLocation": "./.yarn/cache/swagger-jsdoc-npm-6.2.8-d69a72a086-7e20f08e8d.zip/node_modules/swagger-jsdoc/",\
+        "packageDependencies": [\
+          ["swagger-jsdoc", "npm:6.2.8"],\
+          ["commander", "npm:6.2.0"],\
+          ["doctrine", "npm:3.0.0"],\
+          ["glob", "npm:7.1.6"],\
+          ["lodash.mergewith", "npm:4.6.2"],\
+          ["swagger-parser", "npm:10.0.3"],\
+          ["yaml", "npm:2.0.0-1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["swagger-parser", [\
+      ["npm:10.0.3", {\
+        "packageLocation": "./.yarn/cache/swagger-parser-npm-10.0.3-51abfd6363-d1a5c05f65.zip/node_modules/swagger-parser/",\
+        "packageDependencies": [\
+          ["swagger-parser", "npm:10.0.3"],\
+          ["@apidevtools/swagger-parser", "virtual:51abfd6363ba598b3ebd615b95bad5285983ddbd41321584e648eb4a3edbc6b47d6e42a130950a6afca601603c272722db94a177ccb3230fd61d4abbdd2996bf#npm:10.0.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["swagger-ui-dist", [\
+      ["npm:5.17.14", {\
+        "packageLocation": "./.yarn/cache/swagger-ui-dist-npm-5.17.14-8eba082cca-cb61bba39e.zip/node_modules/swagger-ui-dist/",\
+        "packageDependencies": [\
+          ["swagger-ui-dist", "npm:5.17.14"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["swagger-ui-express", [\
+      ["npm:5.0.1", {\
+        "packageLocation": "./.yarn/cache/swagger-ui-express-npm-5.0.1-a36db7d969-dbe9830cae.zip/node_modules/swagger-ui-express/",\
+        "packageDependencies": [\
+          ["swagger-ui-express", "npm:5.0.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.0.1", {\
+        "packageLocation": "./.yarn/__virtual__/swagger-ui-express-virtual-a906f62b77/0/cache/swagger-ui-express-npm-5.0.1-a36db7d969-dbe9830cae.zip/node_modules/swagger-ui-express/",\
+        "packageDependencies": [\
+          ["swagger-ui-express", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.0.1"],\
+          ["@types/express", "npm:4.17.21"],\
+          ["express", "npm:4.21.0"],\
+          ["swagger-ui-dist", "npm:5.17.14"]\
+        ],\
+        "packagePeers": [\
+          "@types/express",\
+          "express"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -22308,6 +22524,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["validator", [\
+      ["npm:13.12.0", {\
+        "packageLocation": "./.yarn/cache/validator-npm-13.12.0-6c8a423cbf-21d48a7947.zip/node_modules/validator/",\
+        "packageDependencies": [\
+          ["validator", "npm:13.12.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["vary", [\
       ["npm:1.1.2", {\
         "packageLocation": "./.yarn/cache/vary-npm-1.1.2-b49f70ae63-f15d588d79.zip/node_modules/vary/",\
@@ -22970,6 +23195,13 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
+      ["npm:2.0.0-1", {\
+        "packageLocation": "./.yarn/cache/yaml-npm-2.0.0-1-230a208429-e76eba2fba.zip/node_modules/yaml/",\
+        "packageDependencies": [\
+          ["yaml", "npm:2.0.0-1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:2.5.1", {\
         "packageLocation": "./.yarn/cache/yaml-npm-2.5.1-8b2871f510-40fba56828.zip/node_modules/yaml/",\
         "packageDependencies": [\
@@ -23033,6 +23265,19 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/yocto-queue-npm-1.1.1-6bddf81a40-cb287fe5e6.zip/node_modules/yocto-queue/",\
         "packageDependencies": [\
           ["yocto-queue", "npm:1.1.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["z-schema", [\
+      ["npm:5.0.5", {\
+        "packageLocation": "./.yarn/cache/z-schema-npm-5.0.5-94fb0e21a9-e4c812cfe6.zip/node_modules/z-schema/",\
+        "packageDependencies": [\
+          ["z-schema", "npm:5.0.5"],\
+          ["commander", "npm:9.5.0"],\
+          ["lodash.get", "npm:4.4.2"],\
+          ["lodash.isequal", "npm:4.5.0"],\
+          ["validator", "npm:13.12.0"]\
         ],\
         "linkType": "HARD"\
       }]\
