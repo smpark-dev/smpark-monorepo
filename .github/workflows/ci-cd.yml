@@ -108,7 +108,7 @@ jobs:
         run: yarn nx build:prod ${{ matrix.project }}
       - name: Transfer .env files to Windows Desktop
         run: |
-          scp 'apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}.${{ matrix.project }}' ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:/Users/smaprk/
+          scp '/apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}.${{ matrix.project }}' ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:/Users/smaprk/
       
       - name: Deploy to Windows Desktop
         run: |
