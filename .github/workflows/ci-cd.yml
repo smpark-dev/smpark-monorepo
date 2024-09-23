@@ -108,10 +108,8 @@ jobs:
         run: yarn nx build:prod ${{ matrix.project }}
       - name: Transfer .env files to Windows Desktop
         run: |
-          scp "./apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}" ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:/
+          scp "./apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}" ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:D:/
       
       - name: Deploy to Windows Desktop
         run: |
-          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }} '
-          deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "${{ vars.OAUTH_VERSION }}" "${{ vars.SPACE_VERSION }}" "${{ vars.NODE_ENV }}"
-          '
+          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }} "cd /d D: && deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "${{ vars.OAUTH_VERSION }}" "${{ vars.SPACE_VERSION }}" "${{ vars.NODE_ENV }}""
