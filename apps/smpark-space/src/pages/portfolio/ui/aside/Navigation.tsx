@@ -57,7 +57,7 @@ export const Navigation = ({ activeSection }: INavigationProps) => {
         {status === 'authenticated' && (
           <Button
             className='w-full h-full text-lg max-md:text-sm font-bold text-primary font-noto'
-            onClick={() => signOut()}
+            onClick={() => signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_API_URL}/` })}
           >
             Logout
           </Button>
