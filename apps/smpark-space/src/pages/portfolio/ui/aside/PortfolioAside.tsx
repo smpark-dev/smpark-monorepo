@@ -1,11 +1,11 @@
 'use client';
 
 import Menu from '@public/imgs/icons/menu.svg';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 
 import { useAsideStore } from '@/pages/portfolio/model';
 import { HighlightMenu } from '@/pages/portfolio/services';
-import { useLayoutStore } from '@/shared/model';
+import { useLayoutStore, useOutsideClick } from '@/shared/model';
 import { Button } from '@/shared/ui';
 
 import { Navigation } from './Navigation';
@@ -13,6 +13,7 @@ import { Navigation } from './Navigation';
 export const PortfolioAside = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const mainRef = useLayoutStore((state) => state.mainRef);
+  const menuRef = useRef<HTMLDivElement>(null);
   const { isToggle, toggleAside } = useAsideStore();
 
   const onObserveTarget = useCallback((id: string) => {
@@ -23,6 +24,12 @@ export const PortfolioAside = () => {
     e.preventDefault();
     toggleAside();
   };
+
+  useOutsideClick(menuRef, () => {
+    if (isToggle) {
+      toggleAside();
+    }
+  });
 
   useEffect(() => {
     if (mainRef?.current) {
@@ -39,11 +46,12 @@ export const PortfolioAside = () => {
 
   return (
     <aside
-      className={`py-[30px] flex w-[15%] h-full z-20 select-none float-right sticky top-0 bottom-0 right-0 max-md:items-center max-md:flex-col
+      ref={menuRef}
+      className={`py-[30px] flex w-[15%] h-full z-20 select-none float-right fixed top-0 bottom-0 right-0 max-md:items-center max-md:flex-col
     ${
       isToggle
-        ? 'max-md:p-0 max-md:h-full max-md:justify-center max-md:pt-[calc((112px-50px)/2)]'
-        : 'max-md:my-0 max-md:h-[112px] max-md:top-[calc((112px-50px)/2)] max-md:justify-start max-md:p-0 max-md:-mt-[112px]'
+        ? 'max-md:p-0 max-md:h-full max-md:justify-center max-md:pt-[calc((112px-50px)/2)] max-md:bg-transparency-primary'
+        : 'max-md:my-0 max-md:top-[calc((112px-50px)/2)] max-md:justify-start max-md:p-0'
     }`}
       aria-label='Menu'
     >
