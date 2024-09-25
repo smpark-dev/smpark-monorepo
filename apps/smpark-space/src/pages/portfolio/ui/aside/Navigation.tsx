@@ -12,7 +12,7 @@ interface INavigationProps {
 }
 
 export const Navigation = ({ activeSection }: INavigationProps) => {
-  const { containerRef, headerRef, mainRef } = useLayoutStore();
+  const { headerRef, mainRef } = useLayoutStore();
   const { status } = useSession();
   const router = useRouter();
   const { isToggle } = useAsideStore();
@@ -24,9 +24,9 @@ export const Navigation = ({ activeSection }: INavigationProps) => {
     if (target.dataset.id) {
       const targetId = target.dataset.id;
 
-      if (containerRef?.current && mainRef?.current && headerRef?.current) {
+      if (mainRef?.current && headerRef?.current) {
         const sections = Array.from(mainRef.current.children) as HTMLDivElement[];
-        const moveMenu = new MoveMenu(targetId, sections, containerRef.current, headerRef.current);
+        const moveMenu = new MoveMenu(targetId, sections, headerRef.current);
         moveMenu.start();
       }
     }
@@ -41,7 +41,7 @@ export const Navigation = ({ activeSection }: INavigationProps) => {
       {NAVIGATION.map((item) => (
         <li className='w-full min-h-[50px] flex items-center' key={item.id}>
           <Button
-            className={`w-full h-full text-lg max-md:text-sm font-bold hover:text-primary ${activeSection === item.id ? 'text-secondary' : ''} font-noto`}
+            className={`w-full h-full text-lg max-md:text-sm font-bold md:hover:text-primary ${activeSection === item.id ? 'text-secondary' : ''} font-noto`}
             onClick={executeMoveSection}
             onKeyDown={handleEnter}
             data-id={item.id}

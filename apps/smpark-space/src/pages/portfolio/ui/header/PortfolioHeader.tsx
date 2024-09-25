@@ -8,7 +8,6 @@ import { useLayoutStore } from '@/shared/model';
 import { Logo } from '@/shared/ui';
 
 export const PortfolioHeader = () => {
-  const containerRef = useLayoutStore((state) => state.containerRef);
   const guideRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const { setHeaderRef } = useLayoutStore();
@@ -20,8 +19,8 @@ export const PortfolioHeader = () => {
   }, [setHeaderRef]);
 
   useEffect(() => {
-    if (containerRef && containerRef.current && guideRef.current) {
-      const rocketGuide = new RocketGuide(guideRef.current, containerRef.current);
+    if (guideRef.current) {
+      const rocketGuide = new RocketGuide(guideRef.current);
       rocketGuide.start();
 
       return () => {
@@ -30,7 +29,7 @@ export const PortfolioHeader = () => {
     }
 
     return undefined;
-  }, [containerRef]);
+  }, []);
 
   return (
     <header className='sticky top-0 w-full h-28 select-none z-10' ref={headerRef}>

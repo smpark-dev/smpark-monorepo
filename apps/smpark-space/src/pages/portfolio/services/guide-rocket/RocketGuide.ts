@@ -1,22 +1,22 @@
 export class RocketGuide {
   private element: HTMLElement;
-  private portfolio: HTMLElement;
+  private window: Window;
   private prevHeight: number;
   private boundRender: () => void;
 
-  constructor(element: HTMLElement, portfolio: HTMLElement) {
+  constructor(element: HTMLElement) {
     this.element = element;
-    this.portfolio = portfolio;
+    this.window = window;
     this.prevHeight = 0;
     this.boundRender = this.render();
   }
 
   start() {
-    this.portfolio.addEventListener('scroll', this.boundRender);
+    this.window.addEventListener('scroll', this.boundRender);
   }
 
   end() {
-    this.portfolio.removeEventListener('scroll', this.boundRender);
+    this.window.removeEventListener('scroll', this.boundRender);
   }
 
   private render() {
@@ -34,16 +34,16 @@ export class RocketGuide {
         rocket.style.transform = newTransform;
       }
 
-      const currHeight = this.portfolio.scrollTop;
+      const currHeight = this.window.scrollY;
 
       if (currHeight > 0) this.prevHeight = currHeight;
     };
   }
 
   private getScrollHeightPercent(): number {
-    const pageTotalHeight = this.portfolio.scrollHeight;
-    const currHeight = this.portfolio.scrollTop;
-    const currentViewHeight = window.innerHeight;
+    const pageTotalHeight = document.documentElement.scrollHeight;
+    const currHeight = this.window.scrollY;
+    const currentViewHeight = this.window.innerHeight;
     const remainTotalHeight = pageTotalHeight - currentViewHeight;
 
     return Math.floor((currHeight / remainTotalHeight) * 100);
@@ -80,6 +80,6 @@ export class RocketGuide {
   }
 
   private getRocketRotate(): string {
-    return this.portfolio.scrollTop > this.prevHeight ? 'rotate(0deg)' : 'rotate(180deg)';
+    return this.window.scrollY > this.prevHeight ? 'rotate(0deg)' : 'rotate(180deg)';
   }
 }
