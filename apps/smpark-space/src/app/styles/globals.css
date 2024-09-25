@@ -15,7 +15,7 @@
 
 @layer components {
   .portfolioSection {
-    @apply text-center max-w-7xl w-[70%] mx-auto max-md:p-8 max-sm:p-6 max-xs:p-4 max-xxs:ps-2;
+    @apply text-center max-w-7xl w-[70%] mx-auto max-md:p-8 max-sm:p-6 max-sm:w-[90%] max-xs:w-full max-xs:p-4 max-xxs:ps-2;
   }
   .portfolioTitleContainer {
     @apply w-80 h-[75px] border-b-[5px] mx-auto max-md:w-60
