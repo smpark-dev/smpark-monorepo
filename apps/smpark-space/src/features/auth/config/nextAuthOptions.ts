@@ -62,46 +62,7 @@ export const nextAuthOptions: NextAuthOptions = {
     },
   ],
   session: {
-    strategy: 'jwt', // 기본값은 "jwt"
-    maxAge: 8000, // 1분 (60초)로 세션 만료 시간 설정
-  },
-  callbacks: {
-    async jwt({ token, account }) {
-      // console.log('token', token);
-      if (account) {
-        if (account?.provider === 'google') {
-          // Google 로그인 관련 로직
-          // console.log('Google login');
-        } else if (account?.provider === 'github') {
-          // GitHub 로그인 관련 로직
-          // console.log('GitHub login');
-        } else if (account?.provider === 'guest') {
-          // 게스트 로그인 관련 로직
-          // console.log('Guest login');
-        } else if (account?.provider === 'smpark') {
-          // smpark 로그인 관련 로직
-          // console.log('smpark login');
-        } else {
-          throw new Error('존재하지 않는 provider');
-        }
-        return {
-          provider: account?.provider,
-          access_token: account?.access_token,
-          expires_at: account?.expires_at,
-          refresh_token: account?.refresh_token,
-        };
-      }
-
-      return token;
-    },
-    async session({ session, token }) {
-      // console.log('🚀 ~ session ~ session:', session);
-
-      if (token.user) {
-        return { ...session, user: token.user };
-      }
-
-      return session;
-    },
+    strategy: 'jwt',
+    maxAge: 8000,
   },
 };
