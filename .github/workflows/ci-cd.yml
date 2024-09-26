@@ -72,6 +72,7 @@ jobs:
             echo "SPACE_SMPARK_CLIENT_SECRET=${{ secrets.SPACE_SMPARK_CLIENT_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "NEXTAUTH_SECRET=${{ secrets.SPACE_NEXTAUTH_SECRET }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "NEXTAUTH_URL=${{ vars.NEXTAUTH_URL }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "SMPARK_RESOURCE_BASE_URI=${{ vars.SMPARK_RESOURCE_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
