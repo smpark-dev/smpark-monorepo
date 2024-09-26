@@ -103,8 +103,8 @@ export const nextAuthOptions: NextAuthOptions = {
 
       return session;
     },
-    async redirect() {
-      return `${process.env.NEXT_PUBLIC_API_URL}/`;
+    async redirect({ url }) {
+      return url;
     },
   },
 };
