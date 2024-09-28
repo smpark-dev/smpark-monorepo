@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  smpark-resource:
+    build:
+      context: ../../
+      dockerfile: apps/smpark-resource/Dockerfile
+      target: production
+    image: smpark9596/smpark-resource:${VERSION}
+    platform: linux/amd64
+    container_name: smpark-resource-${VERSION}
+    ports:
+      - '5000:5555'
+    env_file:
+      - .env.production
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - smpark-log:/usr/src/resource-log
+    command: yarn smpark-resource:prod
+
+networks:
+  default:
+    name: smpark-resource-network-prod
+
+volumes:
+  smpark-log:

@@ -68,7 +68,7 @@
           "yarn nx build smpark-resource",
           "yarn nx docker:prod-build smpark-resource",
           "yarn nx docker:prod-push smpark-resource"
-        ],
+        ], 
         "parallel": false
       }
     },

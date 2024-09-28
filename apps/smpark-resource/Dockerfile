@@ -1,6 +1,6 @@
 FROM node:20.14.0 AS base
 
-WORKDIR /usr/src/oauth
+WORKDIR /usr/src/resource
 
 # Yarn PnP Zero Install 관련 파일들
 COPY .yarn .yarn
@@ -8,10 +8,9 @@ COPY .pnp.* ./
 COPY package.json yarn.lock ./
 
 # 설정 파일들
-COPY apps/smpark-oauth2.0/nodemon.json ./
-COPY apps/smpark-oauth2.0/*.config.js apps/smpark-oauth2.0/*.config.mjs ./
+COPY apps/smpark-resource/*.config.js apps/smpark-resource/*.config.mjs ./
 COPY tsconfig.base.json ./
-COPY apps/smpark-oauth2.0/tsconfig*.json ./tsconfig/sub-config/
+COPY apps/smpark-resource/tsconfig*.json ./tsconfig/sub-config/
 
 FROM base AS production
 # 빌드 파일
@@ -21,8 +20,8 @@ COPY dist ./dist
 RUN corepack enable 
 
 ENV NODE_ENV=production
-EXPOSE 4444
-CMD ["yarn", "smpark-oauth2.0:prod"]
+EXPOSE 5555
+CMD ["yarn", "smpark-resource:prod"]
 
 FROM base AS development
 
@@ -30,5 +29,5 @@ FROM base AS development
 RUN corepack enable 
 
 ENV NODE_ENV=development
-EXPOSE 4004
+EXPOSE 5005
 CMD ["yarn", "dev"]
