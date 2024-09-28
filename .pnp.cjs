@@ -28,6 +28,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@jest/types", "npm:29.6.3"],\
+          ["@koa/cors", "npm:5.0.0"],\
           ["@next/bundle-analyzer", "npm:14.2.11"],\
           ["@nx/esbuild", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:19.5.6"],\
           ["@nx/eslint", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:19.5.6"],\
@@ -42,6 +43,7 @@ const RAW_RUNTIME_STATE =
           ["@svgr/webpack", "npm:8.1.0"],\
           ["@swc-node/register", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:1.10.9"],\
           ["@swc/core", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:1.5.29"],\
+          ["@swc/helpers", "npm:0.5.13"],\
           ["@swc/types", "npm:0.1.12"],\
           ["@types/argon2", "npm:0.15.0"],\
           ["@types/compression", "npm:1.7.5"],\
@@ -55,6 +57,9 @@ const RAW_RUNTIME_STATE =
           ["@types/http-errors", "npm:2.0.4"],\
           ["@types/jest", "npm:29.5.13"],\
           ["@types/jsonwebtoken", "npm:9.0.6"],\
+          ["@types/koa", "npm:2.15.0"],\
+          ["@types/koa-router", "npm:7.4.8"],\
+          ["@types/koa__cors", "npm:5.0.0"],\
           ["@types/morgan", "npm:1.9.9"],\
           ["@types/node", "npm:22.5.4"],\
           ["@types/react", "npm:18.3.5"],\
@@ -67,6 +72,7 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/parser", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:7.18.0"],\
           ["argon2", "npm:0.40.3"],\
           ["autoprefixer", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:10.4.20"],\
+          ["axios", "npm:1.7.7"],\
           ["compression", "npm:1.7.4"],\
           ["connect-mongo", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.1.0"],\
           ["connect-mongodb-session", "npm:5.0.0"],\
@@ -97,8 +103,11 @@ const RAW_RUNTIME_STATE =
           ["http-errors", "npm:2.0.0"],\
           ["inversify", "npm:6.0.2"],\
           ["jest", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:29.7.0"],\
+          ["jest-environment-node", "npm:29.7.0"],\
           ["jest-mock", "npm:29.7.0"],\
           ["jsonwebtoken", "npm:9.0.2"],\
+          ["koa", "npm:2.15.3"],\
+          ["koa-router", "npm:13.0.1"],\
           ["mongodb", "virtual:9f8e16caa77ad1ba652d060eaac75d52ee8a70a592ae1064fe295ce963d398fdd0fd09a14776e3b3230d4eaf547e9f6954a981713705ba10f06bdb151914d630#npm:6.9.0"],\
           ["morgan", "npm:1.10.0"],\
           ["next", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:14.2.3"],\
@@ -116,6 +125,7 @@ const RAW_RUNTIME_STATE =
           ["swagger-ui-express", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.0.1"],\
           ["tailwindcss", "npm:3.4.11"],\
           ["ts-jest", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:29.2.5"],\
+          ["ts-node", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:10.9.1"],\
           ["tslib", "npm:2.7.0"],\
           ["tsx", "npm:4.19.1"],\
           ["typescript", "patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"],\
@@ -5032,6 +5042,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@koa/cors", [\
+      ["npm:5.0.0", {\
+        "packageLocation": "./.yarn/cache/@koa-cors-npm-5.0.0-693911adf6-49e5f3b861.zip/node_modules/@koa/cors/",\
+        "packageDependencies": [\
+          ["@koa/cors", "npm:5.0.0"],\
+          ["vary", "npm:1.1.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@leichtgewicht/ip-codec", [\
       ["npm:2.0.5", {\
         "packageLocation": "./.yarn/cache/@leichtgewicht-ip-codec-npm-2.0.5-23deb9e4c5-14a0112bd5.zip/node_modules/@leichtgewicht/ip-codec/",\
@@ -7562,7 +7582,7 @@ const RAW_RUNTIME_STATE =
           ["@swc/core-win32-ia32-msvc", "npm:1.5.29"],\
           ["@swc/core-win32-x64-msvc", "npm:1.5.29"],\
           ["@swc/counter", "npm:0.1.3"],\
-          ["@swc/helpers", null],\
+          ["@swc/helpers", "npm:0.5.13"],\
           ["@swc/types", "npm:0.1.12"],\
           ["@types/swc__helpers", null]\
         ],\
@@ -7673,6 +7693,14 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@swc/helpers", [\
+      ["npm:0.5.13", {\
+        "packageLocation": "./.yarn/cache/@swc-helpers-npm-0.5.13-763e72c536-b9df578401.zip/node_modules/@swc/helpers/",\
+        "packageDependencies": [\
+          ["@swc/helpers", "npm:0.5.13"],\
+          ["tslib", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:0.5.5", {\
         "packageLocation": "./.yarn/cache/@swc-helpers-npm-0.5.5-a0698e6ac9-21a9b9cfe7.zip/node_modules/@swc/helpers/",\
         "packageDependencies": [\
@@ -7744,6 +7772,16 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@tybys/wasm-util", "npm:0.9.0"],\
           ["tslib", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/accepts", [\
+      ["npm:1.3.7", {\
+        "packageLocation": "./.yarn/cache/@types-accepts-npm-1.3.7-96df7c6899-7b21efc78b.zip/node_modules/@types/accepts/",\
+        "packageDependencies": [\
+          ["@types/accepts", "npm:1.3.7"],\
+          ["@types/node", "npm:22.5.4"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7894,12 +7932,34 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/content-disposition", [\
+      ["npm:0.5.8", {\
+        "packageLocation": "./.yarn/cache/@types-content-disposition-npm-0.5.8-0074adf6a1-f10baeab2e.zip/node_modules/@types/content-disposition/",\
+        "packageDependencies": [\
+          ["@types/content-disposition", "npm:0.5.8"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/cookie-parser", [\
       ["npm:1.4.7", {\
         "packageLocation": "./.yarn/cache/@types-cookie-parser-npm-1.4.7-b74a485836-af37fea539.zip/node_modules/@types/cookie-parser/",\
         "packageDependencies": [\
           ["@types/cookie-parser", "npm:1.4.7"],\
           ["@types/express", "npm:4.17.21"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/cookies", [\
+      ["npm:0.9.0", {\
+        "packageLocation": "./.yarn/cache/@types-cookies-npm-0.9.0-a3671b5a75-ce95c19685.zip/node_modules/@types/cookies/",\
+        "packageDependencies": [\
+          ["@types/cookies", "npm:0.9.0"],\
+          ["@types/connect", "npm:3.4.38"],\
+          ["@types/express", "npm:4.17.21"],\
+          ["@types/keygrip", "npm:1.0.6"],\
+          ["@types/node", "npm:22.5.4"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7976,6 +8036,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@types/graceful-fs", "npm:4.1.9"],\
           ["@types/node", "npm:22.5.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/http-assert", [\
+      ["npm:1.5.5", {\
+        "packageLocation": "./.yarn/cache/@types-http-assert-npm-1.5.5-9b7e98e85c-02e7ba584d.zip/node_modules/@types/http-assert/",\
+        "packageDependencies": [\
+          ["@types/http-assert", "npm:1.5.5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -8063,6 +8132,62 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@types/jsonwebtoken", "npm:9.0.6"],\
           ["@types/node", "npm:22.5.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/keygrip", [\
+      ["npm:1.0.6", {\
+        "packageLocation": "./.yarn/cache/@types-keygrip-npm-1.0.6-25e224891d-1045a79913.zip/node_modules/@types/keygrip/",\
+        "packageDependencies": [\
+          ["@types/keygrip", "npm:1.0.6"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/koa", [\
+      ["npm:2.15.0", {\
+        "packageLocation": "./.yarn/cache/@types-koa-npm-2.15.0-fe318dc6d8-3fd591e25e.zip/node_modules/@types/koa/",\
+        "packageDependencies": [\
+          ["@types/koa", "npm:2.15.0"],\
+          ["@types/accepts", "npm:1.3.7"],\
+          ["@types/content-disposition", "npm:0.5.8"],\
+          ["@types/cookies", "npm:0.9.0"],\
+          ["@types/http-assert", "npm:1.5.5"],\
+          ["@types/http-errors", "npm:2.0.4"],\
+          ["@types/keygrip", "npm:1.0.6"],\
+          ["@types/koa-compose", "npm:3.2.8"],\
+          ["@types/node", "npm:22.5.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/koa-compose", [\
+      ["npm:3.2.8", {\
+        "packageLocation": "./.yarn/cache/@types-koa-compose-npm-3.2.8-f62156b53c-f2bfb7376c.zip/node_modules/@types/koa-compose/",\
+        "packageDependencies": [\
+          ["@types/koa-compose", "npm:3.2.8"],\
+          ["@types/koa", "npm:2.15.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/koa-router", [\
+      ["npm:7.4.8", {\
+        "packageLocation": "./.yarn/cache/@types-koa-router-npm-7.4.8-2f399796e7-9aa1018c33.zip/node_modules/@types/koa-router/",\
+        "packageDependencies": [\
+          ["@types/koa-router", "npm:7.4.8"],\
+          ["@types/koa", "npm:2.15.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/koa__cors", [\
+      ["npm:5.0.0", {\
+        "packageLocation": "./.yarn/cache/@types-koa__cors-npm-5.0.0-72211e8b99-2392b4ad63.zip/node_modules/@types/koa__cors/",\
+        "packageDependencies": [\
+          ["@types/koa__cors", "npm:5.0.0"],\
+          ["@types/koa", "npm:2.15.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -16325,6 +16450,18 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["koa-router", [\
+      ["npm:13.0.1", {\
+        "packageLocation": "./.yarn/cache/koa-router-npm-13.0.1-eaf91b95f5-f99fc92c1a.zip/node_modules/koa-router/",\
+        "packageDependencies": [\
+          ["koa-router", "npm:13.0.1"],\
+          ["http-errors", "npm:2.0.0"],\
+          ["koa-compose", "npm:4.1.0"],\
+          ["path-to-regexp", "npm:8.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["kruptein", [\
       ["npm:3.0.7", {\
         "packageLocation": "./.yarn/cache/kruptein-npm-3.0.7-209c75e716-cf90a58062.zip/node_modules/kruptein/",\
@@ -18384,6 +18521,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/path-to-regexp-npm-0.1.10-63516149e0-34196775b9.zip/node_modules/path-to-regexp/",\
         "packageDependencies": [\
           ["path-to-regexp", "npm:0.1.10"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:8.2.0", {\
+        "packageLocation": "./.yarn/cache/path-to-regexp-npm-8.2.0-71c92fc0c6-ef7d0a887b.zip/node_modules/path-to-regexp/",\
+        "packageDependencies": [\
+          ["path-to-regexp", "npm:8.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -20710,6 +20854,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["smpark-monorepo", "workspace:."],\
           ["@jest/types", "npm:29.6.3"],\
+          ["@koa/cors", "npm:5.0.0"],\
           ["@next/bundle-analyzer", "npm:14.2.11"],\
           ["@nx/esbuild", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:19.5.6"],\
           ["@nx/eslint", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:19.5.6"],\
@@ -20724,6 +20869,7 @@ const RAW_RUNTIME_STATE =
           ["@svgr/webpack", "npm:8.1.0"],\
           ["@swc-node/register", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:1.10.9"],\
           ["@swc/core", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:1.5.29"],\
+          ["@swc/helpers", "npm:0.5.13"],\
           ["@swc/types", "npm:0.1.12"],\
           ["@types/argon2", "npm:0.15.0"],\
           ["@types/compression", "npm:1.7.5"],\
@@ -20737,6 +20883,9 @@ const RAW_RUNTIME_STATE =
           ["@types/http-errors", "npm:2.0.4"],\
           ["@types/jest", "npm:29.5.13"],\
           ["@types/jsonwebtoken", "npm:9.0.6"],\
+          ["@types/koa", "npm:2.15.0"],\
+          ["@types/koa-router", "npm:7.4.8"],\
+          ["@types/koa__cors", "npm:5.0.0"],\
           ["@types/morgan", "npm:1.9.9"],\
           ["@types/node", "npm:22.5.4"],\
           ["@types/react", "npm:18.3.5"],\
@@ -20749,6 +20898,7 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/parser", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:7.18.0"],\
           ["argon2", "npm:0.40.3"],\
           ["autoprefixer", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:10.4.20"],\
+          ["axios", "npm:1.7.7"],\
           ["compression", "npm:1.7.4"],\
           ["connect-mongo", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.1.0"],\
           ["connect-mongodb-session", "npm:5.0.0"],\
@@ -20779,8 +20929,11 @@ const RAW_RUNTIME_STATE =
           ["http-errors", "npm:2.0.0"],\
           ["inversify", "npm:6.0.2"],\
           ["jest", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:29.7.0"],\
+          ["jest-environment-node", "npm:29.7.0"],\
           ["jest-mock", "npm:29.7.0"],\
           ["jsonwebtoken", "npm:9.0.2"],\
+          ["koa", "npm:2.15.3"],\
+          ["koa-router", "npm:13.0.1"],\
           ["mongodb", "virtual:9f8e16caa77ad1ba652d060eaac75d52ee8a70a592ae1064fe295ce963d398fdd0fd09a14776e3b3230d4eaf547e9f6954a981713705ba10f06bdb151914d630#npm:6.9.0"],\
           ["morgan", "npm:1.10.0"],\
           ["next", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:14.2.3"],\
@@ -20798,6 +20951,7 @@ const RAW_RUNTIME_STATE =
           ["swagger-ui-express", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.0.1"],\
           ["tailwindcss", "npm:3.4.11"],\
           ["ts-jest", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:29.2.5"],\
+          ["ts-node", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:10.9.1"],\
           ["tslib", "npm:2.7.0"],\
           ["tsx", "npm:4.19.1"],\
           ["typescript", "patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"],\
@@ -22031,6 +22185,42 @@ const RAW_RUNTIME_STATE =
           ["ts-node", "npm:10.9.1"]\
         ],\
         "linkType": "SOFT"\
+      }],\
+      ["virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:10.9.1", {\
+        "packageLocation": "./.yarn/__virtual__/ts-node-virtual-f374eb3ba1/0/cache/ts-node-npm-10.9.1-6c268be7f4-95187932fb.zip/node_modules/ts-node/",\
+        "packageDependencies": [\
+          ["ts-node", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:10.9.1"],\
+          ["@cspotcode/source-map-support", "npm:0.8.1"],\
+          ["@swc/core", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:1.5.29"],\
+          ["@swc/wasm", null],\
+          ["@tsconfig/node10", "npm:1.0.11"],\
+          ["@tsconfig/node12", "npm:1.0.11"],\
+          ["@tsconfig/node14", "npm:1.0.3"],\
+          ["@tsconfig/node16", "npm:1.0.4"],\
+          ["@types/node", "npm:22.5.4"],\
+          ["@types/swc__core", null],\
+          ["@types/swc__wasm", null],\
+          ["@types/typescript", null],\
+          ["acorn", "npm:8.12.1"],\
+          ["acorn-walk", "npm:8.3.4"],\
+          ["arg", "npm:4.1.3"],\
+          ["create-require", "npm:1.1.1"],\
+          ["diff", "npm:4.0.2"],\
+          ["make-error", "npm:1.3.6"],\
+          ["typescript", "patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"],\
+          ["v8-compile-cache-lib", "npm:3.0.1"],\
+          ["yn", "npm:3.1.1"]\
+        ],\
+        "packagePeers": [\
+          "@swc/core",\
+          "@swc/wasm",\
+          "@types/node",\
+          "@types/swc__core",\
+          "@types/swc__wasm",\
+          "@types/typescript",\
+          "typescript"\
+        ],\
+        "linkType": "HARD"\
       }],\
       ["virtual:e7e771438c7719f0d560733eec60030276149fe10b5cba175e4f02e86038943b55a4eeb3c78ef24cfee526baca1dc9313fed0b3f4651252c0211fb4289eb1d38#npm:10.9.1", {\
         "packageLocation": "./.yarn/__virtual__/ts-node-virtual-26d533bd42/0/cache/ts-node-npm-10.9.1-6c268be7f4-95187932fb.zip/node_modules/ts-node/",\

@@ -1,0 +1,110 @@
+{
+  "plugins": ["@typescript-eslint", "import"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "../../.eslintrc.json"
+  ],
+  "ignorePatterns": ["!**/*"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.ts"],
+      "rules": {
+        "import/order": [
+          "warn",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              "parent",
+              "sibling",
+              "index",
+              "object",
+              "type"
+            ],
+            "pathGroups": [
+              {
+                "pattern": "react*",
+                "group": "builtin"
+              },
+              {
+                "pattern": "@/**",
+                "group": "internal"
+              },
+              {
+                "pattern": "@*/**",
+                "group": "internal"
+              }
+            ],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            },
+            "pathGroupsExcludedImportTypes": ["type"]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.js"],
+      "rules": {
+        "no-console": "warn",
+        "no-multiple-empty-lines": ["error", { "max": 1 }],
+        "arrow-spacing": ["error", { "before": true, "after": true }]
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module",
+        "project": ["tsconfig.base.json"]
+      },
+      "rules": {
+        "import/no-extraneous-dependencies": ["error", { "packageDir": ["."] }],
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/array-type": ["error", { "default": "array-simple" }],
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["../*", "*.test", "src/legacy/*"]
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "varsIgnorePattern": "^_",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "no-underscore-dangle": ["warn", { "allow": ["__filename", "__dirname"] }],
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/lines-between-class-members": [
+          "error",
+          {
+            "enforce": [
+              { "blankLine": "always", "prev": "method", "next": "*" },
+              { "blankLine": "always", "prev": "*", "next": "method" }
+            ]
+          }
+        ],
+        "class-methods-use-this": "off",
+        "consistent-return": "off",
+        "max-classes-per-file": "off",
+        "import/prefer-default-export": "off",
+        "no-console": "off"
+      }
+    }
+  ]
+}

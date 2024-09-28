@@ -1,0 +1,26 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "types": ["jest", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@configs/*": ["src/configs/*"],
+      "@middleware/*": ["src/middleware/*"],
+      "@services/*": ["src/services/*"],
+      "@repository/*": ["src/repository/*"],
+      "@dtos/*": ["src/dtos/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ],
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "tests"]
+}

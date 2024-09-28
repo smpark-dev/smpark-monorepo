@@ -1,0 +1,113 @@
+{
+  "name": "smpark-resource",
+  "version": "1.0.0",
+  "private": true,
+  "sourceRoot": "apps/smpark-resource",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cross-env NODE_ENV=development tsx --tsconfig apps/smpark-resource/tsconfig.json apps/smpark-resource/src/main.ts"
+      }
+    },
+    "prod": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "production",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "smpark-resource:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "smpark-resource:build:development"
+        },
+        "production": {
+          "buildTarget": "smpark-resource:build:production"
+        }
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "main": "src/main.ts",
+        "outputPath": "dist",
+        "outputFileName": "apps/smpark-resource/main.js",
+        "tsConfig": "apps/smpark-resource/tsconfig.app.json",
+        "format": ["esm"],
+        "bundle": true,
+        "assets": ["apps/smpark-resource/src/assets"],
+        "platform": "node"
+      },
+      "configurations": {
+        "development": {
+          "minify": false
+        },
+        "production": {
+          "minify": true
+        },
+        "define": {
+          "process.env.NODE_ENV": "'production'"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/smpark-resource/src/**/*.ts"]
+      }
+    },
+    "build:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn nx build smpark-resource",
+          "yarn nx docker:prod-build smpark-resource",
+          "yarn nx docker:prod-push smpark-resource"
+        ],
+        "parallel": false
+      }
+    },
+    "docker:prod-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.yml --env-file apps/smpark-resource/.env.production build"
+      }
+    },
+    "docker:prod-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.yml --env-file apps/smpark-resource/.env.production push"
+      }
+    },
+    "docker:prod-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.yml --env-file apps/smpark-resource/.env.production up -d"
+      }
+    },
+    "docker:prod-down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.yml --env-file apps/smpark-resource/.env.production down"
+      }
+    },
+    "docker:prod-pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.yml --env-file apps/smpark-resource/.env.production pull"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/smpark-resource/jest.config.ts"
+      }
+    }
+  }
+}
