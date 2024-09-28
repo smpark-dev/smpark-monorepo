@@ -26,5 +26,5 @@ configureSwagger(app);
 
 const port = env.port || 5555;
 app.listen(port, async () => {
-  console.log(`Server Connected, ${port} port!`);
+  console.log(`Oauth2.0 Server Connected, ${port} port!`);
 });
