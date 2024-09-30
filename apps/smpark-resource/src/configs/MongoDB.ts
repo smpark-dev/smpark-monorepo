@@ -13,8 +13,6 @@ class MongoDB {
   }
 
   public static getInstance(url: string, dbName: string): MongoDB {
-    console.log(url);
-    console.log(dbName);
     if (!MongoDB.instance) {
       MongoDB.instance = new MongoDB(url, dbName);
     }
