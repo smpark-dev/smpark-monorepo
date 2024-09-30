@@ -123,5 +123,22 @@ jobs:
           scp "./apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}" ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:D:/
       
       - name: Deploy to Windows Desktop
+        env:
+          smpark-oauth2.0_VERSION: ${{ vars.OAUTH_VERSION }}
+          smpark-space_VERSION: ${{ vars.SPACE_VERSION }}
+          smpark-resource_VERSION: ${{ vars.RESOURCE_VERSION }}
         run: |
-          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }} "cd /d D: && deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "${{ vars.OAUTH_VERSION }}" "${{ vars.SPACE_VERSION }}" "${{ vars.RESOURCE_VERSION }}" "${{ vars.NODE_ENV }}""
+          if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
+            VERSION="${{ vars.OAUTH_VERSION }}"
+            PORT="${{ vars.OAUTH_NGINX_PORT }}":"${{ vars.OAUTH_APP_PORT }}"
+          elif [ "${{ matrix.project }}" == "smpark-resource" ]; then
+            VERSION="${{ vars.RESOURCE_VERSION }}"
+            PORT="${{ vars.RESOURCE_NGINX_PORT }}":"${{ vars.RESOURCE_APP_PORT }}"
+          elif [ "${{ matrix.project }}" == "smpark-space" ]; then
+            VERSION="${{ vars.SPACE_VERSION }}"
+            PORT="${{ vars.SPACE_NGINX_PORT }}":"${{ vars.SPACE_APP_PORT }}"
+          else
+            echo "Unknown project: ${{ matrix.project }}"
+            exit 1
+          fi
+          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }} "cd /d D: && deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "$VERSION" "$PORT" "${{ vars.NODE_ENV }}""
