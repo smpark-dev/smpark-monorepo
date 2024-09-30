@@ -29,6 +29,5 @@ FROM base AS development
 RUN corepack enable 
 
 ENV NODE_ENV=development
-
 EXPOSE 5005
 CMD ["yarn", "dev"]
