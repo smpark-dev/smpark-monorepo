@@ -16,7 +16,7 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - smpark-log:/usr/src/resource-log
+      - resource-log:/usr/src/resource-log
     command: yarn smpark-resource:prod
 
 networks:
