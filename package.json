@@ -120,7 +120,7 @@
   "scripts": {
     "dev-all": "nx run-many --target=dev --projects=smpark-oauth2.0,smpark-space,smpark-resource --parallel",
     "smpark-oauth2.0:prod": "cross-env NODE_ENV=production node ./dist/apps/smpark-oauth2.0/index.js",
-    "smpark-resource:prod": "cross-env NODE_ENV=production node ./dist/apps/smpark-resource/index.js",
+    "smpark-resource:prod": "cross-env NODE_ENV=production node ./dist/apps/smpark-resource/main.js",
     "smpark-space:prod": "next start"
   }
 }
