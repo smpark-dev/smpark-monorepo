@@ -123,10 +123,6 @@ jobs:
           scp "./apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}" ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:D:/
       
       - name: Deploy to Windows Desktop
-        env:
-          smpark-oauth2.0_VERSION: ${{ vars.OAUTH_VERSION }}
-          smpark-space_VERSION: ${{ vars.SPACE_VERSION }}
-          smpark-resource_VERSION: ${{ vars.RESOURCE_VERSION }}
         run: |
           if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
             VERSION="${{ vars.OAUTH_VERSION }}"
