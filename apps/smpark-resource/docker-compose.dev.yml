@@ -15,7 +15,7 @@ services:
       - NODE_ENV=development
     volumes:
     - .:/usr/src/resource
-    - smpark_log:/usr/src/resource_log
+    - smpark-log:/usr/src/resource_log
     command: yarn dev
     
 networks:
