@@ -21,5 +21,5 @@ COPY apps/smpark-space/public ./public
 RUN corepack enable 
 
 ENV NODE_ENV=production
-EXPOSE 3333
+EXPOSE 3000
 CMD ["yarn", "smpark-space:prod"]

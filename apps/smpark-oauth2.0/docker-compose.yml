@@ -10,7 +10,7 @@ services:
     platform: linux/amd64
     container_name: smpark-oauth2.0-${VERSION}
     ports:
-      - '4000:4444'
+      - '4444:4000'
     env_file:
       - .env.production
     environment:

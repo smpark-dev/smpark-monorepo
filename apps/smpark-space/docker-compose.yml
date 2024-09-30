@@ -10,7 +10,7 @@ services:
     platform: linux/amd64
     container_name: smpark-space-${VERSION}
     ports:
-      - "3000:3333"
+      - "3333:3000"
     env_file:
       - .env.production
     environment:

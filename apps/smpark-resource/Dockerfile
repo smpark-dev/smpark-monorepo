@@ -20,7 +20,7 @@ COPY dist ./dist
 RUN corepack enable 
 
 ENV NODE_ENV=production
-EXPOSE 5555
+EXPOSE 5000
 CMD ["yarn", "smpark-resource:prod"]
 
 FROM base AS development
