@@ -24,4 +24,4 @@ networks:
     name: smpark-oauth-network-prod
 
 volumes:
-  smpark-log:
+  oauth-log:

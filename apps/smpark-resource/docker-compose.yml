@@ -24,4 +24,4 @@ networks:
     name: smpark-resource-network-prod
 
 volumes:
-  smpark-log:
+  resource-log:
