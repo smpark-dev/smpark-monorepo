@@ -7,7 +7,7 @@ import { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 
 const dynamicSecurityMiddleware = (req: IOauthRequest, res: Response, next: NextFunction): void => {
-  const refererUri = req.session.unVerifiedRefererUri;
+  const refererUri = req.headers.referer;
 
   if (!refererUri) {
     return next(createError(401, ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI));
