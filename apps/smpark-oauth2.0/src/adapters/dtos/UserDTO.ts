@@ -23,10 +23,3 @@ export class RegisterDTO {
     public email?: string,
   ) {}
 }
-
-export class UserResponseDTO {
-  constructor(
-    public authenticatedUser: { id: string; name: string; email: string },
-    public token: string,
-  ) {}
-}

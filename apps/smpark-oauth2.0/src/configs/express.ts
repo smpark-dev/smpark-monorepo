@@ -41,9 +41,10 @@ const configureExpress = async (
       saveUninitialized: false,
       store: sessionStore,
       cookie: {
-        sameSite: 'strict',
+        maxAge: Number(env.oauthRefreshTokenExpiresIn) * 1000,
         httpOnly: true,
-        maxAge: Number(env.loginExpiresIn) * 1000,
+        secure: true,
+        sameSite: 'strict',
       },
     }),
   );

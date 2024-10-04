@@ -20,10 +20,12 @@ import type {
   IScopeComparatorUseCase,
 } from '@application-interfaces/usecases/IOAuthUseCase';
 import type { ITokenGenerationUseCase } from '@application-interfaces/usecases/ITokenUseCase';
+import type { EnvConfig } from '@lib/dotenv-env';
 
 @injectable()
 class OAuthController implements IOAuthController {
   constructor(
+    @inject('env') private env: EnvConfig,
     @inject(UserMapper) private userMapper: UserMapper,
     @inject(OAuthMapper) private oAuthMapper: OAuthMapper,
     @inject(TokenMapper) private tokenMapper: TokenMapper,
@@ -49,6 +51,7 @@ class OAuthController implements IOAuthController {
         ...req.body,
         referer_uri: req.headers.referer || req.session.unVerifiedRefererUri,
       });
+
       await this.userAuthorizationUseCase.execute(authorizeRequestDTO);
 
       req.session.verifiedRefererUri = authorizeRequestDTO.referer_uri;
@@ -67,14 +70,14 @@ class OAuthController implements IOAuthController {
 
     try {
       const loginDTO = this.userMapper.toLoginDTO(id, password);
-      const { authenticatedUser, token } = await this.userLoginUseCase.execute(loginDTO);
+      const accessToken = await this.userLoginUseCase.execute(loginDTO);
 
-      res.cookie('auth_token', token, {
-        maxAge: 1000 * 60 * 60 * 24 * 3,
+      res.cookie('auth_token', accessToken, {
+        maxAge: Number(this.env.oauthAccessTokenExpiresIn) * 1000,
         httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
       });
-
-      req.session.user = authenticatedUser;
 
       req.body = authSerialize(req.body, ['password']);
 
@@ -108,6 +111,10 @@ class OAuthController implements IOAuthController {
         redirect_uri,
         state,
       });
+
+      if (!updated) {
+        return res.redirect('/oauth/consent');
+      }
 
       return res.render('oauth/consent', {
         scope: comparedScope,

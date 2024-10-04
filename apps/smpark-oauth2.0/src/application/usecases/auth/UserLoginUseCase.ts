@@ -1,9 +1,10 @@
 import { injectable, inject } from 'inversify';
 
 import { IUserLoginUseCase } from '@application-interfaces/usecases/IAuthUseCase';
-import { LoginDTO, UserResponseDTO } from '@dtos/UserDTO';
+import { LoginDTO } from '@dtos/UserDTO';
 import UserMapper from '@mapper/UserMapper';
 
+import type { IRedisTokenRepository } from '@domain-interfaces/repository/IRedisTokenRepository';
 import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
 import type { IAuthenticationService } from '@domain-interfaces/services/IAuthenticationService';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
@@ -19,9 +20,11 @@ class UserLoginUseCase implements IUserLoginUseCase {
     @inject('ITokenService') private tokenService: ITokenService,
     @inject('IAuthenticationService') private authService: IAuthenticationService,
     @inject('IOAuthVerifierService') private oAuthVerifierService: IOAuthVerifierService,
+    @inject('IRedisTokenRepository')
+    private redisTokenRepository: IRedisTokenRepository,
   ) {}
 
-  async execute(loginDTO: LoginDTO): Promise<UserResponseDTO> {
+  async execute(loginDTO: LoginDTO): Promise<string> {
     const { id, password } = this.authService.verifySignInInfo(loginDTO);
     const fetchedUser = await this.userRepository.findById(id);
     const verifiedUser = this.oAuthVerifierService.verifyUser(fetchedUser);
@@ -29,18 +32,28 @@ class UserLoginUseCase implements IUserLoginUseCase {
     await this.authService.authenticate(user, password, verifiedUser.password);
 
     const loginPayload = { id: user.id, name: user.name, email: user.email };
-    const token = this.tokenService.generateToken(
+    const accessToken = this.tokenService.generateToken(
       loginPayload,
-      this.env.loginJWTSecretKey,
-      Number(this.env.loginExpiresIn),
+      this.env.oauthAccessSecret,
+      Number(this.env.oauthAccessTokenExpiresIn),
     );
-    const authenticatedUser = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    };
+    const refreshToken = this.tokenService.generateToken(
+      loginPayload,
+      this.env.oauthAccessSecret,
+      Number(this.env.oauthRefreshTokenExpiresIn),
+    );
 
-    return this.userMapper.toUserResponseDTO(authenticatedUser, token);
+    const tokenType = 'refresh';
+    const isSave = await this.redisTokenRepository.save(
+      tokenType,
+      id,
+      refreshToken,
+      Number(this.env.oauthRefreshTokenExpiresIn),
+    );
+
+    this.oAuthVerifierService.verifyOperation(isSave);
+
+    return accessToken;
   }
 }
 

@@ -15,8 +15,12 @@ class TokenService implements ITokenService {
     return jwtToken;
   }
 
-  verifyToken<T>(token: string, jwtSecretKey: string): T {
+  verifyTokenStrict<T>(token: string, jwtSecretKey: string): T {
     return jwt.verify(token, jwtSecretKey) as T;
+  }
+
+  verifyTokenIgnoreExpiration<T>(token: string, jwtSecretKey: string): T {
+    return jwt.verify(token, jwtSecretKey, { ignoreExpiration: true }) as T;
   }
 
   getDefaultScope(): ScopeDTO {

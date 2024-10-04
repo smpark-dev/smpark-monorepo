@@ -7,7 +7,7 @@ import { UserDTO } from '@dtos/UserDTO';
 import TokenMapper from '@mapper/TokenMapper';
 
 import type { ICodeRepository } from '@domain-interfaces/repository/ICodeRepository';
-import type { ITokenRepository } from '@domain-interfaces/repository/ITokenRepository';
+import type { IMongoTokenRepository } from '@domain-interfaces/repository/IMongoTokenRepository';
 import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
 import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
 import type { ITokenService } from '@domain-interfaces/services/ITokenService';
@@ -19,7 +19,7 @@ class TokenGenerationUseCase implements ITokenGenerationUseCase {
     @inject('env') private env: EnvConfig,
     @inject(TokenMapper) private tokenMapper: TokenMapper,
     @inject('ITokenService') public tokenService: ITokenService,
-    @inject('ITokenRepository') public tokenRepository: ITokenRepository,
+    @inject('IMongoTokenRepository') public tokenRepository: IMongoTokenRepository,
     @inject('IUserRepository') public userRepository: IUserRepository,
     @inject('ICodeRepository') public codeRepository: ICodeRepository,
     @inject('IOAuthVerifierService') public oAuthVerifierService: IOAuthVerifierService,
