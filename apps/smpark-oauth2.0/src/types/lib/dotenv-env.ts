@@ -1,6 +1,7 @@
 export type EnvConfig = {
   nodeEnv: string;
   port: string;
+  redisURL: string;
   mongoDBUri: string;
   mongoDBUser: string;
   mongoDBName: string;
@@ -12,7 +13,5 @@ export type EnvConfig = {
   oauthRefreshSecret: string;
   oauthAccessTokenExpiresIn: string;
   oauthRefreshTokenExpiresIn: string;
-  loginExpiresIn: string;
-  loginJWTSecretKey: string;
   issuer: string;
 };

@@ -5,6 +5,7 @@ import AuthenticationController from '@controllers/AuthenticationController';
 import ClientsController from '@controllers/ClientsController';
 import OAuthController from '@controllers/OAuthController';
 import MongoDB from '@database/MongoDB';
+import Redis from '@database/Redis';
 import ClientsMapper from '@mapper/ClientsMapper';
 import CodeMapper from '@mapper/CodeMapper';
 import OAuthMapper from '@mapper/OAuthMapper';
@@ -13,7 +14,8 @@ import UserMapper from '@mapper/UserMapper';
 import AuthenticationMiddleware from '@middleware/routeMiddleware/AuthenticationMiddleware';
 import ClientsRepository from '@repository/ClientsRepository';
 import CodeRepository from '@repository/CodeRepository';
-import TokenRepository from '@repository/TokenRepository';
+import MongoTokenRepository from '@repository/MongoTokenRepository';
+import RedisTokenRepository from '@repository/RedisTokenRepository';
 import UserRepository from '@repository/UserRepository';
 import AuthenticationService from '@services/AuthenticationService';
 import ClientsService from '@services/ClientsService';
@@ -60,9 +62,10 @@ const registerServiceDependencies = (): void => {
 
 const registerRepositoryDependencies = (): void => {
   container.bind('ICodeRepository').to(CodeRepository);
-  container.bind('ITokenRepository').to(TokenRepository);
+  container.bind('IMongoTokenRepository').to(MongoTokenRepository);
   container.bind('IUserRepository').to(UserRepository);
   container.bind('IClientsRepository').to(ClientsRepository);
+  container.bind('IRedisTokenRepository').to(RedisTokenRepository);
 };
 
 const registerControllerDependencies = (): void => {
@@ -74,7 +77,12 @@ const registerControllerDependencies = (): void => {
 const registerMongoDependencies = (dbURL: string, dbName: string): void => {
   container.bind('DbURL').toConstantValue(dbURL);
   container.bind('DbName').toConstantValue(dbName);
-  container.bind(MongoDB).to(MongoDB).inSingletonScope();
+  container.bind(MongoDB).toSelf().inSingletonScope();
+};
+
+const registerRedisDependencies = (redisURL: string): void => {
+  container.bind('RedisURL').toConstantValue(redisURL);
+  container.bind(Redis).toSelf().inSingletonScope();
 };
 
 const registerEnvDependencies = (): void => {
@@ -93,12 +101,13 @@ const registerMapperDependencies = (): void => {
   container.bind(TokenMapper).to(TokenMapper);
 };
 
-const registerAllDependencies = (dbURL: string, dbName: string): void => {
+const registerAllDependencies = (dbURL: string, dbName: string, redisURL: string): void => {
   registerControllerDependencies();
   registerEnvDependencies();
   registerMapperDependencies();
   registerMiddlewareDependencies();
   registerMongoDependencies(dbURL, dbName);
+  registerRedisDependencies(redisURL);
   registerRepositoryDependencies();
   registerServiceDependencies();
   registerUseCaseDependencies();

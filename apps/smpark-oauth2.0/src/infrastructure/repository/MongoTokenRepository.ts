@@ -2,11 +2,11 @@ import { injectable, inject } from 'inversify';
 import { Collection, ClientSession, DeleteResult } from 'mongodb';
 
 import MongoDB from '@database/MongoDB';
-import { ITokenRepository } from '@domain-interfaces/repository/ITokenRepository';
+import { IMongoTokenRepository } from '@domain-interfaces/repository/IMongoTokenRepository';
 import { TokenDTO } from '@dtos/TokenDTO';
 
 @injectable()
-class TokenRepository implements ITokenRepository<ClientSession> {
+class MongoTokenRepository implements IMongoTokenRepository<ClientSession> {
   private collection: Collection<TokenDTO>;
 
   constructor(@inject(MongoDB) database: MongoDB) {
@@ -36,4 +36,4 @@ class TokenRepository implements ITokenRepository<ClientSession> {
   }
 }
 
-export default TokenRepository;
+export default MongoTokenRepository;

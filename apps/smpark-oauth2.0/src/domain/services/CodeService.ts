@@ -9,9 +9,9 @@ class CodeService implements ICodeService {
     return uuidv4().substring(0, 15);
   }
 
-  calculateExpiryTime(minutes: number): number {
+  calculateExpiryTime(seconds: number): number {
     const now = new Date();
-    now.setMinutes(now.getMinutes() + minutes);
+    now.setSeconds(now.getSeconds() + seconds);
     return Math.floor(now.getTime() / 1000);
   }
 

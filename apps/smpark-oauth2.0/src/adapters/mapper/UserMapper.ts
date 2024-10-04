@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 
-import { UserDTO, LoginDTO, UserResponseDTO, RegisterDTO } from '@dtos/UserDTO';
+import { UserDTO, LoginDTO, RegisterDTO } from '@dtos/UserDTO';
 import User from '@entities/User';
 
 @injectable()
@@ -15,13 +15,6 @@ class UserMapper {
 
   toLoginDTO(id?: string, password?: string): LoginDTO {
     return new LoginDTO(id, password);
-  }
-
-  toUserResponseDTO(
-    authenticatedUser: { id: string; name: string; email: string },
-    token: string,
-  ): UserResponseDTO {
-    return new UserResponseDTO(authenticatedUser, token);
   }
 
   toEntity({ id, name, email, agreedScopes }: UserDTO): User {

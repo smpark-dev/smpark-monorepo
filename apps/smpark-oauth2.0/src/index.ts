@@ -7,9 +7,10 @@ import configureExpress from '@configs/express';
 import { container, registerAllDependencies } from '@configs/inversify';
 import configureSwagger from '@configs/swagger';
 import MongoDB from '@database/MongoDB';
+import Redis from '@database/Redis';
 
-const { mongoDBName } = env;
-registerAllDependencies(env.mongoDBUri, mongoDBName);
+const { mongoDBName, redisURL } = env;
+registerAllDependencies(env.mongoDBUri, mongoDBName, redisURL);
 
 const database = container.get<MongoDB>(MongoDB);
 await database.connect();
@@ -18,6 +19,9 @@ const sessionStore = new MongoStore({
   dbName: mongoDBName,
   collectionName: env.mongoDBSessionCollection,
 });
+
+const redis = container.get<Redis>(Redis);
+await redis.connect();
 
 const app = express();
 

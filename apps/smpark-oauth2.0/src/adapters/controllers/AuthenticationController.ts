@@ -42,14 +42,14 @@ class AuthenticationController implements IAuthenticationController {
 
     try {
       const loginDTO = this.userMapper.toLoginDTO(id, password);
-      const { authenticatedUser, token } = await this.userLoginUseCase.execute(loginDTO);
+      const accessToken = await this.userLoginUseCase.execute(loginDTO);
 
-      res.cookie('auth_token', token, {
-        maxAge: Number(this.env.loginExpiresIn) * 1000,
+      res.cookie('auth_token', accessToken, {
+        maxAge: Number(this.env.oauthAccessTokenExpiresIn) * 1000,
         httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
       });
-
-      req.session.user = authenticatedUser;
 
       req.body = authSerialize(req.body, ['password']);
 
@@ -79,8 +79,10 @@ class AuthenticationController implements IAuthenticationController {
       if (error) {
         next(error);
       }
+
       res.clearCookie('auth_token');
       res.clearCookie('connect.sid');
+
       return res.redirect('/');
     });
   }
