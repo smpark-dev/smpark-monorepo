@@ -4,7 +4,7 @@ import { IClientsController } from '@adapters-interfaces/controllers/IClientsCon
 import { IOAuthController } from '@adapters-interfaces/controllers/IOAuthController';
 import { container } from '@configs/inversify';
 import { IAuthenticationMiddleware } from '@middleware/interfaces/routeMiddleware/IAuthenticationMiddleware';
-import dynamicSecurityMiddleware from '@middleware/routeMiddleware/dynamicSecurityMiddleware';
+import dynamicCSPMiddleware from '@middleware/routeMiddleware/dynamicCSPMiddleware';
 
 const oAuthController = container.get<IOAuthController>('IOAuthController');
 const clientsController = container.get<IClientsController>('IClientsController');
@@ -140,9 +140,9 @@ oauth.post(
  */
 oauth.get(
   '/authorize',
-  dynamicSecurityMiddleware,
   authenticationMiddleware.handle,
   oAuthController.verifyOauthRequest.bind(oAuthController),
+  dynamicCSPMiddleware,
   oAuthController.compareScope.bind(oAuthController),
 );
 
