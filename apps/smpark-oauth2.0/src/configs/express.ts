@@ -43,7 +43,7 @@ const configureExpress = async (
       cookie: {
         maxAge: Number(env.oauthRefreshTokenExpiresIn) * 1000,
         httpOnly: true,
-        secure: false,
+        secure: env.nodeEnv === 'production',
         sameSite: 'strict',
       },
     }),
@@ -69,7 +69,12 @@ const configureExpress = async (
   app.use(helmet.xssFilter());
 
   // CORS 미들웨어
-  app.use(cors());
+  app.use(
+    cors({
+      origin: ['https://smpark.dev', 'https://smpark.ddns.net'],
+      credentials: true,
+    }),
+  );
 
   // 응답 압축 미들웨어
   app.use(compression());
