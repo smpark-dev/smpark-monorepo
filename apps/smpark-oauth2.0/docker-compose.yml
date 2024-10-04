@@ -21,7 +21,7 @@ services:
       - oauth-log:/usr/src/oauth-log
     command: yarn smpark-oauth2.0:prod
   redis:
-    image: redis
+    image: redis:alpine
     volumes:
       - redis-data:/data
 
