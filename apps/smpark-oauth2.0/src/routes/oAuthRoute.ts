@@ -141,8 +141,8 @@ oauth.post(
 oauth.get(
   '/authorize',
   authenticationMiddleware.handle,
-  oAuthController.verifyOauthRequest.bind(oAuthController),
   dynamicSecurityMiddleware,
+  oAuthController.verifyOauthRequest.bind(oAuthController),
   oAuthController.compareScope.bind(oAuthController),
 );
 
