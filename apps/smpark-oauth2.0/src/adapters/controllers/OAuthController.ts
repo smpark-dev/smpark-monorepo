@@ -52,7 +52,6 @@ class OAuthController implements IOAuthController {
       });
 
       const address_uri = await this.userAuthorizationUseCase.execute(authorizeRequestDTO);
-
       req.session.address_uri = address_uri;
     } catch (error) {
       next(error);

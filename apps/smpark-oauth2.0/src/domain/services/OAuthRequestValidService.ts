@@ -20,15 +20,17 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
       request.client_id,
       clients?.client_id,
     );
-
     const redirect_uri = this.validateField(
       ERROR_MESSAGES.VALIDATION.MISSING.REDIRECT_URI,
       ERROR_MESSAGES.VALIDATION.MISMATCH.REDIRECT_URI,
       request.redirect_uri,
       clients?.redirect_uri,
     );
+    let address_uri = '';
+    if (clients) {
+      address_uri = this.validateAddressURI(clients.address_uri);
+    }
 
-    const address_uri = this.validateAddressURI(clients?.address_uri);
     const response_type = this.validateResponseType(request.response_type);
 
     return {
