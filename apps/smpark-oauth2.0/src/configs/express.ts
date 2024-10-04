@@ -69,12 +69,7 @@ const configureExpress = async (
   app.use(helmet.xssFilter());
 
   // CORS 미들웨어
-  app.use(
-    cors({
-      origin: ['https://smpark.dev', 'https://smpark.ddns.net'],
-      credentials: true,
-    }),
-  );
+  app.use(cors());
 
   // 응답 압축 미들웨어
   app.use(compression());
