@@ -43,8 +43,8 @@ const configureExpress = async (
       cookie: {
         maxAge: Number(env.oauthRefreshTokenExpiresIn) * 1000,
         httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
+        secure: env.nodeEnv === 'production',
+        sameSite: 'none',
       },
     }),
   );
