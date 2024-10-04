@@ -37,24 +37,7 @@ route.get('/', (req: Request, res: Response) => {
   }
 });
 
-/**
- * @swagger
- * /:
- *   get:
- *     tags: [Authentication]
- *     summary: 인증 관련 라우트
- *     description: 인증 관련 모든 엔드포인트를 포함합니다. 자세한 내용은 개별 엔드포인트를 참조하세요.
- */
 route.use('/', auth);
-
-/**
- * @swagger
- * /oauth:
- *   get:
- *     tags: [OAuth]
- *     summary: OAuth 관련 라우트
- *     description: OAuth 관련 모든 엔드포인트를 포함합니다. 자세한 내용은 개별 엔드포인트를 참조하세요.
- */
 route.use('/oauth', oauth);
 
 export default route;
