@@ -20,13 +20,18 @@ services:
     volumes:
       - oauth-log:/usr/src/oauth-log
     command: yarn smpark-oauth2.0:prod
+    networks:
+      - smpark-oauth-network-prod 
+
   redis:
     image: redis:alpine
     volumes:
       - redis-data:/data
+    networks:
+      - smpark-oauth-network-prod
 
 networks:
-  default:
+  smpark-oauth-network-prod:
     name: smpark-oauth-network-prod
 
 volumes:
