@@ -43,8 +43,8 @@ const configureExpress = async (
       cookie: {
         maxAge: Number(env.oauthRefreshTokenExpiresIn) * 1000,
         httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
+        secure: env.nodeEnv === 'production',
+        sameSite: 'strict',
       },
     }),
   );
@@ -67,17 +67,6 @@ const configureExpress = async (
     }),
   );
   app.use(helmet.xssFilter());
-
-  app.use((req, res, next) => {
-    console.log('--- New Request ---');
-    console.log('Session ID:', req.sessionID);
-    console.log('Session:', JSON.stringify(req.session, null, 2));
-    console.log('Headers:', JSON.stringify(req.headers, null, 2));
-    console.log('Secure:', req.secure);
-    console.log('Protocol:', req.protocol);
-    console.log('X-Forwarded-Proto:', req.get('X-Forwarded-Proto'));
-    next();
-  });
 
   // CORS 미들웨어
   app.use(cors());
