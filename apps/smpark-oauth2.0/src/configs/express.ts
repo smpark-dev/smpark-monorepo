@@ -86,7 +86,7 @@ const configureExpress = async (
   // CORS 미들웨어
   app.use(
     cors({
-      origin: ['https://smpark.dev'],
+      origin: ['https://smpark.dev', 'https://smpark.ddns.net'],
       credentials: true,
     }),
   );
