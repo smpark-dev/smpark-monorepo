@@ -41,16 +41,19 @@ class ScopeComparatorUseCase implements IScopeComparatorUseCase {
   ): ScopeResponseDTO {
     if (!clientAllowedScopes) {
       const defaultScope = this.tokenService.getDefaultScope();
-      return this.oAuthMapper.toScopeResponseDTO(defaultScope, false);
+      const isUpdated = false;
+      return this.oAuthMapper.toScopeResponseDTO(defaultScope, isUpdated);
     }
 
     if (!scope) {
-      return this.oAuthMapper.toScopeResponseDTO(clientAllowedScopes, false);
+      const isUpdated = false;
+      return this.oAuthMapper.toScopeResponseDTO(clientAllowedScopes, isUpdated);
     }
 
     const resultScope = this.tokenService.validateScope(clientAllowedScopes, scope);
     const isEqual = this.compareScope(resultScope, agreedScopes);
-    return this.oAuthMapper.toScopeResponseDTO(resultScope, !isEqual);
+    const isUpdated = !isEqual;
+    return this.oAuthMapper.toScopeResponseDTO(resultScope, isUpdated);
   }
 
   private compareScope(newScope: Partial<ScopeDTO>, agreedScopes?: ScopeDTO): boolean {
