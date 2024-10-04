@@ -28,7 +28,7 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
       clients?.redirect_uri,
     );
 
-    const address_uri = this.validateReferer(request.referer_uri, clients?.address_uri);
+    const address_uri = this.validateAddressURI(clients?.address_uri);
     const response_type = this.validateResponseType(request.response_type);
 
     return {
@@ -92,16 +92,12 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
     return requestValue;
   }
 
-  protected validateReferer(refererUri?: string, addressUri?: string): string {
-    if (!refererUri) {
-      throw createError(400, ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI);
+  protected validateAddressURI(addressUri?: string): string {
+    if (!addressUri) {
+      throw createError(400, ERROR_MESSAGES.VALIDATION.MISSING.ADDRESS_URI);
     }
 
-    if (addressUri && this.normalizeUri(refererUri) !== this.normalizeUri(addressUri)) {
-      throw createError(401, ERROR_MESSAGES.VALIDATION.MISMATCH.ADDRESS_URI);
-    }
-
-    return refererUri;
+    return addressUri;
   }
 
   protected validateResponseType(responseType?: string): string {

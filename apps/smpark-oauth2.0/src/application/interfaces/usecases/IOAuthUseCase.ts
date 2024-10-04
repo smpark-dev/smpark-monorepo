@@ -19,7 +19,7 @@ export interface ITokenPreparationUseCase {
 }
 
 export interface IUserAuthorizationUseCase {
-  execute(authorizeRequest: AuthorizeRequestDTO): Promise<void>;
+  execute(authorizeRequest: AuthorizeRequestDTO): Promise<string>;
 }
 
 export interface IUserScopeUpdaterUseCase {

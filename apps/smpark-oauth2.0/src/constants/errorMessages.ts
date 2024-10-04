@@ -31,7 +31,6 @@ export const ERROR_MESSAGES = {
       EMAIL: 'email이 존재하지 않습니다.',
       CLIENT_ID: 'client_id가 존재하지 않습니다.',
       CLIENT_SECRET: 'client_secret가 존재하지 않습니다.',
-      REFERER_URI: 'referer_uri가 존재하지 않습니다.',
       REDIRECT_URI: 'redirect_uri가 존재하지 않습니다.',
       GRANT_TYPE: 'grant_type이 존재하지 않습니다.',
       CODE: 'code가 존재하지 않습니다.',

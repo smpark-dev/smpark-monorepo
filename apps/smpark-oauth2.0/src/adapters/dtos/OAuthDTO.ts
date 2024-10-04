@@ -6,7 +6,6 @@ export class AuthorizeRequestDTO {
     public id?: string,
     public client_id?: string,
     public redirect_uri?: string,
-    public referer_uri?: string,
     public scope?: string,
     public state?: string,
     public response_type?: ResponseType,

@@ -49,12 +49,11 @@ class OAuthController implements IOAuthController {
         id: req.session.user?.id,
         ...req.query,
         ...req.body,
-        referer_uri: req.headers.referer || req.session.unVerifiedRefererUri,
       });
 
-      await this.userAuthorizationUseCase.execute(authorizeRequestDTO);
+      const address_uri = await this.userAuthorizationUseCase.execute(authorizeRequestDTO);
 
-      req.session.verifiedRefererUri = authorizeRequestDTO.referer_uri;
+      req.session.address_uri = address_uri;
     } catch (error) {
       next(error);
     }
@@ -209,11 +208,11 @@ class OAuthController implements IOAuthController {
   }
 
   disagree(req: Request, res: Response, next: NextFunction): void {
-    const referer = req.session.verifiedRefererUri;
-    if (referer) {
-      res.redirect(referer);
+    const { address_uri } = req.session;
+    if (address_uri) {
+      res.redirect(address_uri);
     } else {
-      next(createError(400, ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI));
+      next(createError(400, ERROR_MESSAGES.VALIDATION.MISSING.ADDRESS_URI));
     }
   }
 }

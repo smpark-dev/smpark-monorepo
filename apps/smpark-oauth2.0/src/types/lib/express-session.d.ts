@@ -8,8 +8,7 @@ declare module 'express-session' {
     user: { id: string; name: string; email: string } | null;
     codeValidatedIds: { id: string; client_id: string } | null;
     redirect_uri: string;
-    unVerifiedRefererUri: string;
-    verifiedRefererUri: string;
+    address_uri: string;
     scope: ScopeDTO;
     updated: boolean;
   }

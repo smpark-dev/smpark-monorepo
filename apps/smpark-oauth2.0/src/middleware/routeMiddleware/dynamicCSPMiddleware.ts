@@ -6,14 +6,14 @@ import { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 
 const dynamicCSPMiddleware = (req: IOauthRequest, res: Response, next: NextFunction): void => {
-  const refererUri = req.session.verifiedRefererUri;
+  const addressUri = req.session.address_uri;
 
-  if (!refererUri) {
-    return next(createError(401, ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI));
+  if (!addressUri) {
+    return next(createError(401, ERROR_MESSAGES.VALIDATION.MISSING.ADDRESS_URI));
   }
 
   const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
-  directives['form-action'] = ["'self'", refererUri];
+  directives['form-action'] = ["'self'", addressUri];
 
   helmet.contentSecurityPolicy({
     directives,

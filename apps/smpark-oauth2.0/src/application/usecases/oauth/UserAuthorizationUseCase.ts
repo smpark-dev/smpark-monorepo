@@ -16,14 +16,16 @@ class UserAuthorizationUseCase implements IUserAuthorizationUseCase {
     @inject(ClientsMapper) private clientsMapper: ClientsMapper,
   ) {}
 
-  async execute(authorizeRequest: AuthorizeRequestDTO): Promise<void> {
+  async execute(authorizeRequest: AuthorizeRequestDTO): Promise<string> {
     const { client_id } =
       this.oAuthRequestValidService.validateAuthorizationRequest(authorizeRequest);
     const fetchedClient = await this.clientsRepository.findByClientId(client_id);
-    this.oAuthRequestValidService.validateAuthorizationRequest(
+    const { address_uri } = this.oAuthRequestValidService.validateAuthorizationRequest(
       authorizeRequest,
       fetchedClient ? this.clientsMapper.toRequestValidDTO(fetchedClient) : null,
     );
+
+    return address_uri;
   }
 }
 

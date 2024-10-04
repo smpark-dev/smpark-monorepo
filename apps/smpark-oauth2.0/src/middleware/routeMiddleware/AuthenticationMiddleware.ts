@@ -33,7 +33,6 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
 
   private handleUnauthenticatedUser(req: IOauthRequest, res: Response, next: NextFunction): void {
     if (req.originalUrl.startsWith('/oauth') && Object.keys(req.query).length > 0) {
-      req.session.unVerifiedRefererUri = req.headers.referer;
       res.render('oauth/login', req.query);
     } else {
       req.session.destroy((error) => {

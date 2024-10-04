@@ -16,7 +16,6 @@ class OAuthMapper {
       authorizeRequest.id,
       authorizeRequest.client_id,
       authorizeRequest.redirect_uri,
-      authorizeRequest.referer_uri,
       authorizeRequest.scope,
       authorizeRequest.state,
       authorizeRequest.response_type,
