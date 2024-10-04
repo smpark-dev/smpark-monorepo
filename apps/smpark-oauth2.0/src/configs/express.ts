@@ -41,7 +41,7 @@ const configureExpress = async (
       saveUninitialized: false,
       store: sessionStore,
       cookie: {
-        domain: 'https://smpark.dev',
+        domain: '.smpark.dev',
         maxAge: Number(env.oauthRefreshTokenExpiresIn) * 1000,
         httpOnly: true,
         secure: env.nodeEnv === 'production',
