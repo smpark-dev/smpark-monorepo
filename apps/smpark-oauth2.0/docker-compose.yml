@@ -15,9 +15,15 @@ services:
       - .env.production
     environment:
       - NODE_ENV=production
+    depends_on:
+      - redis
     volumes:
       - oauth-log:/usr/src/oauth-log
     command: yarn smpark-oauth2.0:prod
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/data
 
 networks:
   default:
@@ -25,3 +31,4 @@ networks:
 
 volumes:
   oauth-log:
+  redis-data:

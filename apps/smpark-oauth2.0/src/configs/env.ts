@@ -11,6 +11,7 @@ if (process.env.NODE_ENV === 'production') {
 const env: EnvConfig = {
   nodeEnv: process.env.NODE_ENV as string,
   port: process.env.APP_PORT as string,
+  redisURL: process.env.REDIS_URL as string,
   mongoDBUri: process.env.MONGO_DATABASE_URI as string,
   mongoDBSessionKey: process.env.MONGO_DATABASE_SESSION_KEY as string,
   mongoDBUser: process.env.MONGO_DATABASE_USER as string,
@@ -22,8 +23,6 @@ const env: EnvConfig = {
   oauthAccessTokenExpiresIn: process.env.OAUTH_ACCESS_TOKEN_EXPIRES_IN as string,
   oauthRefreshSecret: process.env.OAUTH_REFRESH_SECRET_KEY as string,
   oauthRefreshTokenExpiresIn: process.env.OAUTH_REFRESH_TOKEN_EXPIRES_IN as string,
-  loginExpiresIn: process.env.LOGIN_EXPIRES_IN as string,
-  loginJWTSecretKey: process.env.LOGIN_JWT_SECRET_KEY as string,
   issuer: process.env.OAUTH_ISSUER as string,
 };
 export default env;
