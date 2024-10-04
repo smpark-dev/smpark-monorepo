@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import compression from 'compression';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
@@ -66,6 +67,29 @@ const configureExpress = async (
     }),
   );
   app.use(helmet.xssFilter());
+
+  // CORS 옵션 구성
+  // const corsOptions = {
+  //   origin(origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
+  //     if (!origin || ALLOWED_CLIENTS.indexOf(origin) !== -1) {
+  //       callback(null, true);
+  //     } else {
+  //       callback(new Error('Not allowed by CORS'));
+  //     }
+  //   },
+  //   methods: ['GET', 'POST'], // OAuth 2.0에 필요한 메서드만 허용
+  //   allowedHeaders: ['Content-Type', 'Authorization'],
+  //   credentials: true, // 인증 정보 포함 허용
+  //   maxAge: 86400, // CORS 프리플라이트 요청 결과를 1일 동안 캐시
+  // };
+
+  // CORS 미들웨어
+  app.use(
+    cors({
+      origin: ['https://smpark.dev'],
+      credentials: true,
+    }),
+  );
 
   // 응답 압축 미들웨어
   app.use(compression());
