@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import compression from 'compression';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
@@ -67,9 +66,6 @@ const configureExpress = async (
     }),
   );
   app.use(helmet.xssFilter());
-
-  // CORS 미들웨어
-  app.use(cors());
 
   // 응답 압축 미들웨어
   app.use(compression());
