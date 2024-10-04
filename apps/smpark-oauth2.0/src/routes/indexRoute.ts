@@ -30,7 +30,7 @@ const route = Router();
  *         description: 인증된 사용자는 OAuth 등록 페이지로 리다이렉트됨
  */
 route.get('/', (req: Request, res: Response) => {
-  if (req.session.user) {
+  if (req.cookies.auth_token) {
     res.redirect('/oauth/register');
   } else {
     res.render('main');

@@ -33,7 +33,7 @@ const configureExpress = async (
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
   app.use(cookieParser());
-
+  app.set('trust proxy', 1);
   app.use(
     session({
       secret: env.mongoDBSessionKey,
@@ -53,7 +53,7 @@ const configureExpress = async (
   app.use(morgan('combined', { stream }));
 
   // 보안 미들웨어
-  const isDevelopment = process.env.NODE_ENV === 'development';
+  const isDevelopment = env.nodeEnv === 'development';
   app.use(
     helmet({
       contentSecurityPolicy: {
@@ -68,28 +68,8 @@ const configureExpress = async (
   );
   app.use(helmet.xssFilter());
 
-  // CORS 옵션 구성
-  // const corsOptions = {
-  //   origin(origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
-  //     if (!origin || ALLOWED_CLIENTS.indexOf(origin) !== -1) {
-  //       callback(null, true);
-  //     } else {
-  //       callback(new Error('Not allowed by CORS'));
-  //     }
-  //   },
-  //   methods: ['GET', 'POST'], // OAuth 2.0에 필요한 메서드만 허용
-  //   allowedHeaders: ['Content-Type', 'Authorization'],
-  //   credentials: true, // 인증 정보 포함 허용
-  //   maxAge: 86400, // CORS 프리플라이트 요청 결과를 1일 동안 캐시
-  // };
-
   // CORS 미들웨어
-  app.use(
-    cors({
-      origin: ['https://smpark.dev', 'https://smpark.ddns.net'],
-      credentials: true,
-    }),
-  );
+  app.use(cors());
 
   // 응답 압축 미들웨어
   app.use(compression());
