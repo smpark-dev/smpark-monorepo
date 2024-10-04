@@ -24,14 +24,14 @@ class MongoDB {
 
   getCollection<T extends Document>(name: string): Collection<T> {
     if (!this.client) {
-      throw createError(500, 'Database not connected');
+      throw createError(500, 'MongoDB not connected');
     }
     return this.client.db(this.dbName).collection(name);
   }
 
   getClient(): MongoClient {
     if (!this.client) {
-      throw createError(500, 'Database not connected');
+      throw createError(500, 'MongoDB not connected');
     }
     return this.client;
   }

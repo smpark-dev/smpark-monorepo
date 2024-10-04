@@ -42,7 +42,7 @@ describe('TokenService', () => {
   describe('verifyToken', () => {
     it('토큰 검증', () => {
       const token = service.generateToken(loginPayload, jwtSecretKey, expiresIn);
-      const decoded = service.verifyToken<typeof loginPayload>(token, jwtSecretKey);
+      const decoded = service.verifyTokenStrict<typeof loginPayload>(token, jwtSecretKey);
       expect(decoded).toMatchObject(loginPayload);
     });
   });
