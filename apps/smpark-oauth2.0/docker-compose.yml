@@ -22,9 +22,7 @@ services:
       - oauth-log:/usr/src/oauth-log
     command: yarn smpark-oauth2.0:prod
     networks:
-      smpark-oauth-network-prod:
-        aliases:
-          - oauth-service
+      - smpark-oauth-network-prod 
 
   redis:
     image: redis:alpine
