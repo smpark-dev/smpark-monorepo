@@ -44,7 +44,7 @@ const configureExpress = async (
         maxAge: Number(env.oauthRefreshTokenExpiresIn) * 1000,
         httpOnly: true,
         secure: env.nodeEnv === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
       },
     }),
   );
