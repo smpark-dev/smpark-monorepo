@@ -48,7 +48,7 @@ class AuthenticationController implements IAuthenticationController {
         maxAge: Number(this.env.oauthAccessTokenExpiresIn) * 1000,
         httpOnly: true,
         secure: true,
-        sameSite: 'strict',
+        sameSite: 'lax',
       });
 
       req.body = authSerialize(req.body, ['password']);

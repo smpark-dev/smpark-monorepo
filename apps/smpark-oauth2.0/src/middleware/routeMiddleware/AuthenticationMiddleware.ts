@@ -89,7 +89,7 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
               maxAge: Number(this.env.oauthAccessTokenExpiresIn) * 1000,
               httpOnly: true,
               secure: true,
-              sameSite: 'strict',
+              sameSite: 'lax',
             });
 
             req.session.user = payload;
