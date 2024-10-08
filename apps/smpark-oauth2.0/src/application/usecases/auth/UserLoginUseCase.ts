@@ -39,7 +39,7 @@ class UserLoginUseCase implements IUserLoginUseCase {
     );
     const refreshToken = this.tokenService.generateToken(
       loginPayload,
-      this.env.oauthAccessSecret,
+      this.env.oauthRefreshSecret,
       Number(this.env.oauthRefreshTokenExpiresIn),
     );
 
