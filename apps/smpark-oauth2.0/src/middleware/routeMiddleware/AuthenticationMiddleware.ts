@@ -64,7 +64,6 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
         accessToken,
         this.env.oauthAccessSecret,
       );
-
       const currentTimestamp = Math.floor(Date.now() / 1000);
       const isExpired = decoded.exp ? decoded.exp < currentTimestamp : true;
 
