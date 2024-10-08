@@ -45,6 +45,7 @@ jobs:
           if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
             echo "Setting up smpark-oauth2.0"
             echo "REDIS_URL=${{ secrets.REDIS_URL }}" > apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "LOGIN_COOKIE_EXPIRES_IN=${{ secrets.LOGIN_COOKIE_EXPIRES_IN }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "MONGO_DATABASE_NAME=${{ secrets.MONGO_DATABASE_NAME }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "MONGO_DATABASE_PASSWORD=${{ secrets.MONGO_DATABASE_PASSWORD }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "MONGO_DATABASE_SESSION_COLLECTION=${{ secrets.MONGO_DATABASE_SESSION_COLLECTION }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
