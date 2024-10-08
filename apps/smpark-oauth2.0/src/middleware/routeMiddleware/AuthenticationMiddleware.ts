@@ -8,6 +8,10 @@ import User from '@entities/User';
 import { IAuthenticationMiddleware } from '@middleware/interfaces/routeMiddleware/IAuthenticationMiddleware';
 
 import type { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
+import type {
+  CookieOptions,
+  ICookieService,
+} from '@application-interfaces/services/ICookieService';
 import type { IRedisTokenRepository } from '@domain-interfaces/repository/IRedisTokenRepository';
 import type { ITokenService } from '@domain-interfaces/services/ITokenService';
 import type { EnvConfig } from '@lib/dotenv-env';
@@ -19,10 +23,11 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
     @inject('ITokenService') private tokenService: ITokenService,
     @inject('IRedisTokenRepository')
     private redisTokenRepository: IRedisTokenRepository,
+    @inject('ICookieService') private cookieService: ICookieService,
   ) {}
 
   public handle = (req: IOauthRequest, res: Response, next: NextFunction): void => {
-    const accessToken = req.cookies.auth_token;
+    const accessToken = req.cookies['smpark-auth'];
 
     if (!accessToken) {
       return this.handleUnauthenticatedUser(req, res, next);
@@ -40,7 +45,7 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
           next(error);
         }
 
-        res.clearCookie('auth_token');
+        res.clearCookie('smpark-auth');
         res.clearCookie('connect.sid');
 
         return res.redirect('/');
@@ -78,19 +83,18 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
               name: decoded.name,
               email: decoded.email,
             };
-
             const newAccessToken = this.tokenService.generateToken(
               payload,
               this.env.oauthAccessSecret,
               Number(this.env.oauthAccessTokenExpiresIn),
             );
+            const cookieOptions: CookieOptions = {
+              name: 'smpark-auth',
+              value: newAccessToken,
+              maxAge: Number(this.env.loginCookieExpiresIn) * 1000,
+            };
 
-            res.cookie('auth_token', newAccessToken, {
-              maxAge: Number(this.env.oauthAccessTokenExpiresIn) * 1000,
-              httpOnly: true,
-              secure: true,
-              sameSite: 'lax',
-            });
+            this.cookieService.setCookie(res, cookieOptions);
 
             req.session.user = payload;
           }

@@ -6,6 +6,7 @@ import ClientsController from '@controllers/ClientsController';
 import OAuthController from '@controllers/OAuthController';
 import MongoDB from '@database/MongoDB';
 import Redis from '@database/Redis';
+import CookieService from '@infra-service/CookieService';
 import ClientsMapper from '@mapper/ClientsMapper';
 import CodeMapper from '@mapper/CodeMapper';
 import OAuthMapper from '@mapper/OAuthMapper';
@@ -58,6 +59,7 @@ const registerServiceDependencies = (): void => {
   container.bind('ICodeService').to(CodeService);
   container.bind('IOAuthVerifierService').to(OAuthVerifierService);
   container.bind('ITokenService').to(TokenService);
+  container.bind('ICookieService').to(CookieService);
 };
 
 const registerRepositoryDependencies = (): void => {

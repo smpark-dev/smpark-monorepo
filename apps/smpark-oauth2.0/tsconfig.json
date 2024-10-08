@@ -18,6 +18,7 @@
       "@dtos/*": ["src/adapters/dtos/*"],
       "@mapper/*": ["src/adapters/mapper/*"],
       "@repository/*": ["src/infrastructure/repository/*"],
+      "@infra-service/*": ["src/infrastructure/services/*"],
       "@database/*": ["src/infrastructure/database/*"],
       "@adapters-interfaces/*": ["src/adapters/interfaces/*"],
       "@domain-interfaces/*": ["src/domain/interfaces/*"],

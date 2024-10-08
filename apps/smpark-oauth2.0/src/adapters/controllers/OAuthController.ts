@@ -11,6 +11,10 @@ import TokenMapper from '@mapper/TokenMapper';
 import UserMapper from '@mapper/UserMapper';
 import { authSerialize } from '@utils/serialize';
 
+import type {
+  CookieOptions,
+  ICookieService,
+} from '@application-interfaces/services/ICookieService';
 import type { IUserLoginUseCase } from '@application-interfaces/usecases/IAuthUseCase';
 import type {
   ICodeGenerationUseCase,
@@ -37,6 +41,7 @@ class OAuthController implements IOAuthController {
     private userAuthorizationUseCase: IUserAuthorizationUseCase,
     @inject('ITokenPreparationUseCase') private tokenPreparationUseCase: ITokenPreparationUseCase,
     @inject('IScopeComparatorUseCase') private scopeComparatorUseCase: IScopeComparatorUseCase,
+    @inject('ICookieService') private cookieService: ICookieService,
   ) {}
 
   async verifyOauthRequest(
@@ -70,12 +75,13 @@ class OAuthController implements IOAuthController {
       const loginDTO = this.userMapper.toLoginDTO(id, password);
       const accessToken = await this.userLoginUseCase.execute(loginDTO);
 
-      res.cookie('auth_token', accessToken, {
-        maxAge: Number(this.env.oauthAccessTokenExpiresIn) * 1000,
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-      });
+      const cookieOptions: CookieOptions = {
+        name: 'smpark-auth',
+        value: accessToken,
+        maxAge: Number(this.env.loginCookieExpiresIn) * 1000,
+      };
+
+      this.cookieService.setCookie(res, cookieOptions);
 
       req.body = authSerialize(req.body, ['password']);
 

@@ -2,6 +2,7 @@ export type EnvConfig = {
   nodeEnv: string;
   port: string;
   redisURL: string;
+  loginCookieExpiresIn: string;
   mongoDBUri: string;
   mongoDBUser: string;
   mongoDBName: string;

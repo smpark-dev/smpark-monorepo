@@ -6,6 +6,10 @@ import UserMapper from '@mapper/UserMapper';
 import { authSerialize } from '@utils/serialize';
 
 import type {
+  CookieOptions,
+  ICookieService,
+} from '@application-interfaces/services/ICookieService';
+import type {
   IUserLoginUseCase,
   IUserRegistrationUseCase,
 } from '@application-interfaces/usecases/IAuthUseCase';
@@ -19,6 +23,7 @@ class AuthenticationController implements IAuthenticationController {
     @inject('IUserLoginUseCase') private userLoginUseCase: IUserLoginUseCase,
     @inject('IUserRegistrationUseCase')
     private userRegistrationUseCase: IUserRegistrationUseCase,
+    @inject('ICookieService') private cookieService: ICookieService,
   ) {}
 
   renderLoginPage(req: Request, res: Response): void {
@@ -43,13 +48,13 @@ class AuthenticationController implements IAuthenticationController {
     try {
       const loginDTO = this.userMapper.toLoginDTO(id, password);
       const accessToken = await this.userLoginUseCase.execute(loginDTO);
+      const cookieOptions: CookieOptions = {
+        name: 'smpark-auth',
+        value: accessToken,
+        maxAge: Number(this.env.loginCookieExpiresIn) * 1000,
+      };
 
-      res.cookie('auth_token', accessToken, {
-        maxAge: Number(this.env.oauthAccessTokenExpiresIn) * 1000,
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-      });
+      this.cookieService.setCookie(res, cookieOptions);
 
       req.body = authSerialize(req.body, ['password']);
 
@@ -80,7 +85,7 @@ class AuthenticationController implements IAuthenticationController {
         next(error);
       }
 
-      res.clearCookie('auth_token');
+      res.clearCookie('smpark-auth');
       res.clearCookie('connect.sid');
 
       return res.redirect('/');
