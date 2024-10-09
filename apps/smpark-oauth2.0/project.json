@@ -54,6 +54,11 @@
             "glob": "**/*",
             "input": "apps/smpark-oauth2.0/src/script",
             "output": "apps/smpark-oauth2.0/src/script"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/smpark-oauth2.0/swagger.yaml",
+            "output": "apps/smpark-oauth2.0/swagger.yaml"
           }
         ],
         "platform": "node"
