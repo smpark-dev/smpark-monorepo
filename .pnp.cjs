@@ -68,6 +68,7 @@ const RAW_RUNTIME_STATE =
           ["@types/swagger-ui-express", "npm:4.1.6"],\
           ["@types/uuid", "npm:10.0.0"],\
           ["@types/winston", "npm:2.4.4"],\
+          ["@types/yamljs", "npm:0.2.34"],\
           ["@typescript-eslint/eslint-plugin", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:7.18.0"],\
           ["@typescript-eslint/parser", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:7.18.0"],\
           ["argon2", "npm:0.40.3"],\
@@ -134,6 +135,7 @@ const RAW_RUNTIME_STATE =
           ["winston", "npm:3.14.2"],\
           ["winston-daily-rotate-file", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.0.0"],\
           ["xss", "npm:1.0.15"],\
+          ["yamljs", "npm:0.3.0"],\
           ["zustand", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:4.5.5"]\
         ],\
         "linkType": "SOFT"\
@@ -8563,6 +8565,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@types/ws", "npm:8.5.12"],\
           ["@types/node", "npm:22.5.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/yamljs", [\
+      ["npm:0.2.34", {\
+        "packageLocation": "./.yarn/cache/@types-yamljs-npm-0.2.34-deb7fcb4e8-10e43fdfa1.zip/node_modules/@types/yamljs/",\
+        "packageDependencies": [\
+          ["@types/yamljs", "npm:0.2.34"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -21050,6 +21061,7 @@ const RAW_RUNTIME_STATE =
           ["@types/swagger-ui-express", "npm:4.1.6"],\
           ["@types/uuid", "npm:10.0.0"],\
           ["@types/winston", "npm:2.4.4"],\
+          ["@types/yamljs", "npm:0.2.34"],\
           ["@typescript-eslint/eslint-plugin", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:7.18.0"],\
           ["@typescript-eslint/parser", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:7.18.0"],\
           ["argon2", "npm:0.40.3"],\
@@ -21116,6 +21128,7 @@ const RAW_RUNTIME_STATE =
           ["winston", "npm:3.14.2"],\
           ["winston-daily-rotate-file", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:5.0.0"],\
           ["xss", "npm:1.0.15"],\
+          ["yamljs", "npm:0.3.0"],\
           ["zustand", "virtual:0806dd0e1a2fb6b571dbece1dbb0cbee7ba7840404ba101e74691b6f35f8c01b0dea3c759cadf55314c22957b7aefb97eefb8924ef0466931fbc52404d1fdaa5#npm:4.5.5"]\
         ],\
         "linkType": "SOFT"\
@@ -23553,6 +23566,17 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/yaml-npm-2.5.1-8b2871f510-40fba56828.zip/node_modules/yaml/",\
         "packageDependencies": [\
           ["yaml", "npm:2.5.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["yamljs", [\
+      ["npm:0.3.0", {\
+        "packageLocation": "./.yarn/cache/yamljs-npm-0.3.0-b0b262e524-61bea60327.zip/node_modules/yamljs/",\
+        "packageDependencies": [\
+          ["yamljs", "npm:0.3.0"],\
+          ["argparse", "npm:1.0.10"],\
+          ["glob", "npm:7.2.3"]\
         ],\
         "linkType": "HARD"\
       }]\

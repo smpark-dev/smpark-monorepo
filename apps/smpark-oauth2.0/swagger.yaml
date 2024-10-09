@@ -1,0 +1,474 @@
+openapi: 3.0.0
+info:
+  title: Authentication and OAuth API
+  version: 1.0.0
+  description: 사용자 인증 및 OAuth 관련 API
+
+tags:
+  - name: Authentication
+    description: 사용자 인증 관련 엔드포인트
+  - name: OAuth
+    description: OAuth 인증 관련 엔드포인트
+  - name: Main
+    description: 메인 페이지 관련 엔드포인트
+
+paths:
+  /:
+    get:
+      summary: 메인 페이지
+      tags: [Main]
+      description: 사용자의 인증 상태에 따라 메인 페이지를 보여주거나 OAuth 등록 페이지로 리다이렉트합니다.
+      responses:
+        '200':
+          description: 메인 페이지가 성공적으로 렌더링됨
+        '302':
+          description: 인증된 사용자는 OAuth 등록 페이지로 리다이렉트됨
+
+  /register:
+    get:
+      summary: 회원가입 페이지 렌더링
+      tags: [Authentication]
+      description: 비인증 사용자에게 회원가입 페이지를 보여줍니다.
+      responses:
+        '200':
+          description: 회원가입 페이지가 성공적으로 렌더링됨
+        '302':
+          description: 이미 인증된 사용자는 OAuth 등록 페이지(/oauth/register)로 리다이렉트됨
+    post:
+      summary: 회원가입 처리
+      tags: [Authentication]
+      description: 비인증 사용자의 회원가입 정보를 처리합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - password
+                - name
+                - email
+              properties:
+                id:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+                email:
+                  type: string
+      responses:
+        '200':
+          description: 회원가입 성공
+        '400':
+          description: 잘못된 입력 데이터
+        '302':
+          description: 이미 인증된 사용자는 OAuth 등록 페이지(/oauth/register)로 리다이렉트됨
+
+  /login:
+    get:
+      summary: 로그인 페이지 렌더링
+      tags: [Authentication]
+      description: 비인증 사용자에게 로그인 페이지를 보여줍니다.
+      responses:
+        '200':
+          description: 로그인 페이지가 성공적으로 렌더링됨
+        '302':
+          description: 이미 인증된 사용자는 OAuth 등록 페이지(/oauth/register)로 리다이렉트됨
+    post:
+      summary: 사용자 로그인
+      tags: [Authentication]
+      description: 제공된 credentials를 사용하여 사용자 로그인을 시도합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - password
+              properties:
+                id:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: 로그인 성공
+        '400':
+          description: 잘못된 요청 (예: 필수 필드 누락, 유효하지 않은 입력 형식)
+        '401':
+          description: 인증 실패 (예: 잘못된 credentials)
+        '500':
+          description: 서버 에러
+
+  /logout:
+    post:
+      summary: 로그아웃
+      tags: [Authentication]
+      description: 사용자 세션을 종료하고 로그아웃 처리합니다.
+      responses:
+        '200':
+          description: 로그아웃 성공
+        '500':
+          description: 서버 에러
+
+  /oauth/register:
+    get:
+      summary: OAuth App 등록 페이지 조회
+      tags: [OAuth]
+      description: 인증된 사용자에게 OAuth 클라이언트 등록 페이지를 제공합니다. 사용자의 인증 상태에 따라 적절한 페이지로 리다이렉트될 수 있습니다.
+      responses:
+        '200':
+          description: OAuth 클라이언트 등록 페이지가 성공적으로 로드됨
+        '302':
+          description: 인증이 필요한 경우 로그인 페이지로 리다이렉트
+        '401':
+          description: 인증되지 않은 사용자
+    post:
+      summary: OAuth App 등록 페이지 데이터 등록
+      tags: [OAuth]
+      description: 인증된 사용자가 OAuth App 등록 페이지의 작성한 데이터를 등록합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - client_id
+                - client_secret
+                - address_uri
+                - redirect_uri
+                - application_name
+              properties:
+                client_id:
+                  type: string
+                  description: 클라이언트 애플리케이션의 고유 식별자.
+                client_secret:
+                  type: string
+                  description: 클라이언트 인증에 사용되는 비밀 키.
+                address_uri:
+                  type: string
+                  description: OAuth 서비스 제공자의 주소 URI.
+                redirect_uri:
+                  type: string
+                  description: 인증 완료 후 사용자를 리다이렉트할 URI.
+                application_name:
+                  type: string
+                  description: 클라이언트 애플리케이션의 이름
+                clientAllowedScopes:
+                  type: string
+                  description: 클라이언트 애플리케이션이 요청할 수 있는 권한 범위(scopes)의 목록.
+                manager_list:
+                  type: string
+                  description: Oauth App의 채팅기능을 관리하는 매니저들의 아이디 ( 미완성 )
+      responses:
+        '200':
+          description: OAuth 등록 완료 메시지 전달
+        '302':
+          description: 인증이 필요한 경우 로그인 페이지로 리다이렉트
+        '401':
+          description: 인증되지 않은 사용자
+
+  /oauth/credential:
+    post:
+      summary: OAuth App 등록 페이지의 Client_ID, Client_Secret, Client_API_KEY 생성 및 갱신
+      tags: [OAuth]
+      description: Auth App 등록 페이지에서 '생성하기' 버튼을 통해 Client_ID, Client_Secret, Client_API_KEY를 각각 생성 및 갱신합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: boolean
+                  description: 클라이언트 ID를 생성/갱신할 경우 true로 설정
+                client_secret:
+                  type: boolean
+                  description: 클라이언트 시크릿을 생성/갱신할 경우 true로 설정
+                api_key:
+                  type: boolean
+                  description: API 키를 생성/갱신할 경우 true로 설정
+              example:
+                client_id: false
+                client_secret: true
+                api_key: false
+                
+      responses:
+        '200':
+          description: OAuth 등록 페이지에 Client_ID, Client_Secret, Client_API_KEY 정보 전달
+        '302':
+          description: 인증이 필요한 경우 로그인 페이지로 리다이렉트
+        '401':
+          description: 인증되지 않은 사용자
+        '500':
+          description: 서버 에러
+  /oauth/authorize:
+    get:
+      summary: OAuth 2.0 인증 프로세스 시작 또는 계속
+      tags: [OAuth]
+      description: |
+        클라이언트가 리소스 소유자의 인증을 요청하고 권한 부여를 얻기 위한 엔드포인트입니다. 이 엔드포인트는 OAuth 2.0 명세 (RFC 6749)를 준수합니다.
+        
+        프로세스 흐름:
+        1. 세션 확인
+          - 유효한 세션이 있는 경우: step 2로 진행
+          - 유효한 세션이 없는 경우: 로그인 페이지 제공
+        2. 파라미터 검증
+        3. 권한 부여 확인
+          - 권한 부여 동의가 필요한 경우: 권한 부여 동의 페이지 제공
+          - 권한 부여 동의가 필요없는 경우: Code 생성 프로세스로 리다이렉트
+      parameters:
+        - in: query
+          name: response_type
+          required: true
+          schema:
+            type: string
+            enum: [code]
+          description: OAuth 2.0 인증 흐름을 지정합니다. 현재는 'code'(Authorization Code Flow)만 지원됩니다.
+        - in: query
+          name: client_id
+          required: true
+          schema:
+            type: string
+          description: 클라이언트 식별자.
+        - in: query
+          name: redirect_uri
+          required: true
+          schema:
+            type: string
+          description: 인증 서버가 인증 완료 후 사용자를 리다이렉트할 URI. 보안상의 이유로 필수로 요구됨.
+        - in: query
+          name: scope
+          required: false
+          schema:
+            type: string
+          description: 요청하는 접근 범위. 공백으로 구분된 문자열.
+        - in: query
+          name: state
+          required: false
+          schema:
+            type: string
+          description: 클라이언트의 요청 상태. CSRF 방지를 위해 사용 권장.
+      responses:
+        '200':
+          description: 로그인 페이지 또는 권한 부여 동의 화면 제공
+        '302':
+          description: 권한 확인 및 권한 부여 동의 확인 후 인증 코드 발급 프로세스('/oauth/consent')로 리다이렉트
+        '400':
+          description: 잘못된 요청 (필수 파라미터 누락)
+        '401':
+          description: 잘못된 요청 (유효하지 않은 값)
+    post:
+      summary: OAuth 2.0 사용자 인증 처리
+      tags: [OAuth]
+      description: |
+        OAuth 2.0 인증 흐름의 일부로, 사용자 인증을 처리합니다. 모든 OAuth 관련 파라미터와 사용자 인증 정보는 요청 본문에 포함됩니다.
+        
+        프로세스 흐름:
+        1. 파라미터 재검증
+        2. 사용자 인증 처리
+        3. 인증 성공 시 GET /oauth/authorize로 리다이렉트 정보 제공
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - id
+                - password
+                - response_type
+                - client_id
+                - redirect_uri
+              properties:
+                id:
+                  type: string
+                  description: 사용자의 아이디
+                password:
+                  type: string
+                  description: 사용자의 비밀번호
+                response_type:
+                  type: string
+                  description: OAuth 2.0 인증 흐름을 지정합니다. 현재는 'code'(Authorization Code Flow)만 지원됩니다.
+                client_id:
+                  type: string
+                  description: 클라이언트 식별자.
+                redirect_uri:
+                  type: string
+                  description: 인증 서버가 인증 완료 후 사용자를 리다이렉트할 URI. 보안상의 이유로 필수로 요구됨.
+                scope:
+                  type: string
+                  description: 요청하는 접근 범위. 공백으로 구분된 문자열.
+                state:
+                  type: string
+                  description: 클라이언트의 요청 상태. CSRF 방지를 위해 사용 강력 권장.
+      responses:
+        '200':
+          description: 인증 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "로그인 성공"
+                  redirect:
+                    type: string
+                    example: "/oauth/authorize?client_id=example_client&redirect_uri=https://example.com/callback&state=xyz&scope=read&response_type=code"
+        '400':
+          description: 잘못된 요청 (필수 파라미터 누락, 유효하지 않은 값 등)
+        '401':
+          description: 인증 실패 (잘못된 사용자 이름 또는 비밀번호)
+
+  /oauth/consent:
+    get:
+      summary: 사용자 동의 처리 및 인증 코드 생성
+      tags: [OAuth]
+      description: |
+        사용자의 동의를 처리하고 인증 코드를 생성하는 엔드포인트입니다.
+        이 프로세스는 두 단계로 구성됩니다:
+        1. 사용자가 동의한 스코프를 업데이트합니다.
+        2. 인증 코드를 생성하고 클라이언트의 redirect_uri로 리다이렉트합니다.
+      parameters:
+        - in: session
+          name: scope
+          required: true
+          schema:
+            type: string
+          description: 사용자가 동의한 스코프
+        - in: session
+          name: updated
+          required: true
+          schema:
+            type: boolean
+          description: 스코프 업데이트 여부
+        - in: session
+          name: user.id
+          required: true
+          schema:
+            type: string
+          description: 사용자 ID
+        - in: session
+          name: redirect_uri
+          required: true
+          schema:
+            type: string
+          description: 클라이언트의 리다이렉트 URI
+        - in: session
+          name: state
+          required: false
+          schema:
+            type: string
+          description: 클라이언트 상태 (있는 경우)
+      responses:
+        '302':
+          description: 인증 코드와 함께 클라이언트의 redirect_uri로 리다이렉트
+          headers:
+            Location:
+              schema:
+                type: string
+              description: |
+                리다이렉트 URL (예: https://client.example.com/callback?code=abc123&state=xyz)
+        '400':
+          description: 잘못된 요청 (세션 데이터 누락 또는 잘못된 형식)
+        '401':
+          description: 인증되지 않은 사용자
+        '500':
+          description: 서버 내부 오류
+
+  /oauth/disagree:
+    post:
+      summary: OAuth 동의 거부 처리
+      tags: [OAuth]
+      description: 사용자가 OAuth 동의를 거부했을 때 처리하는 엔드포인트입니다. 사용자를 미리 등록된 주소로 리다이렉트합니다.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object           
+              properties:
+                - in: session
+                  address_uri:
+                    type: string
+                    description: 인증취소 시 되돌아갈 클라이언트 주소
+      responses:
+        '302':
+          description: 사용자가 등록한 주소로 리다이렉트
+          headers:
+            Location:
+              schema:
+                type: string
+              description: 리다이렉트 URL
+        '400':
+          description: 잘못된 요청 (클라이언트 ID 누락 또는 잘못된 클라이언트 ID)
+
+  /oauth/token:
+    post:
+      summary: 액세스 토큰 발급
+      tags: [OAuth]
+      description: |
+        인증 코드를 사용하여 액세스 토큰과 리프레시 토큰을 발급합니다.
+        이 프로세스는 두 단계로 구성됩니다:
+        1. 토큰 요청 검증 (verifyTokenRequest)
+        2. 액세스 토큰 생성 (generateAccessToken)
+        
+        client_id와 client_secret은 Basic 인증을 통해 전달됩니다.
+      security:
+        - BasicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - grant_type
+                - code
+                - redirect_uri
+              properties:
+                grant_type:
+                  type: string
+                  enum: [authorization_code, refresh_token]
+                  description: authorization_code 또는 refresh_token
+                code:
+                  type: string
+                  description: 이전에 발급받은 인증 코드 (grant_type이 "authorization_code"일 때 필요)
+                redirect_uri:
+                  type: string
+                  description: 인증 요청 시 사용한 리다이렉트 URI와 동일해야 합니다.
+      responses:
+        '200':
+          description: 액세스 토큰 발급 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: 발급된 액세스 토큰
+                  refresh_token:
+                    type: string
+                    description: 리프레시 토큰
+                  token_type:
+                    type: string
+                    example: "Bearer"
+        '400':
+          description: 잘못된 요청 (필수 파라미터 누락, 유효하지 않은 값 등)
+        '401':
+          description: 인증 실패 (잘못된 클라이언트 인증 정보)
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: 클라이언트 ID와 시크릿을 Base64로 인코딩하여 Authorization 헤더에 포함

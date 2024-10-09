@@ -44,6 +44,7 @@
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "@types/yamljs": "^0.2.34",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
@@ -114,6 +115,7 @@
     "winston": "^3.13.1",
     "winston-daily-rotate-file": "^5.0.0",
     "xss": "^1.0.15",
+    "yamljs": "^0.3.0",
     "zustand": "^4.5.4"
   },
   "packageManager": "yarn@4.4.0",
