@@ -12,7 +12,7 @@ COPY apps/smpark-oauth2.0/nodemon.json ./
 COPY apps/smpark-oauth2.0/*.config.js apps/smpark-oauth2.0/*.config.mjs ./
 COPY tsconfig.base.json ./
 COPY apps/smpark-oauth2.0/tsconfig*.json ./tsconfig/sub-config/
-COPY apps/smpark-oauth2.0/swagger.yaml apps/smpark-oauth2.0/
+COPY apps/smpark-oauth2.0/swagger.yaml ./
 
 FROM base AS production
 # 빌드 파일
