@@ -5,12 +5,16 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 
+import env from '@configs/env';
+
 const configureSwagger = (app: express.Application): void => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
 
   // YAML 파일 로드
-  const swaggerDocument = YAML.load(path.join(__dirname, '../../swagger.yaml'));
+  const swaggerDocument = YAML.load(
+    path.join(__dirname, env.nodeEnv === 'production' ? 'swagger.yaml' : '../../swagger.yaml'),
+  );
 
   // 서버 정보 동적 추가
   swaggerDocument.servers = [
