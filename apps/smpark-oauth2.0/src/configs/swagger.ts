@@ -5,18 +5,19 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 
-import env from '@configs/env';
+import type { EnvConfig } from '@lib/dotenv-env';
 
-const configureSwagger = (app: express.Application): void => {
+const configureSwagger = (app: express.Application, env: EnvConfig): void => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
 
-  // YAML 파일 로드
-  const swaggerDocument = YAML.load(
-    path.join(__dirname, env.nodeEnv === 'production' ? 'swagger.yaml' : '../../swagger.yaml'),
-  );
+  const swaggerPath =
+    env.nodeEnv === 'production'
+      ? '/usr/src/oauth/swagger.yaml'
+      : path.join(__dirname, '../../swagger.yaml');
 
-  // 서버 정보 동적 추가
+  const swaggerDocument = YAML.load(swaggerPath);
+
   swaggerDocument.servers = [
     {
       url: process.env.API_URL || 'http://localhost:4000',

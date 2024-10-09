@@ -26,7 +26,7 @@ await redis.connect();
 const app = express();
 
 await configureExpress(app, sessionStore, env);
-configureSwagger(app);
+configureSwagger(app, env);
 
 const port = env.port || 5555;
 app.listen(port, async () => {
