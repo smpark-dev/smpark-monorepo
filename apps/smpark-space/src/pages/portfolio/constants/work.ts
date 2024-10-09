@@ -174,7 +174,7 @@ export const WORK = {
       LINKS: {
         ICON: Link,
         TEXT: '링크',
-        LIST: [{ TEXT: '웹사이트', URL: 'https://www.dualtalk.ai/' }],
+        LIST: [{ TEXT: '웹사이트', URL: 'https://smpark.ddns.net' }],
       },
     },
     {
