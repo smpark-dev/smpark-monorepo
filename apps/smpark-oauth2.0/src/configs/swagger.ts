@@ -20,7 +20,7 @@ const configureSwagger = (app: express.Application, env: EnvConfig): void => {
 
   swaggerDocument.servers = [
     {
-      url: process.env.API_URL || 'http://localhost:4000',
+      url: env.issuer || 'http://localhost:4000',
       description: 'smpark oauth2.0 API server',
     },
   ];
