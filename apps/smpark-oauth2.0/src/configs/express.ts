@@ -33,6 +33,7 @@ const configureExpress = async (
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
   app.use(cookieParser());
+  app.set('trust proxy', 1);
   app.use(
     session({
       secret: env.mongoDBSessionKey,
