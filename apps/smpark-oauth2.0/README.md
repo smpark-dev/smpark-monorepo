@@ -1,6 +1,6 @@
 # smPark OAuth2.0 Server
 
-`smPark OAuth2.0 Server`는 3년 전 보안 공부를 위해 만들었던 OAuth 2.0 서버를 클린 아키텍처와 최신 기술을 적용하여 리마스터한 프로젝트입니다.
+`smPark OAuth2.0 Server`는 3년 전 보안 공부를 위해 만들었던 OAuth 2.0 서버를 클린 아키텍처를 적용하여 확장성을 개선하고 일부 코드를 리펙토링한 프로젝트입니다.
 README.md는 OAuth2.0에 대한 간단한 소개 및 사용방법, 폴더 구조 및 아키텍처, 기타 설정 등에 대한 소개입니다.
 
 ## 주요 특징
@@ -9,24 +9,31 @@ README.md는 OAuth2.0에 대한 간단한 소개 및 사용방법, 폴더 구조
   유지보수성과 확장성을 고려한 구조로 설계되었습니다.
 
 - **Yarn PnP (Zero Install)**:
-  PnP 기능을 체험하고 Zero Install의 속도를 확인하기 위해 적용해보았습니다.
+  설치 시간 단축, CI/CD 시간 단축 등을 위해 Zero Install을 사용하였습니다.
 
 - **TypeScript**:
   정적 타입 체크(Strict)를 통해 코드의 안정성과 가독성을 향상시켰습니다.
 
+- **DB & Session**:
+  noSQL(MongoDB)를 이용하여 데이터를 저장합니다. 
+  JWT를 이용하여 로그인 기능을 구현하였고 그 중 Refresh Token을 Redis에 저장합니다.
+
 - **ESLint**:
-  코드 품질과 일관성을 유지하기 위해 엄격한 린팅 규칙을 적용하였습니다.
+  코드 품질과 일관성을 유지하기 위해 린팅 규칙을 적용하였습니다.
 
 - **Docker**:
   컨테이너화를 통해 개발 환경과 배포 환경의 일관성을 보장하였습니다.
 
 - **JEST/Cypress**:
-
   - 서비스 로직을 유닛 테스트 하였습니다.
   - OAuth 인증의 성공 사례를 E2E 테스트 하였습니다.
 
 - **CI/CD**:
-  GitHub Actions를 통해 지속적인 통합 및 배포 파이프라인을 구축하였습니다.
+  - GitHub Actions를 통해 지속적인 통합 및 배포 파이프라인을 구축하였습니다. 
+  - 개인 자원을 통한 무료 배포 + 성능을 목적으로, 가정 내 윈도우 데스크탑에서 배포하였습니다. 
+  - WSL(리눅스)를 이용한 배포 보다는 새롭게 윈도우11에서 직접 배포에 도전하였습니다. 
+  - CI는 개발 맥북 -> CD는 윈도우 데스크탑에서 이루어집니다. 
+  - 포트폴리오용으로 만들었기에 08:00 - 21:00 사이에만 배포가 이루어지며, 시간에 맞춰 자동 구동하도록 세팅하였습니다.
 
 ## Version
 
@@ -38,7 +45,7 @@ README.md는 OAuth2.0에 대한 간단한 소개 및 사용방법, 폴더 구조
 
 - **Tool** - `VSCode` _(v1.91.1)_
 - **Back End** - `Node.js` _(v20.14.0)_, `Express` _(v4.19.2)_
-- **Front End** - `JavaScript Module` _(ES6+)_, `TypeScript` _(v5.5.2)_
+- **Front End** - `JavaScript` _(ES6+)_, `TypeScript` _(v5.5.2)_
 - **Database** - `MongoDB (Atlas)` _(v6.7.0)_
 - **Web Server** - `Nginx` _(v1.27.0)_
 - **Linting** - `ESLint` _(v9.5.0)_
@@ -47,7 +54,7 @@ README.md는 OAuth2.0에 대한 간단한 소개 및 사용방법, 폴더 구조
 - **Package Management** - `Yarn` _(v4.3.1)_
 - **Version Control** - `Git` _(v2.40.1)_
 - **Testing** - `Jest` _(v29.7.0)_, `Cypress` _(v13.13.0)_
-- **Deployment Environment** - `macOS` _(v14.5 Sonoma on MacBook)_
+- **Deployment Environment** - `CI - macOS` _(v14.5 Sonoma on MacBook)_, `CD - Windows11` _(vWin11 Desktop)_
 
 <br>
 
@@ -66,15 +73,16 @@ README.md는 OAuth2.0에 대한 간단한 소개 및 사용방법, 폴더 구조
 
 OAuth2.0에서 쓰이는 용어 설명입니다.
 
-- `Client ID (client_id)` - 클라이언트 애플리케이션을 식별하기 위한 공개된 식별자.
-- `Client Secret (client_secret)` - 클라이언트 애플리케이션을 인증하기 위한 비밀 키로, 서버 간 통신에서만 사용됨.
+- `Client ID (client_id)` - 클라이언트 애플리케이션 식별을 위한 공개된 식별자.
+- `Client Secret (client_secret)` - 클라이언트 애플리케이션을 인증하기 위한 비밀 키.
 - `Scope` - 클라이언트가 접근하려는 리소스 서버의 자원 범위.
+- `Response_type` - OAuth2.0 인증 플로우 선택. 현재 Code만 지원.
 - `Authorization Callback URL (redirect_uri)` - 권한 부여 코드 또는 액세스 토큰을 전달받을 클라이언트의 URL.
-- `Homepage Address` - 클라이언트의 홈페이지 URL로, 일반적으로 referer 도메인 검사를 위해 사용됨.
-- `Access Token` - 리소스 서버에서 보호된 자원에 접근하기 위한 토큰. 유효 시간은 일반적으로 10분.
-- `Refresh Token` - 새로운 액세스 토큰을 발급받기 위한 토큰. 유효 시간은 일반적으로 5시간.
-- `State` - 요청의 무결성을 검증하기 위한 고유한 문자열.
-- `Authorization Code` - 사용자가 클라이언트에 로그인하여 권한을 부여한 후 발급되는 코드. 클라이언트는 이 코드를 사용하여 액세스 토큰을 요청함.
+- `Homepage Address` - 클라이언트의 홈페이지 URI로 동의 취소 시 리다이렉트 주소로 사용.
+- `Access Token` - 리소스 서버에서 보호된 자원에 접근하기 위한 토큰. 유효 기간 15분 설정.
+- `Refresh Token` - 새로운 액세스 토큰을 발급받기 위한 토큰. 유효 시간 1일 설정.
+- `State` - 요청과 응답의 상태를 유지하고 무결성을 검증하기 위한 고유한 문자열로 클라이언트가 생성하여 제공.
+- `Authorization Code` - 사용자의 권한 인증 후 발급되는 일회용 코드. 클라이언트는 이 코드로 액세스 토큰 요청.
 
 <br>
 
@@ -85,8 +93,47 @@ OAuth2.0에서 쓰이는 용어 설명입니다.
 
 <br>
 
-- `state` : CSRF 공격에 대비하여 공격자가 예상할 수 없는 state 데이터를 받아 클라이언트 어플리케이션의 redirect_uri에 담아 되돌려줍니다.
+- `CSP` : 웹 애플리케이션에서 실행될 수 있는 리소스의 출처를 제한하는 보안 메커니즘으로, 서버가 HTTP 헤더를 통해 브라우저에 전달하는 정책입니다.
+미들웨어를 통해 접속 요청이 있을때 인증된 URI에만 제한을 완화하도록 동적 설정하였습니다.
+
 - ```javascript
+  const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
+  directives['form-action'] = ["'self'", addressUri];
+  directives['script-src'] = ["'self'", addressUri];
+  directives['connect-src'] = ["'self'", addressUri];
+  directives['form-action'] = ["'self'", addressUri];
+  directives['frame-ancestors'] = ["'none'"];
+
+  helmet.contentSecurityPolicy({
+    directives,
+  })(req, res, next);
+  ```
+
+
+- `CSRF` : CSP의 form 설정으로 승인되지 않은 도메인으로의 폼 제출을 방지합니다.
+State 사용으로 CSRF 공격 방지와 요청-응답 상태 유지합니다. 이는 클라이언트가 생성하여 전송하고, 인증 서버는 이를 그대로 반환합니다.
+httpOnly, secure, sameSite등 엄격한 쿠키 설정을 통해 클라이언트에서 쿠키 접근을 막고, HTTPS에서만 접근을 허용하며 같은 사이트 출처의 요청에만 쿠키를 전송하여 CSRF 공격에 대비하였습니다. 
+- ```javascript
+   directives['form-action'] = ["'self'", addressUri];
+   setCookie(res: Response, options: CookieOptions): Response {
+    const {
+      name,
+      value,
+      maxAge = Number(this.env.loginCookieExpiresIn) * 1000,
+      httpOnly = true,
+      secure = this.env.nodeEnv === 'production',
+      sameSite = 'lax',
+    } = options;
+
+    return res.cookie(name, value, {
+      maxAge,
+      httpOnly,
+      secure,
+      sameSite,
+    });
+  }
+  
+
   try {
     const { redirect_uri, state } = req.session;
     const code = await this.codeGenerationUseCase.execute(id);
@@ -113,28 +160,10 @@ OAuth2.0에서 쓰이는 용어 설명입니다.
 
 <br>
 
-- `xss` & `referer` xss 패키지를 이용하여 refererUri에서 스크립트를 제거한 후, 기존에 등록된 addressUri와 비교하여 레퍼러를 검사합니다.
+- `xss` : CSP 설정을 통한 스크립트 제한으로 등록된 addressUri를 제외한 스크립트 소스를 엄격하게 제한합니다.
 
   ```javascript
-  private validateReferer(refererUri?: string, addressUri?: string): string {
-      if (!refererUri) {
-        throw createError(400, ERROR_MESSAGES.VALIDATION.MISSING.REFERER_URI);
-      }
-
-      if (
-        addressUri &&
-        this.normalizeUri(refererUri) !== this.normalizeUri(addressUri)
-      ) {
-        throw createError(401, ERROR_MESSAGES.VALIDATION.MISMATCH.ADDRESS_URI);
-      }
-
-      return refererUri;
-    }
-
-  private normalizeUri(uri: string): string {
-    const validUri = xss(uri);
-    return validUri.endsWith('/') ? validUri.slice(0, -1) : validUri;
-  }
+  directives['script-src'] = ["'self'", addressUri];
   ```
 
 <br>
@@ -154,27 +183,47 @@ OAuth2.0에서 쓰이는 용어 설명입니다.
 
 <br>
 
-- `Refresh Token` : 통신 중 `Access Token`을 탈취당할 위험을 최소화하기 위해 유효시간을 10분 이하로 설정하고 `Refresh Token`을 통해 재발급하도록 구현하였습니다. 유효시간이 만료되면 자동으로 로그아웃됩니다.
+- `Access Token & Refresh Token` : OAauth2.0 서버에서 인증이 완료되면 클라이언트는 `Access Token`과 `Refresh Token`를 지급받습니다. 
+로그인 처리는 JWT 방식을 사용합니다. `Access Token`은 cookie에 담고 `Refresh Token`은 Redis에 담아 이원화하였고 서버에서만 관리하도록 하였습니다. 통신 중 `Access Token`을 탈취 후의 위험을 최소화하기 위해 유효시간을 15분 이하로 설정하고 해당 토큰이 만료되면 `Refresh Token`을 활용하여 재발급합니다.  `Access Token` 쿠키가 제거되거나 `Refresh Token`유효시간이 만료되면 다시 인증과정을 거쳐야합니다.
 
   ```javascript
-  generateToken(
-    payload: object,
-    jwtSecretKey: string,
-    expiresIn: number,
-  ): string {
-    const jwtToken = jwt.sign(payload, jwtSecretKey, {
-      expiresIn,
-    });
+  setCookie(res: Response, options: CookieOptions): Response {
+    const {
+      name,
+      value,
+      maxAge = Number(this.env.loginCookieExpiresIn) * 1000,
+      httpOnly = true,
+      secure = this.env.nodeEnv === 'production',
+      sameSite = 'lax',
+    } = options;
 
-    return jwtToken;
+    return res.cookie(name, value, {
+      maxAge,
+      httpOnly,
+      secure,
+      sameSite,
+    });
   }
+
+  const tokens = {
+      accessToken: this.generateToken(
+        accessTokenPayload,
+        this.env.oauthAccessSecret,
+        Number(this.env.oauthAccessTokenExpiresIn),
+      ),
+      refreshToken: this.generateToken(
+        refreshTokenPayload,
+        this.env.oauthRefreshSecret,
+        Number(this.env.oauthRefreshTokenExpiresIn),
+      ),
+  };
   ```
 
 <br>
 
 ## Usage
 
-간단한 이용 방법입니다.
+해당 사이트의 이용 방법입니다.
 
 #### Register
 
@@ -218,7 +267,7 @@ window.location.href = uri;
    <br>
 
   <br>
-4. Flow 2: 동의 후 클라이언트에게 code 전달
+4. Flow 2: 동의 후 클라이언트에게 code 전달(서버에서 자동으로 이루어짐)
 
 <br>
 
@@ -256,7 +305,7 @@ return res.json({
 });
 ```
 
-6. Flow 5: 클라이언트는 `OAuth Server`에서 받은` access_token`을 Resource Server에 전달
+6. Flow 5: 클라이언트는 `OAuth Server`에서 받은 `access_token`을 Resource Server에 전달
 
 ```javascript
 const response = await axios.get('https://resource-server.example.com/scope', {
@@ -317,4 +366,4 @@ error.log
 
 ## architecture
 
-작성중 ...
+
