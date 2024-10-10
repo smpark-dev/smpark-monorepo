@@ -18,18 +18,18 @@ class UserLoginUseCase implements IUserLoginUseCase {
     @inject(UserMapper) private userMapper: UserMapper,
     @inject('IUserRepository') private userRepository: IUserRepository,
     @inject('ITokenService') private tokenService: ITokenService,
-    @inject('IAuthenticationService') private authService: IAuthenticationService,
+    @inject('IAuthenticationService') private authenticationService: IAuthenticationService,
     @inject('IOAuthVerifierService') private oAuthVerifierService: IOAuthVerifierService,
     @inject('IRedisTokenRepository')
     private redisTokenRepository: IRedisTokenRepository,
   ) {}
 
   async execute(loginDTO: LoginDTO): Promise<string> {
-    const { id, password } = this.authService.verifySignInInfo(loginDTO);
+    const { id, password } = this.authenticationService.verifySignInInfo(loginDTO);
     const fetchedUser = await this.userRepository.findById(id);
     const verifiedUser = this.oAuthVerifierService.verifyUser(fetchedUser);
     const user = this.userMapper.toEntity(verifiedUser);
-    await this.authService.authenticate(user, password, verifiedUser.password);
+    await this.authenticationService.authenticate(user, password, verifiedUser.password);
 
     const loginPayload = { id: user.id, name: user.name, email: user.email };
     const accessToken = this.tokenService.generateToken(

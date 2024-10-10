@@ -13,16 +13,16 @@ class UserRegistrationUseCase implements IUserRegistrationUseCase {
   constructor(
     @inject(UserMapper) private userMapper: UserMapper,
     @inject('IUserRepository') private userRepository: IUserRepository,
-    @inject('IAuthenticationService') private authService: IAuthenticationService,
+    @inject('IAuthenticationService') private authenticationService: IAuthenticationService,
     @inject('IOAuthVerifierService') private oAuthVerifierService: IOAuthVerifierService,
   ) {}
 
   async execute(userInfo: RegisterDTO): Promise<void> {
-    const verifiedInfo = this.authService.verifySignUpInfo(userInfo);
+    const verifiedInfo = this.authenticationService.verifySignUpInfo(userInfo);
 
     const user = this.userMapper.toEntity(verifiedInfo);
 
-    this.authService.validSignUpInfo(user);
+    this.authenticationService.validSignUpInfo(user);
 
     const { id, password } = verifiedInfo;
 
@@ -32,7 +32,7 @@ class UserRegistrationUseCase implements IUserRegistrationUseCase {
 
     // const userByEmail = await this.userRepository.findByEmail(email); // 이메일 확인 관련 기능 보류 (2024-07 작성)
 
-    const hashedPassword = await this.authService.hashedPassword(password);
+    const hashedPassword = await this.authenticationService.hashedPassword(password);
     const updatedInfo = {
       ...verifiedInfo,
       password: hashedPassword,

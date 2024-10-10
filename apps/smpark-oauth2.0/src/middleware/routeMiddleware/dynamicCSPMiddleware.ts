@@ -14,6 +14,10 @@ const dynamicCSPMiddleware = (req: IOauthRequest, res: Response, next: NextFunct
 
   const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
   directives['form-action'] = ["'self'", addressUri];
+  directives['script-src'] = ["'self'", addressUri];
+  directives['connect-src'] = ["'self'", addressUri];
+  directives['form-action'] = ["'self'", addressUri];
+  directives['frame-ancestors'] = ["'none'"];
 
   helmet.contentSecurityPolicy({
     directives,
