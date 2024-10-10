@@ -1,6 +1,5 @@
 import createError from 'http-errors';
 import { injectable } from 'inversify';
-import xss from 'xss';
 
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 import { IOAuthRequestValidService } from '@domain-interfaces/services/IOAuthRequestValidService';
@@ -123,11 +122,6 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
       throw createError(401, ERROR_MESSAGES.VALIDATION.UNSUPPORTED.GRANT_TYPE);
     }
     return grantType;
-  }
-
-  protected normalizeUri(uri: string): string {
-    const filteredUri = xss(uri);
-    return filteredUri.endsWith('/') ? filteredUri.slice(0, -1) : filteredUri;
   }
 }
 
