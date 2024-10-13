@@ -2,13 +2,14 @@ import createError from 'http-errors';
 import { injectable } from 'inversify';
 
 import { ERROR_MESSAGES } from '@constants/errorMessages';
-import { IOAuthRequestValidService } from '@domain-interfaces/services/IOAuthRequestValidService';
 import { RequestValidDTO, ResponseValidDTO } from '@dtos/ClientsDTO';
 import { AuthorizeRequestDTO, TokenRequestDTO, TokenValidateDTO } from '@dtos/OAuthDTO';
 import { GrantType } from '@enums/oauth';
 
+import type { IClientsOAuthValidService } from '@application-interfaces/services/clients/IClientsOAuthValidService';
+
 @injectable()
-class OAuthRequestValidService implements IOAuthRequestValidService {
+class ClientsOAuthValidService implements IClientsOAuthValidService {
   validateAuthorizationRequest(
     request: AuthorizeRequestDTO,
     clients?: RequestValidDTO | null,
@@ -125,4 +126,4 @@ class OAuthRequestValidService implements IOAuthRequestValidService {
   }
 }
 
-export default OAuthRequestValidService;
+export default ClientsOAuthValidService;

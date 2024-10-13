@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 
-import { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
+import type { IOauthRequest } from '@infra-interfaces/IOauthRequest';
 
 export interface IAuthenticationMiddleware {
   handle(req: IOauthRequest, res: Response, next: NextFunction): void;

@@ -2,28 +2,28 @@ import { Request, Response, NextFunction } from 'express';
 import createError from 'http-errors';
 import { injectable, inject } from 'inversify';
 
-import { IOAuthController } from '@adapters-interfaces/controllers/IOAuthController';
-import { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 import { TRANSLATIONS } from '@constants/scopes';
 import OAuthMapper from '@mapper/OAuthMapper';
-import TokenMapper from '@mapper/TokenMapper';
 import UserMapper from '@mapper/UserMapper';
 import { authSerialize } from '@utils/serialize';
 
+import type { IOAuthController } from '@adapters-interfaces/controllers/IOAuthController';
+import type { CookieOptions, ICookieHandler } from '@adapters-interfaces/handlers/ICookieHandler';
 import type {
-  CookieOptions,
-  ICookieService,
-} from '@application-interfaces/services/ICookieService';
-import type { IUserLoginUseCase } from '@application-interfaces/usecases/IAuthUseCase';
-import type {
-  ICodeGenerationUseCase,
+  IUserLoginUseCase,
   IUserScopeUpdaterUseCase,
-  IUserAuthorizationUseCase,
+} from '@application-interfaces/usecases/IAuthUseCase';
+import type {
+  IClientsRequestValidUseCase,
+  IClientsScopeValidationUseCase,
+} from '@application-interfaces/usecases/IClientsUseCase';
+import type { ICodeGenerationUseCase } from '@application-interfaces/usecases/ICodeUseCase';
+import type {
+  ITokenIssuanceOauthUseCase,
   ITokenPreparationUseCase,
-  IScopeComparatorUseCase,
-} from '@application-interfaces/usecases/IOAuthUseCase';
-import type { ITokenGenerationUseCase } from '@application-interfaces/usecases/ITokenUseCase';
+} from '@application-interfaces/usecases/ITokenUseCase';
+import type { IOauthRequest } from '@infra-interfaces/IOauthRequest';
 import type { EnvConfig } from '@lib/dotenv-env';
 
 @injectable()
@@ -32,16 +32,17 @@ class OAuthController implements IOAuthController {
     @inject('env') private env: EnvConfig,
     @inject(UserMapper) private userMapper: UserMapper,
     @inject(OAuthMapper) private oAuthMapper: OAuthMapper,
-    @inject(TokenMapper) private tokenMapper: TokenMapper,
     @inject('IUserLoginUseCase') private userLoginUseCase: IUserLoginUseCase,
     @inject('ICodeGenerationUseCase') private codeGenerationUseCase: ICodeGenerationUseCase,
-    @inject('ITokenGenerationUseCase') private tokenGenerationUseCase: ITokenGenerationUseCase,
+    @inject('ITokenIssuanceOauthUseCase')
+    private tokenGenerationUseCase: ITokenIssuanceOauthUseCase,
     @inject('IUserScopeUpdaterUseCase') private userScopeUpdaterUseCase: IUserScopeUpdaterUseCase,
-    @inject('IUserAuthorizationUseCase')
-    private userAuthorizationUseCase: IUserAuthorizationUseCase,
+    @inject('IClientsRequestValidUseCase')
+    private clientsRequestValidUseCase: IClientsRequestValidUseCase,
     @inject('ITokenPreparationUseCase') private tokenPreparationUseCase: ITokenPreparationUseCase,
-    @inject('IScopeComparatorUseCase') private scopeComparatorUseCase: IScopeComparatorUseCase,
-    @inject('ICookieService') private cookieService: ICookieService,
+    @inject('IClientsScopeValidationUseCase')
+    private scopeComparatorUseCase: IClientsScopeValidationUseCase,
+    @inject('ICookieHandler') private cookieHandler: ICookieHandler,
   ) {}
 
   async verifyOauthRequest(
@@ -56,7 +57,7 @@ class OAuthController implements IOAuthController {
         ...req.body,
       });
 
-      const address_uri = await this.userAuthorizationUseCase.execute(authorizeRequestDTO);
+      const address_uri = await this.clientsRequestValidUseCase.execute(authorizeRequestDTO);
       req.session.address_uri = address_uri;
     } catch (error) {
       next(error);
@@ -81,7 +82,7 @@ class OAuthController implements IOAuthController {
         maxAge: Number(this.env.loginCookieExpiresIn) * 1000,
       };
 
-      this.cookieService.setCookie(res, cookieOptions);
+      this.cookieHandler.setCookie(res, cookieOptions);
 
       req.body = authSerialize(req.body, ['password']);
 
@@ -109,6 +110,7 @@ class OAuthController implements IOAuthController {
       const { scope: comparedScope, updated } =
         await this.scopeComparatorUseCase.execute(scopeRequestDTO);
 
+      console.log('state', state);
       Object.assign(req.session, {
         scope: comparedScope,
         updated,
@@ -135,6 +137,7 @@ class OAuthController implements IOAuthController {
     res: Response,
     next: NextFunction,
   ): Promise<void | Response> {
+    console.log(req.session);
     const { scope: agreedScope, updated } = req.session;
     const id = req.session.user?.id;
 

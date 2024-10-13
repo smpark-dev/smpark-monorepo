@@ -2,9 +2,9 @@ import { ERROR_MESSAGES } from '@constants/errorMessages';
 import { RequestValidDTO } from '@dtos/ClientsDTO';
 import { AuthorizeRequestDTO, TokenRequestDTO } from '@dtos/OAuthDTO';
 import { GrantType } from '@enums/oauth';
-import OAuthRequestValidService from '@services/OAuthRequestValidService';
+import ClientsOAuthValidService from '@app-services/clients/ClientsOAuthValidService';
 
-class TestableService extends OAuthRequestValidService {
+class TestableService extends ClientsOAuthValidService {
   public testValidateField(
     missingErrorMsg: string,
     mismatchErrorMsg: string,

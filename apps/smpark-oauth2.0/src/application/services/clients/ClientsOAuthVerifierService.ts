@@ -2,14 +2,15 @@ import createError from 'http-errors';
 import { injectable } from 'inversify';
 
 import { ERROR_MESSAGES } from '@constants/errorMessages';
-import { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
 import { ClientsDTO } from '@dtos/ClientsDTO';
 import { CodeDTO } from '@dtos/CodeDTO';
 import { ScopeDTO } from '@dtos/TokenDTO';
 import { UserDTO } from '@dtos/UserDTO';
 
+import type { IClientsOAuthVerifierService } from '@application-interfaces/services/clients/IClientsOAuthVerifierService';
+
 @injectable()
-class OAuthVerifierService implements IOAuthVerifierService {
+class ClientsOAuthVerifierService implements IClientsOAuthVerifierService {
   private verify<T>(entity: T | null | undefined, errorMessage: string, errorCode?: number): T {
     if (!entity) {
       throw createError(errorCode || 401, errorMessage);
@@ -73,4 +74,4 @@ class OAuthVerifierService implements IOAuthVerifierService {
   }
 }
 
-export default OAuthVerifierService;
+export default ClientsOAuthVerifierService;

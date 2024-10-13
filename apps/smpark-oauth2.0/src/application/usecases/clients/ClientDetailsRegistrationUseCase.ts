@@ -1,35 +1,18 @@
 import { injectable, inject } from 'inversify';
 
-import { IClientDetailsRegistrationUseCase } from '@application-interfaces/usecases/IClientsUseCase';
 import { ClientsRequestDTO } from '@dtos/ClientsDTO';
-import ClientsMapper from '@mapper/ClientsMapper';
 
-import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
-import type { IClientsService } from '@domain-interfaces/services/IClientsService';
-import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
+import type { IClientsRegisterService } from '@application-interfaces/services/clients/IClientsRegisterService';
+import type { IClientDetailsRegistrationUseCase } from '@application-interfaces/usecases/IClientsUseCase';
 
 @injectable()
 class ClientDetailsRegistrationUseCase implements IClientDetailsRegistrationUseCase {
   constructor(
-    @inject(ClientsMapper) private clientsMapper: ClientsMapper,
-    @inject('IClientsRepository') private clientsRepository: IClientsRepository,
-    @inject('IClientsService') private clientsService: IClientsService,
-    @inject('IOAuthVerifierService') private oAuthVerifierService: IOAuthVerifierService,
+    @inject('IClientsRegisterService') private clientsRegisterService: IClientsRegisterService,
   ) {}
 
   async execute(clientsData: ClientsRequestDTO): Promise<void> {
-    const verifiedClients = this.clientsService.verifyClientsDetail(clientsData);
-    const clientsEntity = this.clientsMapper.toEntity(verifiedClients);
-    this.clientsService.validClientsDetail(clientsEntity);
-    const {
-      client_id: _client_id,
-      client_secret: _client_secret,
-      api_key: _api_key,
-      ...clientDetail
-    } = verifiedClients;
-
-    const isSave = await this.clientsRepository.save(clientDetail);
-    this.oAuthVerifierService.verifyOperation(isSave);
+    await this.clientsRegisterService.registerClient(clientsData);
   }
 }
 

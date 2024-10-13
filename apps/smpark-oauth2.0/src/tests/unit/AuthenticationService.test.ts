@@ -2,17 +2,17 @@ import argon2 from 'argon2';
 
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 import User from '@entities/User';
-import AuthenticationService from '@services/AuthenticationService';
+import UserAuthenticationService from '@app-services/auth/UserAuthenticationService';
 
 jest.mock('argon2');
 jest.mock('@entities/User');
 
-describe('AuthenticationService', () => {
-  let authService: AuthenticationService;
+describe('UserAuthenticationService', () => {
+  let authService: UserAuthenticationService;
   let mockUser: jest.Mocked<User>;
 
   beforeEach(() => {
-    authService = new AuthenticationService();
+    authService = new UserAuthenticationService();
     mockUser = jest.mocked(
       new User('smpark', '박상민', 'smpark@gmail.com', {
         id: true,

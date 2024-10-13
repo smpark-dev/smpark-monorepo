@@ -1,20 +1,22 @@
-import { injectable, inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 
-import { ITokenGenerationUseCase } from '@application-interfaces/usecases/ITokenUseCase';
+import { DEFAULT_SCOPE } from '@constants/scopes';
 import { ValidIdsDTO } from '@dtos/OAuthDTO';
 import { ScopeDTO, TokenResponseDTO } from '@dtos/TokenDTO';
 import { UserDTO } from '@dtos/UserDTO';
 import TokenMapper from '@mapper/TokenMapper';
 
-import type { ICodeRepository } from '@domain-interfaces/repository/ICodeRepository';
-import type { IMongoTokenRepository } from '@domain-interfaces/repository/IMongoTokenRepository';
-import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
-import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
+import type { IClientsOAuthVerifierService } from '@application-interfaces/services/clients/IClientsOAuthVerifierService';
+import type { ITokenIssuanceOAuthService } from '@application-interfaces/services/token/ITokenIssuanceOAuthService';
+import type { ICodeRepository } from '@domain-interfaces/infrastructure/repository/ICodeRepository';
+import type { IMongoTokenRepository } from '@domain-interfaces/infrastructure/repository/IMongoTokenRepository';
+import type { IUserRepository } from '@domain-interfaces/infrastructure/repository/IUserRepository';
+import type { ITokenManagementService } from '@domain-interfaces/infrastructure/services/ITokenManagementService';
 import type { ITokenService } from '@domain-interfaces/services/ITokenService';
 import type { EnvConfig } from '@lib/dotenv-env';
 
 @injectable()
-class TokenGenerationUseCase implements ITokenGenerationUseCase {
+class TokenIssuanceOAuthService implements ITokenIssuanceOAuthService {
   constructor(
     @inject('env') private env: EnvConfig,
     @inject(TokenMapper) private tokenMapper: TokenMapper,
@@ -22,13 +24,15 @@ class TokenGenerationUseCase implements ITokenGenerationUseCase {
     @inject('IMongoTokenRepository') public tokenRepository: IMongoTokenRepository,
     @inject('IUserRepository') public userRepository: IUserRepository,
     @inject('ICodeRepository') public codeRepository: ICodeRepository,
-    @inject('IOAuthVerifierService') public oAuthVerifierService: IOAuthVerifierService,
+    @inject('ITokenManagementService') private tokenManagementService: ITokenManagementService,
+    @inject('IClientsOAuthVerifierService')
+    public oAuthVerifierService: IClientsOAuthVerifierService,
   ) {}
 
-  async execute(ids?: ValidIdsDTO | null): Promise<TokenResponseDTO> {
+  async issueOauthToken(ids?: ValidIdsDTO | null): Promise<TokenResponseDTO> {
     const { id, client_id } = this.oAuthVerifierService.verifyIds(ids);
     const user = await this.getUser(id);
-    const agreedScopes = user.agreedScopes || this.tokenService.getDefaultScope();
+    const agreedScopes = user.agreedScopes || DEFAULT_SCOPE;
     const verifiedScopes = this.oAuthVerifierService.verifyAgreedScopes(agreedScopes);
 
     const accessTokenPayload = {
@@ -46,12 +50,12 @@ class TokenGenerationUseCase implements ITokenGenerationUseCase {
     };
 
     const tokens = {
-      accessToken: this.generateToken(
+      accessToken: this.tokenManagementService.generateToken(
         accessTokenPayload,
         this.env.oauthAccessSecret,
         Number(this.env.oauthAccessTokenExpiresIn),
       ),
-      refreshToken: this.generateToken(
+      refreshToken: this.tokenManagementService.generateToken(
         refreshTokenPayload,
         this.env.oauthRefreshSecret,
         Number(this.env.oauthRefreshTokenExpiresIn),
@@ -61,14 +65,6 @@ class TokenGenerationUseCase implements ITokenGenerationUseCase {
     await this.saveOrUpdateToken(id, tokens, verifiedScopes);
     await this.codeRepository.delete(id);
     return this.tokenMapper.toTokenResponseDTO(tokens);
-  }
-
-  private generateToken<T extends object>(
-    payload: T,
-    secretKey: string,
-    expiresIn: number,
-  ): string {
-    return this.tokenService.generateToken(payload, secretKey, expiresIn);
   }
 
   private async getUser(id: string): Promise<UserDTO> {
@@ -93,4 +89,5 @@ class TokenGenerationUseCase implements ITokenGenerationUseCase {
     this.oAuthVerifierService.verifyOperation(isUpserted);
   }
 }
-export default TokenGenerationUseCase;
+
+export default TokenIssuanceOAuthService;

@@ -3,7 +3,7 @@ import { CodeDTO } from '@dtos/CodeDTO';
 import { ScopeDTO } from '@dtos/TokenDTO';
 import { UserDTO } from '@dtos/UserDTO';
 
-export interface IOAuthVerifierService {
+export interface IClientsOAuthVerifierService {
   verifyId(id?: string): string;
   verifyIds(ids?: { id: string; client_id: string } | null): {
     id: string;

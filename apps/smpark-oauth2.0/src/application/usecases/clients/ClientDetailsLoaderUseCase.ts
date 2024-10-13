@@ -1,24 +1,18 @@
 import { injectable, inject } from 'inversify';
 
-import { IClientDetailsLoaderUseCase } from '@application-interfaces/usecases/IClientsUseCase';
 import { ClientsDTO } from '@dtos/ClientsDTO';
 
-import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
-import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
+import type { IClientsLoadService } from '@application-interfaces/services/clients/IClientsLoadService';
+import type { IClientDetailsLoaderUseCase } from '@application-interfaces/usecases/IClientsUseCase';
 
 @injectable()
 class ClientDetailsLoaderUseCase implements IClientDetailsLoaderUseCase {
-  constructor(
-    @inject('IClientsRepository') private clientsRepository: IClientsRepository,
-    @inject('IOAuthVerifierService') private oAuthVerifierService: IOAuthVerifierService,
-  ) {}
+  constructor(@inject('IClientsLoadService') private clientsLoadService: IClientsLoadService) {}
 
   async execute(id?: string): Promise<ClientsDTO | null> {
-    const verifiedId = this.oAuthVerifierService.verifyId(id);
+    const clients = await this.clientsLoadService.loadClient(id);
 
-    const fetchedClients = await this.clientsRepository.findById(verifiedId);
-
-    return fetchedClients;
+    return clients;
   }
 }
 

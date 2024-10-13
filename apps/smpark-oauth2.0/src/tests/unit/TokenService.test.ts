@@ -1,6 +1,6 @@
 import { DEFAULT_SCOPE } from '@constants/scopes';
 import { ScopeDTO } from '@dtos/TokenDTO';
-import TokenService from '@services/TokenService';
+import TokenService from 'src/application/services/TokenService';
 
 describe('TokenService', () => {
   const jwtSecretKey = 'test_secret_key';
