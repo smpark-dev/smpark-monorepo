@@ -9,6 +9,6 @@ export interface CookieOptions {
   sameSite?: 'strict' | 'lax' | 'none';
 }
 
-export interface ICookieService {
+export interface ICookieHandler {
   setCookie(res: Response, options: CookieOptions): Response;
 }

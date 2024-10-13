@@ -1,14 +1,11 @@
 import { Response } from 'express';
 import { inject, injectable } from 'inversify';
 
-import type {
-  CookieOptions,
-  ICookieService,
-} from '@application-interfaces/services/ICookieService';
+import type { CookieOptions, ICookieHandler } from '@adapters-interfaces/handlers/ICookieHandler';
 import type { EnvConfig } from '@lib/dotenv-env';
 
 @injectable()
-class CookieService implements ICookieService {
+class CookieHandler implements ICookieHandler {
   constructor(@inject('env') private env: EnvConfig) {}
 
   setCookie(res: Response, options: CookieOptions): Response {
@@ -29,4 +26,4 @@ class CookieService implements ICookieService {
     });
   }
 }
-export default CookieService;
+export default CookieHandler;
