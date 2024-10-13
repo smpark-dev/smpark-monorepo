@@ -2,7 +2,8 @@ import createError from 'http-errors';
 import { inject, injectable } from 'inversify';
 
 import Redis from '@database/Redis';
-import { IRedisTokenRepository } from '@domain-interfaces/repository/IRedisTokenRepository';
+
+import type { IRedisTokenRepository } from '@domain-interfaces/infrastructure/repository/IRedisTokenRepository';
 
 @injectable()
 class RedisTokenRepository implements IRedisTokenRepository {

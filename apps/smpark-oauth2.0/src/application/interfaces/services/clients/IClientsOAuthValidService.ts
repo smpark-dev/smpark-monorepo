@@ -1,7 +1,7 @@
 import { RequestValidDTO, ResponseValidDTO } from '@dtos/ClientsDTO';
 import { AuthorizeRequestDTO, TokenRequestDTO, TokenValidateDTO } from '@dtos/OAuthDTO';
 
-export interface IOAuthRequestValidService {
+export interface IClientsOAuthValidService {
   validateAuthorizationRequest(
     request: AuthorizeRequestDTO,
     clients?: RequestValidDTO | null,

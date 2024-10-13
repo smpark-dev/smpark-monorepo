@@ -1,3 +1,4 @@
+import { ScopeRequestDTO } from '@dtos/OAuthDTO';
 import { LoginDTO, RegisterDTO } from '@dtos/UserDTO';
 
 export interface IUserLoginUseCase {
@@ -6,4 +7,8 @@ export interface IUserLoginUseCase {
 
 export interface IUserRegistrationUseCase {
   execute(userRegisterInfo: RegisterDTO): Promise<void>;
+}
+
+export interface IUserScopeUpdaterUseCase {
+  execute(scopeRequest: ScopeRequestDTO): Promise<void>;
 }

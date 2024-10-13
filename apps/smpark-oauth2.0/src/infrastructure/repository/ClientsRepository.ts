@@ -2,9 +2,10 @@ import { injectable, inject } from 'inversify';
 import { ClientSession, Collection } from 'mongodb';
 
 import MongoDB from '@database/MongoDB';
-import { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
 import { ClientsDTO, CredentialResponseDTO } from '@dtos/ClientsDTO';
 import ClientsMapper from '@mapper/ClientsMapper';
+
+import type { IClientsRepository } from '@domain-interfaces/infrastructure/repository/IClientsRepository';
 
 @injectable()
 class ClientsRepository implements IClientsRepository<ClientSession> {

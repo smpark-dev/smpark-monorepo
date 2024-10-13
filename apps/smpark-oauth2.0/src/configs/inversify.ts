@@ -1,12 +1,33 @@
 import { Container } from 'inversify';
 
+import UserAuthenticationService from '@app-services/auth/UserAuthenticationService';
+import UserRegistrationService from '@app-services/auth/UserRegistrationService';
+import UserScopeUpdaterService from '@app-services/auth/UserScopeUpdaterService';
+import ClientsGenerationService from '@app-services/clients/ClientsGenerationService';
+import ClientsLoadService from '@app-services/clients/ClientsLoadService';
+import ClientsOAuthRequestValidService from '@app-services/clients/ClientsOAuthRequestValidService';
+import ClientsOAuthValidService from '@app-services/clients/ClientsOAuthValidService';
+import ClientsOAuthVerifierService from '@app-services/clients/ClientsOAuthVerifierService';
+import ClientsRegisterService from '@app-services/clients/ClientsRegisterService';
+import ClientsScopeValidationService from '@app-services/clients/ClientsScopeSelectionService';
+import ClientsVerifierService from '@app-services/clients/ClientsVerifierService';
+import CodeGenerationService from '@app-services/code/CodeGenerationService';
+import CodeValidateService from '@app-services/code/CodeValidateService';
+import TokenIssuanceLoginService from '@app-services/token/TokenIssuanceLoginService';
+import TokenIssuanceOAuthService from '@app-services/token/TokenIssuanceOAuthService';
+import TokenPrepareService from '@app-services/token/TokenPrepareService';
 import env from '@configs/env';
 import AuthenticationController from '@controllers/AuthenticationController';
 import ClientsController from '@controllers/ClientsController';
 import OAuthController from '@controllers/OAuthController';
 import MongoDB from '@database/MongoDB';
 import Redis from '@database/Redis';
-import CookieService from '@infra-service/CookieService';
+import ClientService from '@domain-services/ClientService';
+import CodeService from '@domain-services/CodeService';
+import TokenService from '@domain-services/TokenService';
+import UserService from '@domain-services/UserService';
+import CookieHandler from '@infra-handlers/CookieHandler';
+import JWTService from '@infra-services/JWTService';
 import ClientsMapper from '@mapper/ClientsMapper';
 import CodeMapper from '@mapper/CodeMapper';
 import OAuthMapper from '@mapper/OAuthMapper';
@@ -18,48 +39,62 @@ import CodeRepository from '@repository/CodeRepository';
 import MongoTokenRepository from '@repository/MongoTokenRepository';
 import RedisTokenRepository from '@repository/RedisTokenRepository';
 import UserRepository from '@repository/UserRepository';
-import AuthenticationService from '@services/AuthenticationService';
-import ClientsService from '@services/ClientsService';
-import CodeService from '@services/CodeService';
-import OAuthRequestValidService from '@services/OAuthRequestValidService';
-import OAuthVerifierService from '@services/OAuthVerifierService';
-import TokenService from '@services/TokenService';
 import UserLoginUseCase from '@usecases/auth/UserLoginUseCase';
 import UserRegistrationUseCase from '@usecases/auth/UserRegistrationUseCase';
+import UserScopeUpdaterUseCase from '@usecases/auth/UserScopeUpdaterUseCase';
 import ClientDetailsLoaderUseCase from '@usecases/clients/ClientDetailsLoaderUseCase';
 import ClientDetailsRegistrationUseCase from '@usecases/clients/ClientDetailsRegistrationUseCase';
 import ClientGenerationUseCase from '@usecases/clients/ClientGenerationUseCase';
-import CodeGenerationUseCase from '@usecases/oauth/CodeGenerationUseCase';
-import ScopeComparatorUseCase from '@usecases/oauth/ScopeComparatorUseCase';
-import TokenPreparationUseCase from '@usecases/oauth/TokenPreparationUseCase';
-import UserAuthorizationUseCase from '@usecases/oauth/UserAuthorizationUseCase';
-import UserScopeUpdaterUseCase from '@usecases/oauth/UserScopeUpdaterUseCase';
-import TokenGenerationUseCase from '@usecases/token/TokenGenerationUseCase';
+import ClientsRequestValidUseCase from '@usecases/clients/ClientsRequestValidUseCase';
+import ClientsScopeValidationUseCase from '@usecases/clients/ClientsScopeValidationUseCase';
+import CodeGenerationUseCase from '@usecases/code/CodeGenerationUseCase';
+import TokenIssuanceOauthUseCase from '@usecases/token/TokenIssuanceOauthUseCase';
+import TokenPreparationUseCase from '@usecases/token/TokenPreparationUseCase';
 
 const container = new Container();
 
 const registerUseCaseDependencies = (): void => {
-  container.bind('ITokenGenerationUseCase').to(TokenGenerationUseCase);
+  container.bind('ITokenIssuanceOauthUseCase').to(TokenIssuanceOauthUseCase);
   container.bind('IClientGenerationUseCase').to(ClientGenerationUseCase);
   container.bind('ICodeGenerationUseCase').to(CodeGenerationUseCase);
-  container.bind('IScopeComparatorUseCase').to(ScopeComparatorUseCase);
+  container.bind('IClientsScopeValidationUseCase').to(ClientsScopeValidationUseCase);
   container.bind('ITokenPreparationUseCase').to(TokenPreparationUseCase);
-  container.bind('IUserAuthorizationUseCase').to(UserAuthorizationUseCase);
+  container.bind('IUserScopeUpdaterUseCase').to(UserScopeUpdaterUseCase);
   container.bind('IUserLoginUseCase').to(UserLoginUseCase);
   container.bind('IUserRegistrationUseCase').to(UserRegistrationUseCase);
-  container.bind('IUserScopeUpdaterUseCase').to(UserScopeUpdaterUseCase);
   container.bind('IClientDetailsLoaderUseCase').to(ClientDetailsLoaderUseCase);
   container.bind('IClientDetailsRegistrationUseCase').to(ClientDetailsRegistrationUseCase);
+  container.bind('IClientsRequestValidUseCase').to(ClientsRequestValidUseCase);
 };
 
-const registerServiceDependencies = (): void => {
-  container.bind('IAuthenticationService').to(AuthenticationService);
-  container.bind('IOAuthRequestValidService').to(OAuthRequestValidService);
-  container.bind('IClientsService').to(ClientsService);
+const registerAppServiceDependencies = (): void => {
+  container.bind('IUserAuthenticationService').to(UserAuthenticationService);
+  container.bind('IUserRegistrationService').to(UserRegistrationService);
+  container.bind('IUserScopeUpdaterService').to(UserScopeUpdaterService);
+  container.bind('IClientsGenerationService').to(ClientsGenerationService);
+  container.bind('IClientsLoadService').to(ClientsLoadService);
+  container.bind('IClientsOAuthRequestValidService').to(ClientsOAuthRequestValidService);
+  container.bind('IClientsOAuthValidService').to(ClientsOAuthValidService);
+  container.bind('IClientsOAuthVerifierService').to(ClientsOAuthVerifierService);
+  container.bind('IClientsRegisterService').to(ClientsRegisterService);
+  container.bind('IClientsVerifierService').to(ClientsVerifierService);
+  container.bind('IClientsScopeValidationService').to(ClientsScopeValidationService);
+  container.bind('ITokenIssuanceLoginService').to(TokenIssuanceLoginService);
+  container.bind('ITokenIssuanceOAuthService').to(TokenIssuanceOAuthService);
+  container.bind('ITokenPrepareService').to(TokenPrepareService);
+  container.bind('ICodeGenerationService').to(CodeGenerationService);
+  container.bind('ICodeValidateService').to(CodeValidateService);
+};
+
+const registerDomainServiceDependencies = (): void => {
+  container.bind('IClientService').to(ClientService);
+  container.bind('IUserService').to(UserService);
   container.bind('ICodeService').to(CodeService);
-  container.bind('IOAuthVerifierService').to(OAuthVerifierService);
   container.bind('ITokenService').to(TokenService);
-  container.bind('ICookieService').to(CookieService);
+};
+
+const registerInfraServiceDependencies = (): void => {
+  container.bind('ITokenManagementService').to(JWTService);
 };
 
 const registerRepositoryDependencies = (): void => {
@@ -68,6 +103,7 @@ const registerRepositoryDependencies = (): void => {
   container.bind('IUserRepository').to(UserRepository);
   container.bind('IClientsRepository').to(ClientsRepository);
   container.bind('IRedisTokenRepository').to(RedisTokenRepository);
+  container.bind('ICookieHandler').to(CookieHandler);
 };
 
 const registerControllerDependencies = (): void => {
@@ -111,7 +147,9 @@ const registerAllDependencies = (dbURL: string, dbName: string, redisURL: string
   registerMongoDependencies(dbURL, dbName);
   registerRedisDependencies(redisURL);
   registerRepositoryDependencies();
-  registerServiceDependencies();
+  registerDomainServiceDependencies();
+  registerAppServiceDependencies();
+  registerInfraServiceDependencies();
   registerUseCaseDependencies();
 };
 

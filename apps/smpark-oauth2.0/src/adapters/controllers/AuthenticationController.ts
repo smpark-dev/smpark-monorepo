@@ -1,14 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { injectable, inject } from 'inversify';
 
-import { IAuthenticationController } from '@adapters-interfaces/controllers/IAuthenticationController';
 import UserMapper from '@mapper/UserMapper';
 import { authSerialize } from '@utils/serialize';
 
-import type {
-  CookieOptions,
-  ICookieService,
-} from '@application-interfaces/services/ICookieService';
+import type { IAuthenticationController } from '@adapters-interfaces/controllers/IAuthenticationController';
+import type { CookieOptions, ICookieHandler } from '@adapters-interfaces/handlers/ICookieHandler';
 import type {
   IUserLoginUseCase,
   IUserRegistrationUseCase,
@@ -23,7 +20,7 @@ class AuthenticationController implements IAuthenticationController {
     @inject('IUserLoginUseCase') private userLoginUseCase: IUserLoginUseCase,
     @inject('IUserRegistrationUseCase')
     private userRegistrationUseCase: IUserRegistrationUseCase,
-    @inject('ICookieService') private cookieService: ICookieService,
+    @inject('ICookieHandler') private cookieHandler: ICookieHandler,
   ) {}
 
   renderLoginPage(req: Request, res: Response): void {
@@ -54,7 +51,7 @@ class AuthenticationController implements IAuthenticationController {
         maxAge: Number(this.env.loginCookieExpiresIn) * 1000,
       };
 
-      this.cookieService.setCookie(res, cookieOptions);
+      this.cookieHandler.setCookie(res, cookieOptions);
 
       req.body = authSerialize(req.body, ['password']);
 

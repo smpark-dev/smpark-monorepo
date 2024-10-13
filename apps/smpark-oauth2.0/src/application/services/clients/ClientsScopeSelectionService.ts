@@ -1,27 +1,29 @@
-import { injectable, inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 
-import { IScopeComparatorUseCase } from '@application-interfaces/usecases/IOAuthUseCase';
+import { DEFAULT_SCOPE } from '@constants/scopes';
 import { ScopeRequestDTO, ScopeResponseDTO } from '@dtos/OAuthDTO';
 import { ScopeDTO } from '@dtos/TokenDTO';
 import OAuthMapper from '@mapper/OAuthMapper';
 import { deepEqual } from '@utils/deepEqual';
 
-import type { IClientsRepository } from '@domain-interfaces/repository/IClientsRepository';
-import type { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
-import type { IOAuthVerifierService } from '@domain-interfaces/services/IOAuthVerifierService';
+import type { IClientsOAuthVerifierService } from '@application-interfaces/services/clients/IClientsOAuthVerifierService';
+import type { IClientsScopeValidationService } from '@application-interfaces/services/clients/IClientsScopeValidationService';
+import type { IClientsRepository } from '@domain-interfaces/infrastructure/repository/IClientsRepository';
+import type { IUserRepository } from '@domain-interfaces/infrastructure/repository/IUserRepository';
 import type { ITokenService } from '@domain-interfaces/services/ITokenService';
 
 @injectable()
-class ScopeComparatorUseCase implements IScopeComparatorUseCase {
+class ClientsScopeValidationService implements IClientsScopeValidationService {
   constructor(
     @inject(OAuthMapper) private oAuthMapper: OAuthMapper,
     @inject('IUserRepository') private userRepository: IUserRepository,
     @inject('IClientsRepository') private clientsRepository: IClientsRepository,
     @inject('ITokenService') private tokenService: ITokenService,
-    @inject('IOAuthVerifierService') private oAuthVerifierService: IOAuthVerifierService,
+    @inject('IClientsOAuthVerifierService')
+    private oAuthVerifierService: IClientsOAuthVerifierService,
   ) {}
 
-  async execute(
+  async validateScope(
     requestScope: ScopeRequestDTO,
   ): Promise<{ scope: Partial<ScopeDTO>; updated: boolean }> {
     const { client_id, scope } = requestScope;
@@ -40,7 +42,7 @@ class ScopeComparatorUseCase implements IScopeComparatorUseCase {
     agreedScopes?: ScopeDTO,
   ): ScopeResponseDTO {
     if (!clientAllowedScopes) {
-      const defaultScope = this.tokenService.getDefaultScope();
+      const defaultScope = DEFAULT_SCOPE;
       const isUpdated = false;
       return this.oAuthMapper.toScopeResponseDTO(defaultScope, isUpdated);
     }
@@ -61,4 +63,4 @@ class ScopeComparatorUseCase implements IScopeComparatorUseCase {
   }
 }
 
-export default ScopeComparatorUseCase;
+export default ClientsScopeValidationService;

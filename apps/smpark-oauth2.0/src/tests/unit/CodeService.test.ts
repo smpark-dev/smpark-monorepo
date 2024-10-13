@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import CodeService from '@services/CodeService';
+import CodeService from '@app-services/code/CodeGenerationService';
 
 jest.mock('uuid');
 

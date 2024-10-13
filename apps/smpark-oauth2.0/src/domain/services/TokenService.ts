@@ -1,32 +1,11 @@
 import { injectable } from 'inversify';
-import jwt from 'jsonwebtoken';
 
-import { DEFAULT_SCOPE } from '@constants/scopes';
-import { ITokenService } from '@domain-interfaces/services/ITokenService';
 import { ScopeDTO } from '@dtos/TokenDTO';
+
+import type { ITokenService } from '@domain-interfaces/services/ITokenService';
 
 @injectable()
 class TokenService implements ITokenService {
-  generateToken(payload: object, jwtSecretKey: string, expiresIn: number): string {
-    const jwtToken = jwt.sign(payload, jwtSecretKey, {
-      expiresIn,
-    });
-
-    return jwtToken;
-  }
-
-  verifyTokenStrict<T>(token: string, jwtSecretKey: string): T {
-    return jwt.verify(token, jwtSecretKey) as T;
-  }
-
-  verifyTokenIgnoreExpiration<T>(token: string, jwtSecretKey: string): T {
-    return jwt.verify(token, jwtSecretKey, { ignoreExpiration: true }) as T;
-  }
-
-  getDefaultScope(): ScopeDTO {
-    return DEFAULT_SCOPE;
-  }
-
   validateScope(allowedScope: ScopeDTO, requestScope: string): Partial<ScopeDTO> {
     const requestScopesArray = requestScope.toLowerCase().split(' ');
     const resultScope: Partial<ScopeDTO> = {};

@@ -3,13 +3,13 @@ import { ClientsDTO } from '@dtos/ClientsDTO';
 import { CodeDTO } from '@dtos/CodeDTO';
 import { ScopeDTO } from '@dtos/TokenDTO';
 import { UserDTO } from '@dtos/UserDTO';
-import OAuthVerifierService from '@services/OAuthVerifierService';
+import ClientsOAuthVerifierService from '@app-services/clients/ClientsOAuthVerifierService';
 
-describe('OAuthVerifierService', () => {
-  let service: OAuthVerifierService;
+describe('ClientsOAuthVerifierService', () => {
+  let service: ClientsOAuthVerifierService;
 
   beforeEach(() => {
-    service = new OAuthVerifierService();
+    service = new ClientsOAuthVerifierService();
   });
 
   describe('verifyId', () => {

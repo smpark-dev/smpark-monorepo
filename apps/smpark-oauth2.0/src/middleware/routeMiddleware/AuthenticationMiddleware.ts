@@ -5,25 +5,22 @@ import { JwtPayload } from 'jsonwebtoken';
 
 import { ERROR_MESSAGES } from '@constants/errorMessages';
 import User from '@entities/User';
-import { IAuthenticationMiddleware } from '@middleware/interfaces/routeMiddleware/IAuthenticationMiddleware';
 
-import type { IOauthRequest } from '@adapters-interfaces/express/IOauthRequest';
-import type {
-  CookieOptions,
-  ICookieService,
-} from '@application-interfaces/services/ICookieService';
-import type { IRedisTokenRepository } from '@domain-interfaces/repository/IRedisTokenRepository';
-import type { ITokenService } from '@domain-interfaces/services/ITokenService';
+import type { CookieOptions, ICookieHandler } from '@adapters-interfaces/handlers/ICookieHandler';
+import type { IRedisTokenRepository } from '@domain-interfaces/infrastructure/repository/IRedisTokenRepository';
+import type { ITokenManagementService } from '@domain-interfaces/infrastructure/services/ITokenManagementService';
+import type { IOauthRequest } from '@infra-interfaces/IOauthRequest';
 import type { EnvConfig } from '@lib/dotenv-env';
+import type { IAuthenticationMiddleware } from '@middleware/interfaces/routeMiddleware/IAuthenticationMiddleware';
 
 @injectable()
 class AuthenticationMiddleware implements IAuthenticationMiddleware {
   constructor(
     @inject('env') private env: EnvConfig,
-    @inject('ITokenService') private tokenService: ITokenService,
     @inject('IRedisTokenRepository')
     private redisTokenRepository: IRedisTokenRepository,
-    @inject('ICookieService') private cookieService: ICookieService,
+    @inject('ICookieHandler') private cookieHandler: ICookieHandler,
+    @inject('ITokenManagementService') private tokenManagementService: ITokenManagementService,
   ) {}
 
   public handle = (req: IOauthRequest, res: Response, next: NextFunction): void => {
@@ -60,7 +57,7 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const decoded = this.tokenService.verifyTokenIgnoreExpiration<User & JwtPayload>(
+      const decoded = this.tokenManagementService.verifyTokenIgnoreExpiration<User & JwtPayload>(
         accessToken,
         this.env.oauthAccessSecret,
       );
@@ -71,7 +68,7 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
         const refreshToken = await this.redisTokenRepository.find('refresh', decoded.id);
 
         if (refreshToken) {
-          const decodedStrict = this.tokenService.verifyTokenStrict<User & JwtPayload>(
+          const decodedStrict = this.tokenManagementService.verifyTokenStrict<User & JwtPayload>(
             refreshToken,
             this.env.oauthRefreshSecret,
           );
@@ -82,7 +79,7 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
               name: decoded.name,
               email: decoded.email,
             };
-            const newAccessToken = this.tokenService.generateToken(
+            const newAccessToken = this.tokenManagementService.generateToken(
               payload,
               this.env.oauthAccessSecret,
               Number(this.env.oauthAccessTokenExpiresIn),
@@ -93,7 +90,7 @@ class AuthenticationMiddleware implements IAuthenticationMiddleware {
               maxAge: Number(this.env.loginCookieExpiresIn) * 1000,
             };
 
-            this.cookieService.setCookie(res, cookieOptions);
+            this.cookieHandler.setCookie(res, cookieOptions);
 
             req.session.user = payload;
           }

@@ -20,27 +20,6 @@ class Clients {
     this.api_key = api_key;
     this.manager_list = manager_list;
   }
-
-  isValidScope(scope: { id: boolean; email: boolean; name: boolean }): boolean {
-    if (!scope.id) {
-      return false;
-    }
-
-    return true;
-  }
-
-  isValidURI(url: string): boolean {
-    const urlPattern = new RegExp(
-      '^(https?:\\/\\/)?' +
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|localhost|\\d{1,3}(\\.\\d{1,3}){3})' +
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-        '(\\?[;&a-z\\d%_.~+=-]*)?' +
-        '(\\#[-a-z\\d_]*)?$',
-      'i',
-    );
-
-    return urlPattern.test(url);
-  }
 }
 
 export default Clients;

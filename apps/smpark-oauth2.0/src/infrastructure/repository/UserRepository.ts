@@ -2,10 +2,11 @@ import { injectable, inject } from 'inversify';
 import { Collection, ClientSession } from 'mongodb';
 
 import MongoDB from '@database/MongoDB';
-import { IUserRepository } from '@domain-interfaces/repository/IUserRepository';
 import { ScopeDTO } from '@dtos/TokenDTO';
 import { UserDTO } from '@dtos/UserDTO';
 import UserMapper from '@mapper/UserMapper';
+
+import type { IUserRepository } from '@domain-interfaces/infrastructure/repository/IUserRepository';
 
 @injectable()
 class UserRepository implements IUserRepository<ClientSession> {
