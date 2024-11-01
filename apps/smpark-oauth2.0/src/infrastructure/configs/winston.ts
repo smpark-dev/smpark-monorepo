@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 
 import winston from 'winston';
 
-import env from '@configs/env';
+import env from '@infrastructure/configs/env';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
