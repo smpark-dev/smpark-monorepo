@@ -41,16 +41,25 @@ jobs:
 
       - name: Setup project
         run: |
-          if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
-            envsubst < .github/env-templates/smpark-oauth2.0.env > apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
-          elif [ "${{ matrix.project }}" == "smpark-resource" ]; then
+          if [ "${{ matrix.project }}" == "smpark-resource" ]; then
+            # env 파일 생성 확인
             envsubst < .github/env-templates/smpark-resource.env > apps/smpark-resource/.env.${{ vars.NODE_ENV }}
-          elif [ "${{ matrix.project }}" == "smpark-space" ]; then
-            envsubst < .github/env-templates/smpark-space.env > apps/smpark-space/.env.${{ vars.NODE_ENV }}
-            # LFS setup for smpark-space
-            git lfs pull
+            
+            # env 파일이 생성되었는지 확인
+            if [ ! -f "apps/smpark-resource/.env.${{ vars.NODE_ENV }}" ]; then
+              echo "Error: Environment file not found"
+              exit 1
+            fi
+            
+            # env 파일 내용 확인 (민감한 정보는 가림)
+            echo "Checking env file structure (secrets hidden)..."
+            cat apps/smpark-resource/.env.${{ vars.NODE_ENV }} | sed 's/=.*/=****/'
+            
+            # Docker 빌드 시 상세 로그
+            cd apps/smpark-resource
+            docker-compose --env-file .env.${{ vars.NODE_ENV }} build --no-cache
           fi
-      
+    
       - name: Cache LFS
         if: matrix.project == 'smpark-space'
         uses: actions/cache@v4
