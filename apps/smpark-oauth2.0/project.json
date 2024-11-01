@@ -49,11 +49,6 @@
             "glob": "**/*",
             "input": "apps/smpark-oauth2.0/src/public",
             "output": "apps/smpark-oauth2.0/src/public"
-          },
-          {
-            "glob": "**/*",
-            "input": "apps/smpark-oauth2.0/src/script",
-            "output": "apps/smpark-oauth2.0/src/script"
           }
         ],
         "platform": "node"
