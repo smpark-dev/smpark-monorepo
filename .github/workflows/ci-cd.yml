@@ -39,6 +39,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
+      - name: Get project version
+        id: get-version
+        run: |
+          LATEST_TAG=$(git describe --tags --match "${{ matrix.project }}/v*" --abbrev=0 2>/dev/null || echo "${{ matrix.project }}/v1.0.0")
+          VERSION=${LATEST_TAG#*/v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Latest tag: $LATEST_TAG"
       - name: Setup project
         run: |
           if [ "${{ matrix.project }}" == "smpark-oauth2.0" ]; then
@@ -60,6 +67,7 @@ jobs:
             echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "NGINX_PORT=${{ vars.OAUTH_NGINX_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
             echo "APP_PORT=${{ vars.OAUTH_APP_PORT }}" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
+            echo "VERSION=$VERSION" >> apps/smpark-oauth2.0/.env.${{ vars.NODE_ENV }}
           elif [ "${{ matrix.project }}" == "smpark-resource" ]; then
             echo "Setting up smpark-resource"
             echo "MONGO_DATABASE_NAME=${{ secrets.MONGO_DATABASE_NAME }}" >> apps/smpark-resource/.env.${{ vars.NODE_ENV }}
@@ -70,6 +78,7 @@ jobs:
             echo "NODE_ENV=${{ vars.NODE_ENV }}" >> apps/smpark-resource/.env.${{ vars.NODE_ENV }}
             echo "NGINX_PORT=${{ vars.RESOURCE_NGINX_PORT }}" >> apps/smpark-resource/.env.${{ vars.NODE_ENV }}
             echo "APP_PORT=${{ vars.RESOURCE_APP_PORT }}" >> apps/smpark-resource/.env.${{ vars.NODE_ENV }}
+            echo "VERSION=$VERSION" >> apps/smpark-resource/.env.${{ vars.NODE_ENV }}
           elif [ "${{ matrix.project }}" == "smpark-space" ]; then
             echo "Setting up smpark-space"
             echo "SPACE_GOOGLE_CLIENT_ID=${{ secrets.SPACE_GOOGLE_CLIENT_ID }}" > apps/smpark-space/.env.${{ vars.NODE_ENV }}
@@ -85,6 +94,7 @@ jobs:
             echo "SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "SMPARK_RESOURCE_BASE_URI=${{ vars.SMPARK_RESOURCE_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "VERSION=$VERSION" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             
             # LFS setup for smpark-space
             git lfs pull
@@ -123,14 +133,6 @@ jobs:
       - name: Transfer .env files to Windows Desktop
         run: |
           scp "./apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}" ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:D:/
-      
-      - name: Get project version
-        id: get-version
-        run: |
-          LATEST_TAG=$(git describe --tags --match "${{ matrix.project }}/v*" --abbrev=0 2>/dev/null || echo "${{ matrix.project }}/v1.0.0")
-          VERSION=${LATEST_TAG#*/v}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Latest tag: $LATEST_TAG"
       
       - name: Deploy to Windows Desktop
         run: |
