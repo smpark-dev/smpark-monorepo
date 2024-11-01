@@ -1,6 +1,7 @@
-import createError from 'http-errors';
 import { inject, injectable } from 'inversify';
 import { MongoClient, Collection, Document } from 'mongodb';
+
+import { CustomError } from '@domain/shared/errors/CustomError';
 
 @injectable()
 class MongoDB {
@@ -18,20 +19,20 @@ class MongoDB {
       this.client = await new MongoClient(this.url).connect();
       console.log('Connected to MongoDB!');
     } catch (error) {
-      throw createError(500, 'Failed to connect to MongoDB', { cause: error });
+      throw new CustomError(500, 'Failed to connect to MongoDB');
     }
   }
 
   getCollection<T extends Document>(name: string): Collection<T> {
     if (!this.client) {
-      throw createError(500, 'MongoDB not connected');
+      throw new CustomError(500, 'MongoDB not connected');
     }
     return this.client.db(this.dbName).collection(name);
   }
 
   getClient(): MongoClient {
     if (!this.client) {
-      throw createError(500, 'MongoDB not connected');
+      throw new CustomError(500, 'MongoDB not connected');
     }
     return this.client;
   }

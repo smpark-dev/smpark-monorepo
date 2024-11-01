@@ -10,11 +10,11 @@ import session from 'express-session';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-import { stream } from '@configs/winston';
+import { stream } from '@infrastructure/configs/winston';
 import errorHandlerMiddleware from '@middleware/globalMiddleware/errorHandlerMiddleware';
 import rateLimiterMiddleware from '@middleware/globalMiddleware/rateLimiterMiddleware';
 
-import type { EnvConfig } from '@lib/dotenv-env';
+import type { EnvConfig } from '@dotenv/env';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,8 +24,11 @@ const configureExpress = async (
   sessionStore: MongoStore,
   env: EnvConfig,
 ): Promise<void> => {
-  const viewsPath = path.join(__dirname, env.nodeEnv === 'production' ? 'src/views' : '../views');
-  const staticPath = path.join(__dirname, env.nodeEnv === 'production' ? 'src/' : '../');
+  const viewsPath = path.join(
+    __dirname,
+    env.nodeEnv === 'production' ? 'src/views/templates' : '../../views/templates',
+  );
+  const staticPath = path.join(__dirname, env.nodeEnv === 'production' ? 'src/' : '../../');
 
   app.set('views', viewsPath);
   app.set('view engine', 'pug');
@@ -78,7 +81,7 @@ const configureExpress = async (
   app.use(rateLimiterMiddleware);
 
   // 라우트 핸들러
-  const route = await import('../routes/indexRoute.js');
+  const route = await import('../../routes/indexRoute.js');
   app.use(route.default);
 
   // 에러 핸들러 미들웨어

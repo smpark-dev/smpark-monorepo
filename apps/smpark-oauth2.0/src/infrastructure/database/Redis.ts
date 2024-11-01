@@ -1,6 +1,7 @@
-import createError from 'http-errors';
 import { inject, injectable } from 'inversify';
 import { createClient, RedisClientType } from 'redis';
+
+import { CustomError } from '@domain/shared/errors/CustomError';
 
 @injectable()
 class Redis {
@@ -18,13 +19,13 @@ class Redis {
       await this.client.connect();
       console.log('Connected to Redis!');
     } catch (error) {
-      throw createError(500, 'Failed to connect to Redis', { cause: error });
+      throw new CustomError(500, 'Failed to connect to Redis');
     }
   }
 
   getClient(): RedisClientType {
     if (!this.client) {
-      throw createError(500, 'Redis not connected');
+      throw new CustomError(500, 'Redis not connected');
     }
     return this.client;
   }
