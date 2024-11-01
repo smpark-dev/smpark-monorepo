@@ -55,18 +55,10 @@ const configureExpress = async (
   // 로깅 미들웨어
   app.use(morgan('combined', { stream }));
 
-  // 보안 미들웨어
-  const isDevelopment = env.nodeEnv === 'development';
+  // 보안 미들웨어 (동적 CSP 미들웨어 사용중)
   app.use(
     helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          formAction: ["'self'"],
-          scriptSrc: ["'self'"],
-          upgradeInsecureRequests: isDevelopment ? null : [],
-        },
-      },
+      contentSecurityPolicy: false, // CSP는 비활성화
     }),
   );
   app.use(helmet.xssFilter());

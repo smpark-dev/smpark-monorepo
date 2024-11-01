@@ -15,7 +15,6 @@ const dynamicCSPMiddleware = (req: Request, res: Response, next: NextFunction): 
   directives['form-action'] = ["'self'", addressUri];
   directives['script-src'] = ["'self'", addressUri];
   directives['connect-src'] = ["'self'", addressUri];
-  directives['form-action'] = ["'self'", addressUri];
   directives['frame-ancestors'] = ["'none'"];
 
   helmet.contentSecurityPolicy({
