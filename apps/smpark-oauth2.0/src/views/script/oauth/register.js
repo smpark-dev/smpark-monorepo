@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       } else {
         const splitWord = managerIdList.trim().split(',');
-        // 1차 중복 검사
         for (const word of splitWord) {
           if (word.trim() === managerId) {
             alert('이미 등록된 아이디 입니다.');
@@ -37,11 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
         arrList.push(managerId);
-        // 2차 중복 검사 및 중복제거
         const clearList = checkArrWord(arrList);
 
         let strList = clearList.join(',');
-        strList = strList.replace(/,/g, ', '); // 콤마 띄어쓰기 유지할 것
+        strList = strList.replace(/,/g, ', ');
         document.getElementById('regListSmpChatManagerId').innerText = strList;
         document.getElementById('regInputSmpChatManagerId').value = '';
       }
@@ -58,10 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const splitWord = managerIdList.trim().split(',');
       for (const word of splitWord) {
         if (word.trim() === managerId) {
-          // 아이디 존재 여부 검사
           nonFindWord.push(word.trim());
         } else {
-          // 삭제 요청 아이디를 제외하고 저장
           arrList2.push(word.trim());
         }
       }
@@ -69,11 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('해당하는 아이디가 없습니다.');
         return;
       }
-      // 2차 중복 검사 및 중복제거
       const clearList = checkArrWord(arrList2);
 
-      let strList = clearList.join(','); // 배열의 문자열화
-      strList = strList.replace(/,/g, ', '); // 콤마 띄어쓰기 유지할 것
+      let strList = clearList.join(',');
+      strList = strList.replace(/,/g, ', ');
       document.getElementById('regListSmpChatManagerId').innerText = strList;
       document.getElementById('regInputSmpChatManagerId').value = '';
     }
@@ -87,20 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const status = {
-      client_id: false,
-      client_secret: false,
-      api_key: false,
+      client_id: type === 'id',
+      client_secret: type === 'secret',
+      api_key: type === 'apiKey',
     };
-
-    if (type === 'id') {
-      status.client_id = true;
-    } else if (type === 'secret') {
-      status.client_secret = true;
-    } else if (type === 'apiKey') {
-      status.api_key = true;
-    } else {
-      throw new Error('존재하지 않는 타입');
-    }
 
     try {
       const response = await fetch('/oauth/credential', {
@@ -127,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const oauthRegCheck = async () => {
     const ClientId = document.getElementById('regInputClientId').value.trim();
     const ClientSecret = document.getElementById('regInputClientSecret').value.trim();
-    const AppName = document.getElementById('regInputAppName').value.trim();
+    const AppName = document.getElementById('regInputAppName').value;
     const HomepageAddr = document.getElementById('regInputHomepageAddr').value.trim();
     const AuthCallbackURL = document.getElementById('regInputCallBackUrl').value.trim();
 
@@ -157,12 +142,17 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     }
 
-    if ([AppName, HomepageAddr, AuthCallbackURL].some(checkSpace)) {
-      alert('공백은 사용하실 수 없습니다.');
-      document.getElementById('regInputAppName').value = '';
-      document.getElementById('regInputHomepageAddr').value = '';
-      document.getElementById('regInputCallBackUrl').value = '';
-      document.getElementById('regInputAppName').focus();
+    const inputs = [
+      { value: HomepageAddr, id: 'regInputHomepageAddr', name: '홈페이지 주소' },
+      { value: AuthCallbackURL, id: 'regInputCallBackUrl', name: '콜백 URL' },
+    ];
+
+    const invalidInput = inputs.find((input) => checkSpace(input.value));
+
+    if (invalidInput) {
+      alert(`${invalidInput.name}에 공백은 사용하실 수 없습니다.`);
+      document.getElementById(invalidInput.id).value = '';
+      document.getElementById(invalidInput.id).focus();
       return false;
     }
 
@@ -185,8 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          client_id: ClientId,
-          client_secret: ClientSecret,
           address_uri: HomepageAddr,
           redirect_uri: AuthCallbackURL,
           clientAllowedScopes: chkReqInfo,
@@ -207,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // 이벤트 리스너 설정
   addEventListenerIfExists('chatManagerIdAdd', 'click', addChatManagerId);
   addEventListenerIfExists('regInputSmpChatManagerId', 'keydown', (e) => {
     if (e.key === 'Enter') {

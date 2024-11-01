@@ -1,0 +1,48 @@
+extends ../layout
+block content
+  div.logo-div
+    a(href='/')
+      img.logo-image(src='/public/image/logo.png' alt='로고')
+    form#registerForm(action='/register', method='POST' aria-labelledby='auth-form-title') 
+      .form-group
+        label(for='regInputId') 아이디
+        input#regInputId.form-control(
+          type='text'  
+          name='id' 
+          placeholder='아이디를 입력하세요'
+          autocomplete='username'
+          required
+        )
+      .form-group
+        label(for='regInputPassword') 패스워드
+        input#regInputPassword.form-control(
+          type='password'
+          name='password' 
+          placeholder='암호'
+          autocomplete='new-password'
+          required
+        )
+      .form-group
+        label(for='regInputName') 이름
+        input#regInputName.form-control(
+          type='text'
+          name='name'
+          placeholder='이름을 입력하세요'
+          required
+        )
+      .form-group
+        label(for='regInputEmail') 이메일
+        input#regInputEmail.form-control(
+          type='email'
+          name='email'
+          placeholder='abc@abcd.abc'
+          autocomplete='email'
+          required
+        )
+      div.login-button-div
+        button#registerButton.btn.btn-default.login-button(
+          type='submit'
+          aria-label='회원가입' 
+        ) 회원가입
+
+  block contents
