@@ -1,13 +1,13 @@
-import { checkSpace, validateId, validateEmail, addEnterKeyListener } from '../utils/utils.js';
+import { checkSpace, validateId, validateEmail } from '../utils/utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  addEnterKeyListener('regInputId', registerCheck);
-  addEnterKeyListener('regInputPassword', registerCheck);
-  addEnterKeyListener('regInputEmail', registerCheck);
+  const registerForm = document.getElementById('registerForm');
 
-  const registerButton = document.getElementById('registerButton');
-  if (registerButton) {
-    registerButton.addEventListener('click', registerCheck);
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await registerCheck();
+    });
   }
 });
 
@@ -44,6 +44,7 @@ const registerCheck = async () => {
     document.getElementById('regInputId').focus();
     return false;
   }
+
   if (!validateEmail(email)) {
     alert('이메일 아이디 @ 도메인주소 형식을 지켜주세요.');
     document.getElementById('regInputEmail').focus();
@@ -60,6 +61,7 @@ const registerCheck = async () => {
     });
 
     const result = await response.json();
+
     if (response.ok) {
       if (result.redirect) {
         window.location.replace(result.redirect);

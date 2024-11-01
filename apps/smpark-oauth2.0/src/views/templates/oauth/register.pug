@@ -33,12 +33,12 @@ block content
       label(for='regInputAppName') 
         | Application Name
         span.required *
-      input#regInputAppName.form-control(type='text', name='appName', placeholder='어플리케이션 이름을 입력하세요', value=client && client.application_name ? client.application_name : '')
+      input#regInputAppName.form-control(type='text', require, name='appName', placeholder='어플리케이션 이름을 입력하세요', value=client && client.application_name ? client.application_name : '')
     .form-group
       label(for='regInputHomepageAddr') 
         | Homepage Address
         span.required *
-      input#regInputHomepageAddr.form-control(type='url', name='homepageAddr', placeholder='홈페이지 주소를 입력하세요.', value=client && client.address_uri ? client.address_uri : '')
+      input#regInputHomepageAddr.form-control(type='url', require, name='homepageAddr', placeholder='홈페이지 주소를 입력하세요.', value=client && client.address_uri ? client.address_uri : '')
     .form-group
       P.information_p Check Required Information
       .checkBoxForm       
@@ -52,7 +52,7 @@ block content
       label(for='regInputCallBackUrl') 
         | Authorization Callback URL
         span.required *
-      input#regInputCallBackUrl.form-control(type='text', name='redirect_uri', placeholder='허가요청을 위한 콜백 주소를 입력하세요.', value=client && client.redirect_uri ? client.redirect_uri : '')
+      input#regInputCallBackUrl.form-control(type='text', require, name='redirect_uri', placeholder='허가요청을 위한 콜백 주소를 입력하세요.', value=client && client.redirect_uri ? client.redirect_uri : '')
     .form-group
       label.regSmpChatManagerIdLabel(for='regInputSmpChatManagerId') smpChatService Manager ID
       input#regInputSmpChatManagerId.form-control(type='text', placeholder='채팅서비스의 관리자 아이디를 등록하세요.')
