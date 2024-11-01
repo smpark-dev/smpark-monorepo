@@ -1,16 +1,14 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
-import createError from 'http-errors';
 
 import { ERROR_MESSAGES } from '@constants/errorMessages';
+import { CustomError } from '@domain/shared/errors/CustomError';
 
-import type { IOauthRequest } from '@infra-interfaces/IOauthRequest';
-
-const dynamicCSPMiddleware = (req: IOauthRequest, res: Response, next: NextFunction): void => {
+const dynamicCSPMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const addressUri = req.session.address_uri;
 
   if (!addressUri) {
-    return next(createError(401, ERROR_MESSAGES.VALIDATION.MISSING.ADDRESS_URI));
+    return next(new CustomError(401, ERROR_MESSAGES.VALIDATION.MISSING.ADDRESS_URI));
   }
 
   const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
