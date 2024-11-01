@@ -20,7 +20,7 @@ export const ERROR_MESSAGES = {
     CLIENT: '등록되지 않은 클라이언트 입니다.',
     CLIENT_ID: '등록되지 않은 클라이언트 아이디 입니다.',
     PAGE: '페이지를 찾을 수 없습니다.',
-    AGREED_SCOPES: '허용 데이터 제공 범위가 없습니다.',
+    SCOPE: '허용 데이터 제공 범위가 없습니다.',
     CREDENTIAL: '생성 요청이 모두 누락되었습니다.',
   },
   VALIDATION: {
@@ -40,6 +40,10 @@ export const ERROR_MESSAGES = {
       CONSENT_UPDATE: 'consent_update가 존재하지 않습니다.',
       ADDRESS_URI: 'address_uri가 존재하지 않습니다.',
       APPLICATION_NAME: 'application_name이 존재하지 않습니다.',
+      TOKEN_ID: 'token_id가 존재하지 않습니다.',
+      TOKEN: 'token이 존재하지 않습니다.',
+      CREDENTIAL: 'client_id, client_secret, api_key가 존재하지 않습니다.',
+      EXPIRED: 'expiresAt이 존재하지 않습니다.',
     },
     MISMATCH: {
       CLIENT_ID: '등록된 client_id와 요청된 client_id가 일치하지 않습니다.',
@@ -50,14 +54,18 @@ export const ERROR_MESSAGES = {
       CREDENTIALS: '아이디 또는 패스워드가 일치하지 않습니다.',
     },
     FORMAT: {
-      USERNAME:
-        '아이디는 4~16자로, 소문자 알파벳, 대문자 알파벳, 그리고 숫자로만 구성되어야 합니다.',
+      USERNAME: '아이디는 영문으로 시작하는 4~16자의 영문, 숫자, 밑줄(_)만 사용 가능합니다.',
       EMAIL: '이메일 주소가 형식에 맞지 않습니다.',
-      NAME: '이름은 1~200자로 구성되어야 합니다.',
+      NAME: '이름은 1~15자로 구성되어야 합니다.',
       ADDRESS_URI: 'address_uri가 형식에 맞지 않습니다.',
       REDIRECT_URI: 'redirect_uri(Authorization Callback URL)가 형식에 맞지 않습니다.',
       TOKEN: '토큰 형식이 올바르지 않습니다. 유효한 토큰을 제공해 주세요.',
       AUTHENTICATION: '잘못된 형식의 클라이언트 인증 정보입니다. "Basic" 형식을 사용해야 합니다.',
+      SCOPE: '잘못된 형식의 scope 정보입니다.',
+      MANAGER_LIST: 'Manager List가 형식에 맞지 않습니다.',
+      CLIENT_ID: 'client_id의 타입이 일치하지 않습니다.',
+      CLIENT_SECRET: 'client_secret의 타입이 일치하지 않습니다.',
+      API_KEY: 'api_key의 타입이 일치하지 않습니다.',
     },
     UNSUPPORTED: {
       RESPONSE_TYPE: 'response_type은 code만 지원됩니다.',

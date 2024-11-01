@@ -2,7 +2,7 @@ import ClientsRepository from '@repository/UserRepository';
 import createError from 'http-errors';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
-type scope = {
+type Scope = {
   id: string;
   email: string;
   name: string;
@@ -17,19 +17,25 @@ export const getScope = async (
   token: string,
   secretKey: string,
   client: ClientsRepository,
-): Promise<Partial<scope>> => {
+): Promise<Partial<Scope>> => {
   const decoded = verifyToken<JwtPayload>(token, secretKey);
   if (!decoded.sub) {
     throw createError(500, 'decoded.sub 누락');
   }
 
-  const userInfo = await client.findById(decoded.sub);
+  const result = await client.findById(decoded.sub);
 
-  if (!userInfo) {
+  if (!result) {
     throw createError(500, 'DB 데이터 누락');
   }
 
-  const resultScope: Partial<scope> = {};
+  const resultScope: Partial<Scope> = {};
+
+  const userInfo: Record<string, string> = {
+    id: result.id,
+    email: result.email,
+    name: result.name,
+  };
 
   Object.keys(decoded.scope).forEach((key) => {
     if (decoded.scope[key]) {

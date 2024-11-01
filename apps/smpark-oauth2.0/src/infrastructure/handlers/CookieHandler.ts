@@ -1,20 +1,20 @@
 import { Response } from 'express';
 import { inject, injectable } from 'inversify';
 
-import type { CookieOptions, ICookieHandler } from '@adapters-interfaces/handlers/ICookieHandler';
-import type { EnvConfig } from '@lib/dotenv-env';
+import type { ICookieHandler, ICookieOptions } from '@adapters/shared/handlers/ICookieHandler';
+import type { IEnvService } from '@domain/shared/interfaces/services/IEnvService';
 
 @injectable()
 class CookieHandler implements ICookieHandler {
-  constructor(@inject('env') private env: EnvConfig) {}
+  constructor(@inject('IEnvService') private envService: IEnvService) {}
 
-  setCookie(res: Response, options: CookieOptions): Response {
+  setCookie(res: Response, options: ICookieOptions): Response {
     const {
       name,
       value,
-      maxAge = Number(this.env.loginCookieExpiresIn) * 1000,
+      maxAge = Number(this.envService.getLoginCookieExpiresIn()) * 1000,
       httpOnly = true,
-      secure = this.env.nodeEnv === 'production',
+      secure = this.envService.getNodeEnv() === 'production',
       sameSite = 'lax',
     } = options;
 

@@ -2,12 +2,12 @@ import 'reflect-metadata';
 import MongoStore from 'connect-mongo';
 import express from 'express';
 
-import env from '@configs/env';
-import configureExpress from '@configs/express';
-import { container, registerAllDependencies } from '@configs/inversify';
-import configureSwagger from '@configs/swagger';
-import MongoDB from '@database/MongoDB';
-import Redis from '@database/Redis';
+import env from '@infrastructure/configs/env';
+import configureExpress from '@infrastructure/configs/express';
+import { container, registerAllDependencies } from '@infrastructure/configs/inversify';
+import configureSwagger from '@infrastructure/configs/swagger';
+import MongoDB from '@infrastructure/database/MongoDB';
+import Redis from '@infrastructure/database/Redis';
 
 const { mongoDBName, redisURL } = env;
 registerAllDependencies(env.mongoDBUri, mongoDBName, redisURL);

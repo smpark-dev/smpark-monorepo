@@ -1,16 +1,38 @@
 import { Router } from 'express';
 
-import { container } from '@configs/inversify';
+import { container } from '@infrastructure/configs/inversify';
 import dynamicCSPMiddleware from '@middleware/routeMiddleware/dynamicCSPMiddleware';
 
-import type { IClientsController } from '@adapters-interfaces/controllers/IClientsController';
-import type { IOAuthController } from '@adapters-interfaces/controllers/IOAuthController';
+import type { IClientsCredentialsController } from '@adapters/clients/interfaces/controllers/IClientsCredentialsController';
+import type { IClientsRegistrationController } from '@adapters/clients/interfaces/controllers/IClientsRegistrationController';
+import type { IClientsVerifierController } from '@adapters/clients/interfaces/controllers/IClientsVerifierController';
+import type { ICodeGenerationController } from '@adapters/code/interfaces/ICodeGenerationController';
+import type { ITokenGenerationController } from '@adapters/token/interfaces/ITokenGenerationController';
+import type { IUserAuthorizationController } from '@adapters/user/interfaces/controllers/IUserAuthorizationController';
+import type { IUserLoginController } from '@adapters/user/interfaces/controllers/IUserLoginController';
 import type { IAuthenticationMiddleware } from '@middleware/interfaces/routeMiddleware/IAuthenticationMiddleware';
 
-const oAuthController = container.get<IOAuthController>('IOAuthController');
-const clientsController = container.get<IClientsController>('IClientsController');
+const clientsCredentialsController = container.get<IClientsCredentialsController>(
+  'IClientsCredentialsController',
+);
+const clientsRegistrationController = container.get<IClientsRegistrationController>(
+  'IClientsRegistrationController',
+);
+const clientsVerifierController = container.get<IClientsVerifierController>(
+  'IClientsVerifierController',
+);
 const authenticationMiddleware = container.get<IAuthenticationMiddleware>(
   'IAuthenticationMiddleware',
+);
+const userLoginController = container.get<IUserLoginController>('IUserLoginController');
+const userAuthorizationController = container.get<IUserAuthorizationController>(
+  'IUserAuthorizationController',
+);
+const codeGenerationController = container.get<ICodeGenerationController>(
+  'ICodeGenerationController',
+);
+const tokenGenerationController = container.get<ITokenGenerationController>(
+  'ITokenGenerationController',
 );
 
 const oauth = Router();
@@ -18,48 +40,48 @@ const oauth = Router();
 oauth.get(
   '/register',
   authenticationMiddleware.handle,
-  clientsController.renderClientRegistrationPage.bind(clientsController),
+  clientsRegistrationController.renderClientRegisterPage,
 );
 
 oauth.post(
   '/register',
   authenticationMiddleware.handle,
-  clientsController.registerClientsDetail.bind(clientsController),
+  clientsRegistrationController.registerClientsDetail,
 );
 
 oauth.post(
   '/credential',
   authenticationMiddleware.handle,
-  clientsController.generateCredentials.bind(clientsController),
+  clientsCredentialsController.generateCredentials,
 );
 
 oauth.get(
   '/authorize',
   authenticationMiddleware.handle,
-  oAuthController.verifyOauthRequest.bind(oAuthController),
+  clientsVerifierController.verifyOauthRequest,
   dynamicCSPMiddleware,
-  oAuthController.compareScope.bind(oAuthController),
+  clientsVerifierController.compareScope,
 );
 
 oauth.post(
   '/authorize',
-  oAuthController.verifyOauthRequest.bind(oAuthController),
-  oAuthController.oAuthUserLogin.bind(oAuthController),
+  clientsVerifierController.verifyOauthRequest,
+  userLoginController.authorizeUserLogin.bind(userLoginController),
 );
 
 oauth.get(
   '/consent',
   authenticationMiddleware.handle,
-  oAuthController.updateUserAgreedScope.bind(oAuthController),
-  oAuthController.generateCode.bind(oAuthController),
+  userAuthorizationController.updateUserAgreedScope,
+  codeGenerationController.generateCode,
 );
 
-oauth.post('/disagree', oAuthController.disagree.bind(oAuthController));
+oauth.post('/disagree', authenticationMiddleware.handle, clientsVerifierController.disagree);
 
 oauth.post(
   '/token',
-  oAuthController.verifyTokenRequest.bind(oAuthController),
-  oAuthController.generateAccessToken.bind(oAuthController),
+  tokenGenerationController.verifyTokenRequest,
+  tokenGenerationController.generateAccessToken,
 );
 
 export default oauth;

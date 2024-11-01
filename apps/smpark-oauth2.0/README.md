@@ -115,7 +115,7 @@ State 사용으로 CSRF 공격 방지와 요청-응답 상태 유지합니다. �
 httpOnly, secure, sameSite등 엄격한 쿠키 설정을 통해 클라이언트에서 쿠키 접근을 막고, HTTPS에서만 접근을 허용하며 같은 사이트 출처의 요청에만 쿠키를 전송하여 CSRF 공격에 대비하였습니다. 
 - ```javascript
    directives['form-action'] = ["'self'", addressUri];
-   setCookie(res: Response, options: CookieOptions): Response {
+   setCookie(res: Response, options: ICookieOptions): Response {
     const {
       name,
       value,
@@ -135,7 +135,7 @@ httpOnly, secure, sameSite등 엄격한 쿠키 설정을 통해 클라이언트�
   
 
   try {
-    const { redirect_uri, state } = req.session;
+    const { redirect_uri, state } = req;
     const code = await this.codeGenerationUseCase.execute(id);
 
     return res.redirect(`${redirect_uri}?code=${code}&state=${state}`);
@@ -187,7 +187,7 @@ httpOnly, secure, sameSite등 엄격한 쿠키 설정을 통해 클라이언트�
 로그인 처리는 JWT 방식을 사용합니다. `Access Token`은 cookie에 담고 `Refresh Token`은 Redis에 담아 이원화하였고 서버에서만 관리하도록 하였습니다. 통신 중 `Access Token`을 탈취 후의 위험을 최소화하기 위해 유효시간을 15분 이하로 설정하고 해당 토큰이 만료되면 `Refresh Token`을 활용하여 재발급합니다.  `Access Token` 쿠키가 제거되거나 `Refresh Token`유효시간이 만료되면 다시 인증과정을 거쳐야합니다.
 
   ```javascript
-  setCookie(res: Response, options: CookieOptions): Response {
+  setCookie(res: Response, options: ICookieOptions): Response {
     const {
       name,
       value,
@@ -272,7 +272,7 @@ window.location.href = uri;
 <br>
 
 ```javascript
-const { redirect_uri, state } = req.session;
+const { redirect_uri, state } = req;
 const code = await this.codeGenerationUseCase.execute(id);
 
 return res.redirect(`${redirect_uri}?code=${code}&state=${state}`);
