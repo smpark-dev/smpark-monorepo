@@ -1,54 +1,46 @@
 import { injectable, inject } from 'inversify';
 import { Collection, ClientSession } from 'mongodb';
 
-import MongoDB from '@database/MongoDB';
-import { ScopeDTO } from '@dtos/TokenDTO';
-import { UserDTO } from '@dtos/UserDTO';
-import UserMapper from '@mapper/UserMapper';
+import BaseId from '@domain/shared/value-objects/BaseId';
+import BaseScope from '@domain/shared/value-objects/BaseScope';
+import User from '@domain/user/entities/User';
+import Email from '@domain/user/value-objects/Email';
+import MongoDB from '@infrastructure/database/MongoDB';
+import UserMapper from '@infrastructure/mapper/UserMapper';
 
-import type { IUserRepository } from '@domain-interfaces/infrastructure/repository/IUserRepository';
+import type { IUserRepository } from '@domain/user/interfaces/repository/IUserRepository';
+import type { IUserCollection } from '@infrastructure/interfaces/collections/IUserCollection';
 
 @injectable()
 class UserRepository implements IUserRepository<ClientSession> {
-  private collection: Collection<UserDTO>;
+  private collection: Collection<IUserCollection>;
 
-  constructor(
-    @inject(MongoDB) public database: MongoDB,
-    @inject(UserMapper) private userMapper: UserMapper,
-  ) {
-    this.collection = database.getCollection('members');
+  constructor(@inject(MongoDB) private database: MongoDB) {
+    this.collection = this.database.getCollection('users');
   }
 
-  async findById(id: string): Promise<UserDTO | null> {
-    const result = await this.collection.findOne({ id });
-    return result
-      ? this.userMapper.toUserDTO(this.userMapper.toEntity(result), result.password)
-      : null;
+  async findById(id: BaseId): Promise<User | null> {
+    const result = await this.collection.findOne({ id: id.getValue() });
+    return result ? UserMapper.toEntity(result) : null;
   }
 
-  async findByEmail(email: string): Promise<UserDTO | null> {
+  async findByEmail(email: Email): Promise<User | null> {
     const result = await this.collection.findOne({ email });
-    return result
-      ? this.userMapper.toUserDTO(this.userMapper.toEntity(result), result.password)
-      : null;
+    return result ? UserMapper.toEntity(result) : null;
   }
 
-  async updateAgreedScope(id: string, agreedScopes: ScopeDTO): Promise<boolean> {
+  async updateAgreedScope(id: BaseId, agreedScope: BaseScope): Promise<boolean> {
     const result = await this.collection.updateOne(
-      { id },
-      { $set: { agreedScopes } },
+      { id: id.getValue() },
+      { $set: { agreedScope: agreedScope.getValue() } },
       { upsert: true },
     );
-
     return result.modifiedCount > 0 || result.upsertedCount > 0;
   }
 
-  async save(
-    userInfo: UserDTO,
-    options?: { transactionContext?: ClientSession },
-  ): Promise<boolean> {
+  async save(user: User, options?: { transactionContext?: ClientSession }): Promise<boolean> {
     const session = options?.transactionContext;
-    const result = await this.collection.insertOne(userInfo, { session });
+    const result = await this.collection.insertOne(UserMapper.toDatabase(user), { session });
     return result.acknowledged;
   }
 }

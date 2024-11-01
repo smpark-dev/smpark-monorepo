@@ -2,23 +2,25 @@ import env from '@configs/env';
 import MongoDB from '@configs/MongoDB';
 import { Collection } from 'mongodb';
 
-export interface IMember {
+export interface IUserCollection {
   id: string;
+  password: string;
   name: string;
   email: string;
-  [key: string]: string;
+  agreedScope?: { id: boolean; email: boolean; name: boolean };
 }
 
 class ClientsRepository {
-  private collection: Collection<IMember>;
+  private collection: Collection<IUserCollection>;
 
   constructor() {
-    this.collection = MongoDB.getInstance(env.mongoDBUri, env.mongoDBName).getCollection<IMember>(
-      'members',
-    );
+    this.collection = MongoDB.getInstance(
+      env.mongoDBUri,
+      env.mongoDBName,
+    ).getCollection<IUserCollection>('users');
   }
 
-  async findById(id: string): Promise<Omit<IMember, 'password'> | null> {
+  async findById(id: string): Promise<Omit<IUserCollection, 'password'> | null> {
     const result = await this.collection.findOne({ id }, { projection: { password: 0 } });
     return result;
   }
