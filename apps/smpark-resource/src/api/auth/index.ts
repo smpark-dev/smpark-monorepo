@@ -1,10 +1,9 @@
-import Koa from 'koa';
-import Router from 'koa-router';
-
 import env from '@configs/env';
 import validateToken from '@middleware/validateToken';
 import ClientsRepository from '@repository/UserRepository';
 import { getScope } from '@services/getScope';
+import Koa from 'koa';
+import Router from 'koa-router';
 
 const client = new ClientsRepository();
 const auth = new Router();

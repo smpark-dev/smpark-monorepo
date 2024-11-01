@@ -1,40 +1,29 @@
 import { Router } from 'express';
 
-import { container } from '@configs/inversify';
-import authBlockMiddleware from '@middleware/routeMiddleware/authBlockMiddleware';
+import { container } from '@infrastructure/configs/inversify';
 
-import type { IAuthenticationController } from '@adapters-interfaces/controllers/IAuthenticationController';
+import type { IUserLoginController } from '@adapters/user/interfaces/controllers/IUserLoginController';
+import type { IUserLogoutController } from '@adapters/user/interfaces/controllers/IUserLogoutController';
+import type { IUserRegistrationController } from '@adapters/user/interfaces/controllers/IUserRegistrationController';
+import type { IAuthBlockMiddleware } from '@middleware/interfaces/routeMiddleware/IAuthBlockMiddleware';
 
-const authenticationController = container.get<IAuthenticationController>(
-  'IAuthenticationController',
+const loginController = container.get<IUserLoginController>('IUserLoginController');
+const logoutController = container.get<IUserLogoutController>('IUserLogoutController');
+const registrationController = container.get<IUserRegistrationController>(
+  'IUserRegistrationController',
 );
+const authBlockMiddleware = container.get<IAuthBlockMiddleware>('IAuthBlockMiddleware');
 
 const auth = Router();
 
-auth.get(
-  '/register',
-  authBlockMiddleware,
-  authenticationController.renderRegisterPage.bind(authenticationController),
-);
+auth.get('/register', authBlockMiddleware.handle, registrationController.renderRegisterPage);
 
-auth.post(
-  '/register',
-  authBlockMiddleware,
-  authenticationController.userRegister.bind(authenticationController),
-);
+auth.post('/register', authBlockMiddleware.handle, registrationController.userRegister);
 
-auth.get(
-  '/login',
-  authBlockMiddleware,
-  authenticationController.renderLoginPage.bind(authenticationController),
-);
+auth.get('/login', authBlockMiddleware.handle, loginController.renderLoginPage);
 
-auth.post(
-  '/login',
-  authBlockMiddleware,
-  authenticationController.userLogin.bind(authenticationController),
-);
+auth.post('/login', authBlockMiddleware.handle, loginController.userLogin);
 
-auth.post('/logout', authenticationController.userLogout.bind(authenticationController));
+auth.post('/logout', logoutController.userLogout);
 
 export default auth;
