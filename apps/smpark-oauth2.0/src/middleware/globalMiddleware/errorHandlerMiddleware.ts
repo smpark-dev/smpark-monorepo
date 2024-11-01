@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { logger } from '@configs/winston';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
+import { logger } from '@infrastructure/configs/winston';
 
 interface HttpError extends Error {
   status?: number;
@@ -12,11 +12,15 @@ const errorHandlerMiddleware = (
   req: Request,
   res: Response,
   _next: NextFunction,
-): void => {
+) => {
   const statusCode = err.status || 500;
   const errorMessage = err.message || ERROR_MESSAGES.SERVER.ISSUE;
 
   logger.error(`[${new Date().toISOString()}] ${req.method} ${req.url} - ${errorMessage}`);
+
+  if (req.headers['content-type']?.includes('application/json')) {
+    return res.status(statusCode).json({ message: errorMessage });
+  }
 
   if ([500, 501, 502, 503, 504].includes(statusCode)) {
     res.status(statusCode).render('main/error', {
@@ -28,8 +32,11 @@ const errorHandlerMiddleware = (
       code: 404,
       message: ERROR_MESSAGES.NOT_FOUND.PAGE,
     });
-  } else {
-    res.status(statusCode).json({ message: errorMessage });
+  } else if (statusCode === 401 || statusCode === 400) {
+    return res.render('auth/login', {
+      error: errorMessage,
+      returnTo: req.originalUrl,
+    });
   }
 };
 

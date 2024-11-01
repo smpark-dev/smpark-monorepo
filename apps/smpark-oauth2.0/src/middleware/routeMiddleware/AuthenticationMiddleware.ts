@@ -1,129 +1,118 @@
-import { Response, NextFunction } from 'express';
-import createError from 'http-errors';
+import { Request, Response, NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
-import { JwtPayload } from 'jsonwebtoken';
 
+import { COOKIE_NAMES } from '@constants/cookie';
 import { ERROR_MESSAGES } from '@constants/errorMessages';
-import User from '@entities/User';
+import { PATHS } from '@constants/path';
+import { REISSUE_STATE } from '@constants/token';
+import { CustomError } from '@domain/shared/errors/CustomError';
 
-import type { CookieOptions, ICookieHandler } from '@adapters-interfaces/handlers/ICookieHandler';
-import type { IRedisTokenRepository } from '@domain-interfaces/infrastructure/repository/IRedisTokenRepository';
-import type { ITokenManagementService } from '@domain-interfaces/infrastructure/services/ITokenManagementService';
-import type { IOauthRequest } from '@infra-interfaces/IOauthRequest';
-import type { EnvConfig } from '@lib/dotenv-env';
+import type { ICookieHandler } from '@adapters/shared/handlers/ICookieHandler';
+import type { ITokenReissueService } from '@domain/token/interfaces/services/ITokenReissueService';
 import type { IAuthenticationMiddleware } from '@middleware/interfaces/routeMiddleware/IAuthenticationMiddleware';
 
 @injectable()
 class AuthenticationMiddleware implements IAuthenticationMiddleware {
   constructor(
-    @inject('env') private env: EnvConfig,
-    @inject('IRedisTokenRepository')
-    private redisTokenRepository: IRedisTokenRepository,
+    @inject('ITokenReissueService') private tokenReissueService: ITokenReissueService,
     @inject('ICookieHandler') private cookieHandler: ICookieHandler,
-    @inject('ITokenManagementService') private tokenManagementService: ITokenManagementService,
   ) {}
 
-  public handle = (req: IOauthRequest, res: Response, next: NextFunction): void => {
-    const accessToken = req.cookies['smpark-auth'];
+  handle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const accessToken = req.cookies[COOKIE_NAMES.AUTH];
 
-    if (!accessToken) {
-      return this.handleUnauthenticatedUser(req, res, next);
+      if (!accessToken) {
+        return this.handleUnauthenticatedUser(req, res, next);
+      }
+
+      return await this.handleTokenReissue(req, res, next, accessToken);
+    } catch (error) {
+      return next(error);
     }
-
-    this.tokenVerifyAndChangedToken(accessToken, req, res, next);
   };
 
-  private handleUnauthenticatedUser(req: IOauthRequest, res: Response, next: NextFunction): void {
-    if (req.originalUrl.startsWith('/oauth') && Object.keys(req.query).length > 0) {
-      res.render('oauth/login', req.query);
-    } else {
-      req.session.destroy((error) => {
-        if (error) {
-          next(error);
-        }
-
-        res.clearCookie('smpark-auth');
-        res.clearCookie('connect.sid');
-
-        return res.redirect('/');
-      });
-    }
-  }
-
-  private async tokenVerifyAndChangedToken(
-    accessToken: string,
-    req: IOauthRequest,
+  private async handleTokenReissue(
+    req: Request,
     res: Response,
     next: NextFunction,
+    accessToken: string,
   ): Promise<void> {
-    try {
-      const decoded = this.tokenManagementService.verifyTokenIgnoreExpiration<User & JwtPayload>(
-        accessToken,
-        this.env.oauthAccessSecret,
-      );
-      const currentTimestamp = Math.floor(Date.now() / 1000);
-      const isExpired = decoded.exp ? decoded.exp < currentTimestamp : true;
+    const reissueResult = await this.tokenReissueService.reissueToken(accessToken);
+    switch (reissueResult.state) {
+      case REISSUE_STATE.PASS:
+        return this.handleTokenPass(req, next, reissueResult.data);
 
-      if (isExpired) {
-        const refreshToken = await this.redisTokenRepository.find('refresh', decoded.id);
+      case REISSUE_STATE.UPDATE:
+        return this.handleTokenUpdate(req, res, next, reissueResult.data);
 
-        if (refreshToken) {
-          const decodedStrict = this.tokenManagementService.verifyTokenStrict<User & JwtPayload>(
-            refreshToken,
-            this.env.oauthRefreshSecret,
-          );
-
-          if (decodedStrict) {
-            const payload = {
-              id: decoded.id,
-              name: decoded.name,
-              email: decoded.email,
-            };
-            const newAccessToken = this.tokenManagementService.generateToken(
-              payload,
-              this.env.oauthAccessSecret,
-              Number(this.env.oauthAccessTokenExpiresIn),
-            );
-            const cookieOptions: CookieOptions = {
-              name: 'smpark-auth',
-              value: newAccessToken,
-              maxAge: Number(this.env.loginCookieExpiresIn) * 1000,
-            };
-
-            this.cookieHandler.setCookie(res, cookieOptions);
-
-            req.session.user = payload;
-          }
-        } else {
-          return this.handleUnauthenticatedUser(req, res, next);
-        }
-      } else {
-        const user = {
-          id: decoded.id,
-          name: decoded.name,
-          email: decoded.email,
-        };
-        req.session.user = user;
-      }
-
-      next();
-    } catch (error) {
-      this.handleTokenVerificationError(error, res, next);
+      case REISSUE_STATE.FAIL:
+        return this.handleUnauthenticatedUser(req, res, next);
+      default:
+        throw new CustomError(500, ERROR_MESSAGES.SERVER.ISSUE);
     }
   }
 
-  private handleTokenVerificationError(error: unknown, res: Response, next: NextFunction): void {
-    if (error instanceof Error) {
-      switch (error.name) {
-        case 'JsonWebTokenError':
-          return next(createError(401, ERROR_MESSAGES.VALIDATION.FORMAT.TOKEN));
-        case 'TokenExpiredError':
-          return next(createError(401, ERROR_MESSAGES.VALIDATION.EXPIRED.TOKEN));
-        default:
-          return next(error);
-      }
+  private handleTokenPass(
+    req: Request,
+    next: NextFunction,
+    data: { accessToken: string; userId: string } | null,
+  ) {
+    if (!data) {
+      throw new CustomError(500, ERROR_MESSAGES.SERVER.ISSUE);
     }
-    next(error);
+
+    req.userId = data.userId;
+    return next();
+  }
+
+  private handleTokenUpdate(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+    data: { accessToken: string; userId: string } | null,
+  ): void {
+    if (!data) {
+      throw new CustomError(500, ERROR_MESSAGES.SERVER.ISSUE);
+    }
+
+    this.cookieHandler.setCookie(res, {
+      name: COOKIE_NAMES.AUTH,
+      value: data.accessToken,
+    });
+
+    req.userId = data.userId;
+    return next();
+  }
+
+  private handleUnauthenticatedUser(req: Request, res: Response, next: NextFunction): void {
+    req.session.destroy((error) => {
+      if (error) {
+        return next(error);
+      }
+
+      this.clearAuthCookies(res);
+      return this.redirectToLogin(req, res);
+    });
+  }
+
+  private clearAuthCookies(res: Response): void {
+    res.clearCookie(COOKIE_NAMES.AUTH);
+    res.clearCookie(COOKIE_NAMES.SESSION);
+  }
+
+  private redirectToLogin(req: Request, res: Response): void {
+    const isOAuthRequest = this.isOAuthRequest(req);
+
+    if (isOAuthRequest) {
+      return res.render(PATHS.OAUTH.LOGIN, req.query);
+    }
+
+    return res.redirect(PATHS.AUTH.LOGIN);
+  }
+
+  private isOAuthRequest(req: Request): boolean {
+    return req.originalUrl.startsWith(PATHS.OAUTH.PREFIX) && Object.keys(req.query).length > 0;
   }
 }
 
