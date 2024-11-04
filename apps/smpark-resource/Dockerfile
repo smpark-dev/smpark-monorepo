@@ -25,10 +25,8 @@ CMD ["yarn", "smpark-resource:prod"]
 
 FROM base AS development
 
-# Prod 글로벌 yarn을 사용 -> corepack 연결 -> 지정 yarn 사용 변경
 RUN corepack enable 
 
 ENV NODE_ENV=development
 EXPOSE 5005
-
 CMD ["yarn", "dev"]
