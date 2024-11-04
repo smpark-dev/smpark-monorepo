@@ -132,7 +132,7 @@ jobs:
       
       - name: Transfer .env files to Windows Desktop
         run: |
-          scp "./apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}" ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }}:D:/
+          scp "./apps/${{ matrix.project }}/.env.${{ vars.NODE_ENV }}" ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_DDNS }}:D:/
       
       - name: Deploy to Windows Desktop
         run: |
@@ -146,4 +146,4 @@ jobs:
             echo "Unknown project: ${{ matrix.project }}"
             exit 1
           fi
-          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_NOIP_HOSTNAME }} "cd /d D: && deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "$VERSION" "$PORT" "${{ vars.NODE_ENV }}""
+          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_DDNS }} "cd /d D: && deploy.bat "${{ secrets.DOCKER_USERNAME }}" "${{ secrets.DOCKER_TOKEN }}" "${{ matrix.project }}" "$VERSION" "$PORT" "${{ vars.NODE_ENV }}""
