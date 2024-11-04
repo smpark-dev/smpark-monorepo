@@ -20,6 +20,7 @@ class UserAuthorizationController implements IUserAuthorizationController {
   ): Promise<void | Response> => {
     try {
       const { scope: agreedScope, isUpdated } = req.session;
+      console.log('req.session', req.session);
       const id = req.userId;
       const scopeRequestDTO = new UserAgreeScopeUpdaterRequestDTO({ agreedScope, isUpdated, id });
       await this.userAgreedScopeUpdaterUseCase.execute(scopeRequestDTO);

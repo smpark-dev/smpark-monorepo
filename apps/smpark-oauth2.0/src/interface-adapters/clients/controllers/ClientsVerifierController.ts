@@ -59,6 +59,13 @@ class ClientsVerifierController implements IClientsVerifierController {
       const { scope: comparedScope, isUpdated } =
         await this.clientsScopeComparisonUseCase.execute(scopeRequestDTO);
 
+      console.log('session in ', {
+        scope: comparedScope,
+        isUpdated,
+        redirect_uri,
+        client_id,
+        state,
+      });
       Object.assign(req.session, {
         scope: comparedScope,
         isUpdated,
