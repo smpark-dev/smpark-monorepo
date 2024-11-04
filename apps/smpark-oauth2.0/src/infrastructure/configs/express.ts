@@ -73,7 +73,7 @@ const configureExpress = async (
   app.use(rateLimiterMiddleware);
 
   // 라우트 핸들러
-  const route = await import('../../routes/indexRoute.js');
+  const route = await import('../../interface-adapters/shared/routes/indexRoute.js');
   app.use(route.default);
 
   // 에러 핸들러 미들웨어

@@ -14,7 +14,7 @@
       "@domain/*": ["src/domain/*"],
       "@infrastructure/*": ["src/infrastructure/*"],
       "@middleware/*": ["src/middleware/*"],
-      "@routes/*": ["src/routes/*"],
+      "@routes/*": ["src/interface-adapters/shared/routes/*"],
       "@dotenv/*": ["src/types/dotenv/*"],
       "@constants/*": ["src/shared/constants/*"],
       "@configs/*": ["src/infrastructure/configs/*"],

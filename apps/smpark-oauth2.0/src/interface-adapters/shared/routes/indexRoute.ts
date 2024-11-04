@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 
-import auth from '@routes/authRoute';
-import oauth from '@routes/oAuthRoute';
+import auth from '@adapters/shared/routes/authRoute';
+import oauth from '@adapters/shared/routes/oAuthRoute';
 
 const route = Router();
 

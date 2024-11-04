@@ -6,7 +6,7 @@ services:
       context: .
       target: development
     image: smpark9596/oauth2.0:${OAUTH_VERSION}
-    container_name: oauth2.0-dev_${OAUTH_VERSION}
+    container_name: oauth2.0-dev
     ports:
       - '4004:4004'
     env_file:
