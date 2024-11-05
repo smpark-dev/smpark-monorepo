@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 
 import type { IOauthRequest } from '@infrastructure/interfaces/http-request/IOauthRequest';
 
@@ -9,5 +9,4 @@ export interface IClientsVerifierController {
     next: NextFunction,
   ): Promise<void | Response>;
   compareScope(req: IOauthRequest, res: Response, next: NextFunction): Promise<void | Response>;
-  disagree(req: Request, res: Response): void;
 }

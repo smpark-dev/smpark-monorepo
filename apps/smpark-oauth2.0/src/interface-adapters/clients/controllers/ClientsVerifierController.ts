@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { injectable, inject } from 'inversify';
 
 import {
@@ -59,13 +59,6 @@ class ClientsVerifierController implements IClientsVerifierController {
       const { scope: comparedScope, isUpdated } =
         await this.clientsScopeComparisonUseCase.execute(scopeRequestDTO);
 
-      console.log('session in ', {
-        scope: comparedScope,
-        isUpdated,
-        redirect_uri,
-        client_id,
-        state,
-      });
       Object.assign(req.session, {
         scope: comparedScope,
         isUpdated,
@@ -85,12 +78,6 @@ class ClientsVerifierController implements IClientsVerifierController {
       });
     } catch (error) {
       next(error);
-    }
-  };
-
-  disagree = (req: Request, res: Response): void => {
-    if (req.session.address_uri) {
-      res.redirect(req.session.address_uri);
     }
   };
 }

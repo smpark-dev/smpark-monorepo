@@ -16,9 +16,8 @@ block content
     else
       p 위의 표기된 정보를 smpark.dev 홈페이지의 로그인 및 채팅의 유저 식별용도 외 사용되지 않습니다. 동의하십니까?
   .agree-buttonBox
-    form#consentForm(action='/oauth/consent', method='get') 
-      button.agreeButton(type='submit') 동의함
-    form#disagreeForm(action='/oauth/disagree', method='post') 
-      button.noAgreeButton(type='submit') 동의안함
+    form.consentForm(action='/oauth/consent', method='post')
+      button.agreeButton(type='submit', name='consent', value=true) 동의함
+      button.noAgreeButton(type='submit', name='consent', value=false) 동의안함
 
   block contents
