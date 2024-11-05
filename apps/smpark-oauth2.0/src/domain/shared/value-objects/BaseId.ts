@@ -5,7 +5,7 @@ class BaseId {
   #id: string;
 
   constructor(id: string | undefined | null) {
-    this.#id = id?.trim() || '';
+    this.#id = id?.trim().toLowerCase() || '';
   }
 
   static validate(id: string | undefined | null): BaseId {
