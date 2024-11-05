@@ -30,8 +30,8 @@ export const copyToClipboard = (inputId) => {
   }
 };
 
-export const checkArrWord = (arrList) => {
-  return arrList.filter((word, index) => arrList.indexOf(word) === index);
+export const checkDuplicateArrWord = (arrList) => {
+  return [...new Set(arrList)];
 };
 
 export const blankPattern = (str, id) => {

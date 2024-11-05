@@ -2,13 +2,15 @@ extends ../layout
 block content
   div.oauth-regapp-div  
     div.oauth-header-div
-      div.oauth-logo-div
-        img.oauth-logo-image(src='/public/image/logo.png')
+      a.back-link(href="javascript:history.back()" data-nav="true")
+        span.back-icon ←
+        span.back-text Back
+      
       h1.oauth-h1 
         | OAuth App
         span.breakpoint 
         | 등록
-      form.logoutForm(action="/logout", method='Post')
+      form.logoutForm(action="/logout", method='POST')
         button.btn.btn-default.logout-button(type='submit') 로그아웃
     .form-group
       label.regIdLabel(for='regInputClientId')

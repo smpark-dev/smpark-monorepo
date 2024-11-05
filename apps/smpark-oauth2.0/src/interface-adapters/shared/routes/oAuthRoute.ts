@@ -43,13 +43,13 @@ oauth.get(
   clientsRegistrationController.renderClientRegisterPage,
 );
 
-oauth.post(
+oauth.put(
   '/register',
   authenticationMiddleware.handle,
   clientsRegistrationController.registerClientsDetail,
 );
 
-oauth.post(
+oauth.patch(
   '/credential',
   authenticationMiddleware.handle,
   clientsCredentialsController.generateCredentials,
@@ -69,14 +69,12 @@ oauth.post(
   userLoginController.authorizeUserLogin.bind(userLoginController),
 );
 
-oauth.get(
+oauth.post(
   '/consent',
   authenticationMiddleware.handle,
   userAuthorizationController.updateUserAgreedScope,
   codeGenerationController.generateCode,
 );
-
-oauth.post('/disagree', authenticationMiddleware.handle, clientsVerifierController.disagree);
 
 oauth.post(
   '/token',

@@ -1,17 +1,16 @@
 extends ../layout
 block content
   .logo-div
-    a(href='/')
+    a(href='/' data-nav="true")
       img.logo-image(src='/public/image/logo.png')
   .main-title
     h2 smPark OAuth2.0 Server
 
   .main-button
-    form.loginForm(action="/login", method='get')
-      button.btn.btn-default(type='submit') 로그인
-    
-    form.regForm(action="/register", method='get')
-      button.btn.btn-default(type='submit') 회원가입
+    .loginForm
+      a.btn.btn-default(href='/login' data-nav="true") 로그인
+    .regForm
+      a.btn.btn-default(href='/register' data-nav="true") 회원가입
 
 
   block contents

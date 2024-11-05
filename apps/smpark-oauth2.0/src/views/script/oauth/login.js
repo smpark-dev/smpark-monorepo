@@ -1,6 +1,5 @@
 import { checkSpace, checkSpecial } from '../utils/utils.js';
 
-document.addEventListener('DOMContentLoaded', () => {
   const oauthLoginForm = document.getElementById('oauthLoginForm');
 
   if (oauthLoginForm) {
@@ -16,63 +15,64 @@ document.addEventListener('DOMContentLoaded', () => {
       window.close();
     });
   });
-});
 
-const oauthLoginCheck = async () => {
-  const id = document.getElementById('oauthInputId').value;
-  const pw = document.getElementById('oauthInputPassword').value;
+  const oauthLoginCheck = async () => {
+    const id = document.getElementById('oauthInputId').value;
+    const pw = document.getElementById('oauthInputPassword').value;
 
-  // 로그인 폼 빈칸 검사
-  if (!id) {
-    alert('아이디를 입력해주세요.');
-    document.getElementById('InputId').focus();
-    return false;
-  }
-  if (!pw) {
-    alert('패스워드를 입력해주세요.');
-    document.getElementById('InputPassword').focus();
-    return false;
-  }
+    // 로그인 폼 빈칸 검사
+    if (!id) {
+      alert('아이디를 입력해주세요.');
+      document.getElementById('InputId').focus();
+      return false;
+    }
+    if (!pw) {
+      alert('패스워드를 입력해주세요.');
+      document.getElementById('InputPassword').focus();
+      return false;
+    }
 
-  if (checkSpace(id) || checkSpace(pw)) {
-    alert('공백은 사용하실 수 없습니다.');
-    document.getElementById('InputId').focus();
-    return false;
-  }
-  if (checkSpecial(id)) {
-    alert('특수문자는 사용하실 수 없습니다.');
-    document.getElementById('InputId').focus();
-    return false;
-  }
-    
-  // FormData 객체를 일반 객체로 변환
-  const oauthLoginForm = document.getElementById('oauthLoginForm');
-  const formData = new FormData(oauthLoginForm);
-  const loginData = {};
+    if (checkSpace(id) || checkSpace(pw)) {
+      alert('공백은 사용하실 수 없습니다.');
+      document.getElementById('InputId').focus();
+      return false;
+    }
+    if (checkSpecial(id)) {
+      alert('특수문자는 사용하실 수 없습니다.');
+      document.getElementById('InputId').focus();
+      return false;
+    }
 
-  formData.forEach((value, key) => {
-    loginData[key] = value;
-  });
+    // FormData 객체를 일반 객체로 변환
+    const oauthLoginForm = document.getElementById('oauthLoginForm');
+    const formData = new FormData(oauthLoginForm);
+    const loginData = {};
 
-  try {
-    const response = await fetch('/oauth/authorize', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(loginData),
+    formData.forEach((value, key) => {
+      loginData[key] = value;
     });
 
-    const result = await response.json();
+    try {
+      NProgress.start();
+      const response = await fetch('/oauth/authorize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
 
-    if (response.ok) {
-      if (result.redirect) {
-        window.location.replace(result.redirect);
+      const result = await response.json();
+      if (response.ok) {
+        if (result.redirect) {
+          window.location.replace(result.redirect);
+        }
+      } else {
+        throw new Error(result.message);
       }
-    } else {
-      throw new Error(result.message);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      NProgress.done();
     }
-  } catch (error) {
-    alert(error.message);
-  }
-};
+  };

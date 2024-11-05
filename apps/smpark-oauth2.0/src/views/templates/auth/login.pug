@@ -1,8 +1,13 @@
 extends ../layout
 block content
   div.logo-div
-    a(href='/')
+    div.back-div
+      a.back-link(href="javascript:history.back()" data-nav="true")
+        span.back-icon ←
+        span.back-text Back
+    a(href='/' data-nav="true")
       img.logo-image(src='/public/image/logo.png')
+    
     form#loginForm(action='/login', method='POST' aria-labelledby='auth-form-title') 
       .form-group
         label(for='InputId') 아이디

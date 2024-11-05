@@ -9,6 +9,7 @@ body {
 }
 a {
   cursor: pointer;
+  text-decoration: none;
 }
 ul {
   list-style: none;
@@ -283,6 +284,12 @@ textarea.form-control {
   justify-content: space-around;
   margin-top: 100px;
 }
+.consentForm {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+}
 /********************* 메인 *********************/
 .main-title h2 {
   margin-top: 60px;
@@ -296,7 +303,7 @@ textarea.form-control {
   align-items: center;
   justify-content: center;
 }
-.main-button form {
+.main-button div {
   width: 165px;
   margin: 0 60px;
 }
@@ -304,13 +311,14 @@ textarea.form-control {
   color: red;
   text-align: center;
 }
-.main-button form button {
+.main-button div a {
   width: 100%;
   font-size: 22px;
   padding: 10px;
   background-color: #fff;
   border: 1px solid #000;
   outline: 0;
+  
 }
 /***************** 인증 등록 페이지 ***************/
 
@@ -318,6 +326,7 @@ textarea.form-control {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 .information_p {
   font-weight: 700;
@@ -448,6 +457,14 @@ textarea.form-control {
 .logo-div {
   max-width: 486px;
   margin: 20px auto 0px auto;
+  position: relative;
+}
+.back-div {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  width: 100px;
+  height: 50px;
 }
 .logo-div > a {
   width: 250px;
@@ -627,6 +644,31 @@ textarea.form-control {
   transform: translate(0, -50%);
   color: #fff;
   background: #0062b3;
+}
+
+/********** 뒤로가기 *************/
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #333;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s;
+
+
+}
+
+.back-link:hover {
+  color: #888;
+}
+
+.back-icon {
+  font-size: 15px;
+}
+
+.back-text {
+  font-weight: 500;
 }
 
 /************ 글내용탭 ***************/
