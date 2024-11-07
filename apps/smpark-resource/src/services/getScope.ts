@@ -1,6 +1,7 @@
-import ClientsRepository from '@repository/UserRepository';
 import createError from 'http-errors';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+
+import ClientsRepository from '@repository/UserRepository';
 
 type Scope = {
   id: string;
@@ -19,6 +20,7 @@ export const getScope = async (
   client: ClientsRepository,
 ): Promise<Partial<Scope>> => {
   const decoded = verifyToken<JwtPayload>(token, secretKey);
+
   if (!decoded.sub) {
     throw createError(500, 'decoded.sub 누락');
   }

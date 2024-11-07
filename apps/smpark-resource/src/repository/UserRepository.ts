@@ -1,6 +1,7 @@
+import { Collection } from 'mongodb';
+
 import env from '@configs/env';
 import MongoDB from '@configs/MongoDB';
-import { Collection } from 'mongodb';
 
 export interface IUserCollection {
   id: string;
