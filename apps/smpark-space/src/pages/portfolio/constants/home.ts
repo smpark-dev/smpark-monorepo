@@ -5,6 +5,7 @@ export const HOME = {
   IMAGE_ALT: (index: number) => `주인장 ${index + 1}번째 그림카드`,
   IMAGES_URL: [
     '/imgs/smpark1.webp',
+    '/imgs/smpark2.webp',
     '/imgs/smpark3.webp',
     '/imgs/smpark4.webp',
     '/imgs/smpark5.webp',

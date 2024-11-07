@@ -1,63 +1,11 @@
 'use client';
 
-import mainImage from '@public/imgs/smpark2.webp';
-import Image, { StaticImageData } from 'next/image';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 
 import { HOME } from '@/pages/portfolio/constants';
-import { useHandleEnter } from '@/shared/model';
-import { Button } from '@/shared/ui';
+import { ImageCard } from '@/widgets/gallery/ui/ImageCard';
 
-type AnimationState = keyof typeof HOME.ANIMATION.STATES;
-
-export const Home: React.FC = () => {
-  const [rotate, setRotate] = useState<AnimationState>(HOME.ANIMATION.STATES.INIT);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [images, setImages] = useState<StaticImageData[]>([mainImage]);
-
-  const createRandomNumber = (): number => Math.floor(Math.random() * HOME.IMAGES_URL.length);
-
-  const getNewRandomIndex = (index: number): number => {
-    const newIndex = createRandomNumber();
-    return newIndex === index ? getNewRandomIndex(index) : newIndex;
-  };
-
-  const handleNextRandomImage = () => {
-    setRotate(HOME.ANIMATION.STATES.ROTATING);
-    setTimeout(() => {
-      setCurrentIndex((prevIndex) => getNewRandomIndex(prevIndex));
-      setRotate(HOME.ANIMATION.STATES.PAUSED);
-    }, HOME.ANIMATION.ROTATE_DELAY);
-  };
-
-  const handleEnter = useHandleEnter(handleNextRandomImage);
-
-  const getRotationClass = (status: AnimationState): string => {
-    return HOME.ANIMATION.CLASSES[status];
-  };
-
-  useEffect(() => {
-    let isMounted = true;
-    const loadImages = async () => {
-      const loadedImages = await Promise.all(
-        HOME.IMAGES_URL.map(async (path) => {
-          const imageModule = await import(`../../../../../../public${path}`);
-          return imageModule.default;
-        }),
-      );
-
-      if (isMounted) {
-        setImages((prevImg) => [...prevImg, ...loadedImages]);
-      }
-    };
-
-    loadImages();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
+export const Home = () => {
   return (
     <section
       id={HOME.ID}
@@ -67,25 +15,7 @@ export const Home: React.FC = () => {
         {HOME.TITLE} <br />
       </h1>
       <div className='relative w-full max-w-[243px] aspect-[243/300] mx-auto'>
-        {images.map((item, index) => (
-          <Button
-            key={item.src}
-            onClick={() => rotate !== HOME.ANIMATION.STATES.ROTATING && handleNextRandomImage()}
-            onKeyDown={(e) => rotate !== HOME.ANIMATION.STATES.ROTATING && handleEnter(e)}
-            className={`absolute inset-0 ${currentIndex === index ? 'z-10' : 'z-0'}`}
-          >
-            <Image
-              src={item}
-              alt={HOME.IMAGE_ALT(currentIndex)}
-              fill
-              sizes='(max-width: 243px) 100vw, 243px'
-              className={`object-cover select-none rounded-[20px] ${
-                rotate !== 'ROTATING' ? 'cursor-pointer' : ''
-              } ${getRotationClass(rotate)}`}
-              placeholder='blur'
-            />
-          </Button>
-        ))}
+        <ImageCard />
       </div>
 
       <h2 className='mt-12 mb-7 tracking-[0.125em] underline text-sm leading-[30px] font-noto italic text-gray-400'>

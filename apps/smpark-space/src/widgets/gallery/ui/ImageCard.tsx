@@ -1,7 +1,7 @@
 'use client';
 
 import mainImage from '@public/imgs/smpark1.webp';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 

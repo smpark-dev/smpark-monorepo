@@ -9,12 +9,11 @@ export const nextAuthOptions: NextAuthOptions = {
     Google({
       clientId: process.env.SPACE_GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.SPACE_GOOGLE_CLIENT_SECRET as string,
-      authorization: { params: { access_type: 'offline' } }, // 구글 Refresh Token 받기.
+      authorization: { params: { access_type: 'offline' } },
     }),
     GitHub({
       clientId: process.env.SPACE_GITHUB_CLIENT_ID as string,
       clientSecret: process.env.SPACE_GITHUB_CLIENT_SECRET as string,
-      // 깃허브는 Refresh Token을 기본적으로 제공하지 않음.
     }),
     Credentials({
       id: 'guest',
@@ -61,8 +60,30 @@ export const nextAuthOptions: NextAuthOptions = {
       },
     },
   ],
-  session: {
-    strategy: 'jwt',
-    maxAge: 8000,
+  callbacks: {
+    async jwt({ token, account, user }) {
+      if (account && user) {
+        return {
+          ...token,
+          id: user.id,
+          provider: account.provider,
+          accessToken: account.access_token,
+          refreshToken: account.refresh_token,
+        };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+        },
+        provider: token.provider,
+        accessToken: token.accessToken,
+        refreshToken: token.refreshToken,
+      };
+    },
   },
 };
