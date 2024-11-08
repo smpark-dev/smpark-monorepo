@@ -1,10 +1,8 @@
 import { NextRequest } from 'next/server';
 
-import { authMiddleware } from '@/shared/api';
+import { authMiddleware } from '@/shared/middleware';
 
 export async function middleware(req: NextRequest) {
-  // let response: NextResponse;
-
   // 인증 미들웨어 적용
   const response = await authMiddleware(req);
 
