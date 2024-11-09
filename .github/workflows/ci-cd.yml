@@ -94,6 +94,7 @@ jobs:
             echo "SMPARK_OAUTH_BASE_URI=${{ vars.SMPARK_OAUTH_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "SMPARK_RESOURCE_BASE_URI=${{ vars.SMPARK_RESOURCE_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "SMPARK_CLIENT_REDIRECT_URI=${{ vars.SMPARK_CLIENT_REDIRECT_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
+            echo "NEXT_PUBLIC_SMPARK_RESOURCE_BASE_URI=${{ vars.NEXT_PUBLIC_SMPARK_RESOURCE_BASE_URI }}" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             echo "VERSION=$VERSION" >> apps/smpark-space/.env.${{ vars.NODE_ENV }}
             
             # LFS setup for smpark-space
