@@ -39,7 +39,13 @@
         "tsConfig": "apps/smpark-resource/tsconfig.app.json",
         "format": ["esm"],
         "bundle": true,
-        "assets": ["apps/smpark-resource/src/assets"],
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/smpark-resource/public",
+            "output": "apps/smpark-resource/public"
+          }
+        ],
         "platform": "node"
       },
       "configurations": {
