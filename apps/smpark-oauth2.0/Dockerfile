@@ -15,7 +15,7 @@ COPY apps/smpark-oauth2.0/tsconfig*.json ./tsconfig/sub-config/
 COPY apps/smpark-oauth2.0/swagger.yaml ./
 
 FROM base AS production
-# 빌드 파일
+
 COPY dist ./dist 
 
 # Prod 글로벌 yarn을 사용 -> corepack 연결 -> 지정 yarn 사용 변경

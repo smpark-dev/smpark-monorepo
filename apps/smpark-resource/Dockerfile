@@ -2,7 +2,6 @@ FROM node:20.14.0 AS base
 
 WORKDIR /usr/src/resource
 
-# Yarn PnP Zero Install 관련 파일들
 COPY .yarn .yarn
 COPY .pnp.* ./
 COPY package.json yarn.lock ./
