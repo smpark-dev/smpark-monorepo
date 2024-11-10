@@ -42,8 +42,8 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/smpark-resource/public",
-            "output": "apps/smpark-resource/public"
+            "input": "apps/smpark-resource/src/assets",
+            "output": "apps/smpark-resource/src/assets"
           }
         ],
         "platform": "node"

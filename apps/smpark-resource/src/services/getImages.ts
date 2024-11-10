@@ -5,6 +5,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
+import env from '@configs/env';
 import ClientsRepository from '@repository/UserRepository';
 
 interface ImageData {
@@ -51,7 +52,10 @@ export const getImages = async (
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
-    const imagesDir = path.join(__dirname, '../../public/images');
+    const imagesDir = path.join(
+      __dirname,
+      env.nodeEnv === 'production' ? 'src/assets/images' : '../assets/images',
+    );
 
     try {
       await fs.access(imagesDir);
