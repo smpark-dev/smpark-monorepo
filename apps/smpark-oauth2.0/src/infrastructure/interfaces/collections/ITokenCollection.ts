@@ -1,4 +1,5 @@
 export interface ITokenCollection {
+  id: string;
   tokenId: string;
   accessToken: string;
   refreshToken: string;

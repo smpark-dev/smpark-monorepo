@@ -43,6 +43,7 @@ class AuthToken {
   static create(
     payload: ITokenPayload,
     options: ITokenOptions,
+    envService: IEnvService,
     tokenGenerator: IJsonWebTokenService,
   ) {
     return {
@@ -60,6 +61,7 @@ class AuthToken {
           options.refreshToken.expiresIn,
         ),
       ),
+      expiresAt: Date.now() + Number(envService.getOAuthAccessTokenExpiresIn()) * 1000,
     };
   }
 

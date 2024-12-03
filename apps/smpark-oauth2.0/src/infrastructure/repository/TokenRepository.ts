@@ -23,6 +23,11 @@ class MongoTokenRepository implements ITokenRepository<ClientSession> {
     return result ? TokenMapper.toEntity(result) : null;
   }
 
+  async findByRefreshToken(refreshToken: string): Promise<BaseId | null> {
+    const result = await this.collection.findOne({ refreshToken });
+    return result ? TokenMapper.toId(result) : null;
+  }
+
   async upsert(
     id: BaseId,
     token: Token,
@@ -31,7 +36,7 @@ class MongoTokenRepository implements ITokenRepository<ClientSession> {
     const session = options?.transactionContext;
     const result = await this.collection.updateOne(
       { id: id.getValue() },
-      { $set: TokenMapper.toDatabase(token) },
+      { $set: TokenMapper.toDatabase(token, id.getValue()) },
       { upsert: true, session },
     );
     return result.acknowledged && (result.modifiedCount > 0 || result.upsertedCount > 0);

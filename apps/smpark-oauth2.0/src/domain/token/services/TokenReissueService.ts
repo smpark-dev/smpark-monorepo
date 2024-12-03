@@ -34,7 +34,7 @@ class TokenReissueService implements ITokenReissueService {
 
   async reissueToken(accessToken: string): Promise<IReissueTokenResult> {
     const accessTokenValidation = await this.validateAccessToken(accessToken);
-    if (!accessTokenValidation.isExpired) {
+    if (accessTokenValidation.isExpired) {
       return {
         state: REISSUE_STATE.PASS,
         data: { accessToken, userId: accessTokenValidation.userId },

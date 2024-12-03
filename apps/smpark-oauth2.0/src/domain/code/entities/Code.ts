@@ -57,7 +57,7 @@ class Code {
     );
   }
 
-  static validateCode(code: string) {
+  static validateCode(code?: string) {
     return new AuthorizationCode(code);
   }
 

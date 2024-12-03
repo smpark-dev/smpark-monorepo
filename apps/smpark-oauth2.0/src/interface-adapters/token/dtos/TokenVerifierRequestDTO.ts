@@ -6,8 +6,8 @@ import type { GrantTypeOptions } from '@domain/clients/value-objects/GrantType';
 export class TokenVerifierRequestDTO {
   client_id: string;
   client_secret: string;
-  code: string;
-  redirect_uri: string;
+  redirect_uri?: string;
+  code?: string;
   grant_type?: GrantTypeOptions;
   refresh_token?: string;
 
@@ -24,12 +24,6 @@ export class TokenVerifierRequestDTO {
     }
     if (!data.client_secret) {
       throw new CustomError(400, ERROR_MESSAGES.VALIDATION.MISSING.CLIENT_SECRET);
-    }
-    if (!data.code) {
-      throw new CustomError(400, ERROR_MESSAGES.VALIDATION.MISSING.CODE);
-    }
-    if (!data.redirect_uri) {
-      throw new CustomError(400, ERROR_MESSAGES.VALIDATION.MISSING.REDIRECT_URI);
     }
 
     this.client_id = data.client_id;

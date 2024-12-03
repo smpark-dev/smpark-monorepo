@@ -1,65 +1,87 @@
-# smPark OAuth2.0 Server
+# SMPark OAuth2.0 Authorization Server
+> **웹 보안과 아키텍처 원칙을 구현한 프로젝트**
 
-`smPark OAuth2.0 Server`는 3년 전 보안 공부를 위해 간단하게 만들었던 OAuth 2.0 서버를 클린 아키텍처와 도메인 주도 설계를 적용하여 리펙토링한 프로젝트입니다. 
-README.md는 OAuth2.0에 대한 간단한 소개 및 사용방법, 아키텍처, 기타 설정 등에 대한 소개입니다.
+## [🔐 Live Demo](https://smpark.site)
 
-## 주요 특징
+## Overview
+OAuth2.0 표준([RFC-6749](https://datatracker.ietf.org/doc/html/rfc6749))을 기반으로 한 인증 서버입니다. 보안 모범 사례들(CSP, JWT 등)을 실제 구현하고, 클린 아키텍처와 DDD 원칙을 적용하여 구조적인 설계를 실현했습니다.
 
-- **클린 아키텍처 + 도메인 주도 설계**:
-  역할에 따라 레이어를 구분하고 외부 레이어에서 내부 레이어로 흐르는 단방향 구조로 시스템을 설계했습니다. 이를 통해 모듈 간의 의존성을 줄여 유지보수성을 높이고, 코드 변경에 유연한 구조를 갖추고자 했습니다. 또한, OAuth 2.0 구현에 필요한 네 가지 핵심 도메인을 설정해 비즈니스 로직과 도메인 요구사항을 명확히 반영하여, 시스템의 복잡성을 효과적으로 관리하면서도 유연성과 확장성을 확보했습니다.
+## Key Features
+- 🔐 표준 OAuth2.0 인증 플로우
+- 🛡️ CSP, XSS, CSRF, DOS 방어
+- 🏗️ 클린 아키텍처 & DDD 기반 설계
+- 🔄 CI/CD 파이프라인
 
-- **Yarn PnP (Zero Install)**:
-  설치 시간 단축과 용량 최소화, CI/CD 시간을 줄이기 위해 Zero Install을 사용했습니다.
+### Usage
 
-- **TypeScript**:
-  엄격한 정적 타입 체크를 통해 코드의 안정성과 가독성을 향상했습니다.
+#### Quick Test Login
+- [🚀 [smpark.dev]](https://smpark.dev) Login -> Smpark Login 클릭
+- [🔐 [smpark.site]](https://smpark.site) ID: `tester`, PW: `1234` 입력 후 로그인
 
-- **MongoDB & Redis**:
-  NoSQL(MongoDB)을 사용하여 데이터를 저장하고, Redis를 이용해 Refresh Token을 관리합니다. 일부 세션 관리도 포함됩니다.
 
-- **ESLint**:
-  코드 품질과 일관성을 유지하기 위해 린팅 규칙을 적용했습니다. 저장 시 단축키를 통해 자동으로 `--fix`를 실행하여 코드를 정리하고, Import 문을 정해진 규칙에 따라 정렬하도록 설정했습니다.
-
-- **Docker**:
-  컨테이너화를 통해 개발 및 배포 환경의 일관성을 보장했습니다.
-
-- **JEST/Cypress**:
-  - 서비스 로직에 대해 유닛 테스트를 진행했습니다.
-  - OAuth 인증 성공 사례에 대해 E2E 테스트를 수행했습니다.
-
-- **Github Action(CI/CD)**:
-  - GitHub Actions를 통해 지속적 통합 및 배포 파이프라인을 구축했습니다.
-  - 무료 배포 및 성능 최적화를 위해 가정 내 Windows 데스크탑에서 배포를 진행했습니다.
-  - WSL(리눅스) 배포 대신 SSH를 통해 Windows 11 OS에서 직접 배포 했습니다.
-  - CI는 개발 MacBook에서, CD는 Windows 데스크탑에서 실행됩니다.
-  - 배포는 08:00 - 20:00 사이에만 이루어지며, 이 시간에 맞춰 데스크탑이 자동으로 구동 및 종료되도록 설정했습니다.
-
-## Version
-
-`smPark OAuth2.0 Server`_(v1.0.0)_
-
-## IDE
-
-<img alt="VSCode" src="https://img.shields.io/badge/VSCode-v1.91.1-007ACC.svg?&flat&logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNDVweCIgaGVpZ2h0PSI0NHB4IiB2aWV3Qm94PSIwIDAgNDQgNDQiIHZlcnNpb249IjEuMSI+CjxnIGlkPSJzdXJmYWNlMSI+CjxwYXRoIHN0eWxlPSIgc3Ryb2tlOm5vbmU7ZmlsbC1ydWxlOm5vbnplcm87ZmlsbDpyZ2IoMTQuMTE3NjQ3JSw1My43MjU0OSUsNzkuMjE1Njg2JSk7ZmlsbC1vcGFjaXR5OjE7IiBkPSJNIDEuMjU3ODEyIDE1LjczMDQ2OSBDIDEuMjU3ODEyIDE1LjczMDQ2OSAwLjIxNDg0NCAxNC45NjQ4NDQgMS40NjQ4NDQgMTMuOTQxNDA2IEwgNC4zNzg5MDYgMTEuMjkyOTY5IEMgNC4zNzg5MDYgMTEuMjkyOTY5IDUuMjEwOTM4IDEwLjM5ODQzOCA2LjA5Mzc1IDExLjE3NTc4MSBMIDMyLjk2NDg0NCAzMS44OTQ1MzEgTCAzMi45NjQ4NDQgNDEuODI4MTI1IEMgMzIuOTY0ODQ0IDQxLjgyODEyNSAzMi45NTMxMjUgNDMuMzkwNjI1IDMwLjk4NDM3NSA0My4yMTg3NSBaIE0gMS4yNTc4MTIgMTUuNzMwNDY5ICIvPgo8cGF0aCBzdHlsZT0iIHN0cm9rZTpub25lO2ZpbGwtcnVsZTpub256ZXJvO2ZpbGw6cmdiKDYuMjc0NTElLDQzLjkyMTU2OSUsNzAuMTk2MDc4JSk7ZmlsbC1vcGFjaXR5OjE7IiBkPSJNIDguMTgzNTk0IDIyLjEzMjgxMiBMIDEuMjU3ODEyIDI4LjU0Njg3NSBDIDEuMjU3ODEyIDI4LjU0Njg3NSAwLjU0Njg3NSAyOS4wODU5MzggMS4yNTc4MTIgMzAuMDQ2ODc1IEwgNC40NzI2NTYgMzMuMDI3MzQ0IEMgNC40NzI2NTYgMzMuMDI3MzQ0IDUuMjM4MjgxIDMzLjg2MzI4MSA2LjM2NzE4OCAzMi45MTAxNTYgTCAxMy43MDcwMzEgMjcuMjQyMTg4IFogTSA4LjE4MzU5NCAyMi4xMzI4MTIgIi8+CjxwYXRoIHN0eWxlPSIgc3Ryb2tlOm5vbmU7ZmlsbC1ydWxlOm5vbnplcm87ZmlsbDpyZ2IoMy4xMzcyNTUlLDQ2LjY2NjY2NyUsNzIuNTQ5MDIlKTtmaWxsLW9wYWNpdHk6MTsiIGQ9Ik0gMjAuMzQzNzUgMjIuMTg3NSBMIDMzLjA0Njg3NSAxMi4zMDg1OTQgTCAzMi45NjQ4NDQgMi40MjU3ODEgQyAzMi45NjQ4NDQgMi40MjU3ODEgMzIuNDIxODc1IDAuMjY5NTMxIDMwLjYxMzI4MSAxLjM5MDYyNSBMIDEzLjcwNzAzMSAxNy4wNTg1OTQgWiBNIDIwLjM0Mzc1IDIyLjE4NzUgIi8+CjxwYXRoIHN0eWxlPSIgc3Ryb2tlOm5vbmU7ZmlsbC1ydWxlOm5vbnplcm87ZmlsbDpyZ2IoMjMuNTI5NDEyJSw2MCUsODMuMTM3MjU1JSk7ZmlsbC1vcGFjaXR5OjE7IiBkPSJNIDMwLjk4NDM3NSA0My4yMzA0NjkgQyAzMS43MjI2NTYgNDQgMzIuNjE3MTg4IDQzLjc1IDMyLjYxNzE4OCA0My43NSBMIDQyLjUxNTYyNSAzOC43ODEyNSBDIDQzLjc4NTE1NiAzNy45MDIzNDQgNDMuNjA1NDY5IDM2LjgwODU5NCA0My42MDU0NjkgMzYuODA4NTk0IEwgNDMuNjA1NDY5IDcuMTQ0NTMxIEMgNDMuNjA1NDY5IDUuODQzNzUgNDIuMjk2ODc1IDUuMzkwNjI1IDQyLjI5Njg3NSA1LjM5MDYyNSBMIDMzLjcxNDg0NCAxLjE3OTY4OCBDIDMxLjgzOTg0NCAwIDMwLjYxMzI4MSAxLjM5MDYyNSAzMC42MTMyODEgMS4zOTA2MjUgQyAzMC42MTMyODEgMS4zOTA2MjUgMzIuMTkxNDA2IDAuMjM0Mzc1IDMyLjk2NDg0NCAyLjQyNTc4MSBMIDMyLjk2NDg0NCA0MS42NDg0MzggQyAzMi45NjQ4NDQgNDEuOTE3OTY5IDMyLjkxMDE1NiA0Mi4xODM1OTQgMzIuNzk2ODc1IDQyLjQyMTg3NSBDIDMyLjU3MDMxMiA0Mi44ODY3MTkgMzIuMDc4MTI1IDQzLjMyMDMxMiAzMC45MDIzNDQgNDMuMTM2NzE5IFogTSAzMC45ODQzNzUgNDMuMjMwNDY5ICIvPgo8L2c+Cjwvc3ZnPgo="/> <img alt="Node.js" src="https://img.shields.io/badge/Node.js-v20.14.0-339933.svg?&flat&logo=Node.js"/> <img alt="Express" src="https://img.shields.io/badge/Express-v4.19.2-333333.svg?&flat&logo=Express"/> <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E.svg?&flat&logo=JavaScript"/> <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-v5.5.2-3178C6.svg?&flat&logo=TypeScript"/> <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-v6.7.0-47A248.svg?&flat&logo=MongoDB"/> <img alt="Redis" src="https://img.shields.io/badge/Redis-v4.7.0-FF4438.svg?&flat&logo=Redis"/> <img alt="Nginx" src="https://img.shields.io/badge/Nginx-v1.27.0-009639.svg?&flat&logo=nginx&logoColor=009639"/> <img alt="ESLint" src="https://img.shields.io/badge/ESLint-v9.5.0-6C54E6.svg?&flat&logo=ESLint&logoColor=6C54E6"/> <img alt="Prettier" src="https://img.shields.io/badge/Prettier-v3.3.2-F7B93E.svg?&flat&logo=Prettier"/> <img alt="Docker" src="https://img.shields.io/badge/Docker-v24.0.2-2496ED.svg?&flat&logo=Docker"/> <img alt="Yarn" src="https://img.shields.io/badge/Yarn-v4.3.1-2C8EBB.svg?&flat&logo=Yarn"/> <img alt="Git" src="https://img.shields.io/badge/Git-v2.40.1-F05032.svg?&flat&logo=Git"/> <img alt="Jest" src="https://img.shields.io/badge/Jest-v29.7.0-C21325.svg?&flat&logo=Jest&logoColor=C21325"/> <img alt="Cypress" src="https://img.shields.io/badge/Cypress-v13.13.0-00BFAA.svg?&flat&logo=Cypress"/>
-
-- **Tool** - `VSCode` _(v1.91.1)_
-- **Back End** - `Node.js` _(v20.14.0)_, `Express` _(v4.19.2)_
-- **Front End** - `JavaScript` _(ES6+)_, `TypeScript` _(v5.5.2)_
-- **Database & Session** - `MongoDB (Atlas)` _(v6.7.0)_, `Redis` _(v4.7.0)_
-- **Web Server** - `Nginx` _(v1.27.0)_
-- **Linting** - `ESLint` _(v9.5.0)_
-- **Formatting** - `Prettier` _(v3.3.2)_
-- **Containerization** - `Docker` _(v24.0.2)_
-- **Package Management** - `Yarn` _(v4.3.1)_
-- **Version Control** - `Git` _(v2.40.1)_
-- **Testing** - `Jest` _(v29.7.0)_, `Cypress` _(v13.13.0)_
-- **Deployment Environment** - `CI - macOS` _(v14.5 Sonoma on MacBook)_, `CD - Windows11` _(vWin11 Desktop)_
+#### Quick Test Social Login
+- [🔐 [smpark.site]](https://smpark.site) 회원가입 후 로그인
+- [🔐 [smpark.site]](https://smpark.site) OAuth 페이지 작성 후, 적용 사이트에 소셜 로그인 로직 연동
 
 <br>
 
-[📑[rfc6749]](https://datatracker.ietf.org/doc/html/rfc6749)의 구조와 권고를 베이스로 제작하였습니다.
+---------------
 
-[🚀[smpark.ddns.net]](https://smpark.ddns.net) 사이트 이동
+<br>
+
+## Key Features
+
+### Security
+- **OAuth 2.0 Implementation**
+  - RFC-6749 표준 준수
+  - 보안 권장사항 적용
+  - 토큰 이원화 (Access/Refresh)
+
+- **Security Measures**
+  - CSP를 통한 리소스 제어
+  - XSS/CSRF 방어
+  - Rate Limiting으로 DoS 방지
+  - Secure Cookie 설정
+
+### Architecture
+- **Clean Architecture**
+  - 계층 분리를 통한 관심사 분리
+  - 의존성 역전 원칙 적용
+  - 테스트 용이성 확보
+
+- **Domain-Driven Design**
+  - 핵심 비즈니스 로직의 도메인 모델링
+  - 유비쿼터스 언어 사용
+  - Aggregate Root 패턴 적용
+
+### DevOps
+- **CI/CD Pipeline**
+  - GitHub Actions 자동화
+  - Docker 컨테이너화
+  - Zero-Install로 배포 최적화
+
+## IDE
+
+## Tech Stack
+### Core
+<img alt="Node.js" src="https://img.shields.io/badge/Node.js-v20.14.0-339933.svg?&flat&logo=Node.js"/> <img alt="Express" src="https://img.shields.io/badge/Express-v4.19.2-333333.svg?&flat&logo=Express"/> <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-v5.5.4-3178C6.svg?&flat&logo=TypeScript"/> <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E.svg?&flat&logo=JavaScript"/>
+
+### Database
+<img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-v6.7.0-47A248.svg?&flat&logo=MongoDB"/> <img alt="Redis" src="https://img.shields.io/badge/Redis-v4.7.0-FF4438.svg?&flat&logo=Redis"/>
+
+### Development
+<img alt="ESLint" src="https://img.shields.io/badge/ESLint-v9.5.0-6C54E6.svg?&flat&logo=ESLint&logoColor=6C54E6"/> <img alt="Prettier" src="https://img.shields.io/badge/Prettier-v3.3.2-F7B93E.svg?&flat&logo=Prettier"/> <img alt="VSCode" src="https://img.shields.io/badge/VSCode-v1.91.1-007ACC.svg?&flat&logo=visualstudiocode"/> <img alt="Git" src="https://img.shields.io/badge/Git-v2.40.1-F05032.svg?&flat&logo=Git"/>
+
+### DevOps
+<img alt="Docker" src="https://img.shields.io/badge/Docker-v24.0.2-2496ED.svg?&flat&logo=Docker"/> <img alt="Nginx" src="https://img.shields.io/badge/Nginx-v1.27.0-009639.svg?&flat&logo=nginx&logoColor=009639"/> <img alt="Yarn" src="https://img.shields.io/badge/Yarn-v4.3.1-2C8EBB.svg?&flat&logo=Yarn"/>
+
+### Testing
+<img alt="Jest" src="https://img.shields.io/badge/Jest-v29.7.0-C21325.svg?&flat&logo=Jest&logoColor=C21325"/> <img alt="Cypress" src="https://img.shields.io/badge/Cypress-v13.13.0-00BFAA.svg?&flat&logo=Cypress"/>
+
+### Build
+<img alt="ESBuild" src="https://img.shields.io/badge/ESBuild-v0.19.2-FFCF00.svg?&flat&logo=ESBuild"/>
+
+
 <br>
 
 ## Flow (OAuth 2.0)
@@ -87,7 +109,7 @@ OAuth2.0에서 쓰이는 용어 설명입니다.
 
 ## Secure
 
-`smPark OAuth2.0 Server`를 제작하면서 가장 중점을 두었던 부분은 보안입니다.
+`smpark OAuth2.0 Server`를 제작하면서 가장 중점을 두었던 부분은 보안입니다.
 아래와 같은 보안 검증을 구현하였습니다.
 
 <br>
@@ -95,16 +117,8 @@ OAuth2.0에서 쓰이는 용어 설명입니다.
 - `CSP` : 웹 애플리케이션에서 실행될 수 있는 리소스의 출처를 제한하는 보안 메커니즘으로, 서버가 HTTP 헤더를 통해 브라우저에 전달하는 정책입니다. 미들웨어를 통해 접속 요청 시 인증된 URI에만 제한을 완화하도록 동적으로 설정했습니다.
 
 - ```javascript
-  const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
+  // CSP 정책 설정 예시 코드: 특정 출처에서만 리소스를 허용합니다.
   directives['form-action'] = ["'self'", addressUri];
-  directives['script-src'] = ["'self'", addressUri];
-  directives['connect-src'] = ["'self'", addressUri];
-  directives['form-action'] = ["'self'", addressUri];
-  directives['frame-ancestors'] = ["'none'"];
-
-  helmet.contentSecurityPolicy({
-    directives,
-  })(req, res, next);
   ```
 
 
@@ -162,6 +176,7 @@ OAuth2.0에서 쓰이는 용어 설명입니다.
 <br>
 
 - `DoS(Denial of Service)` : express-rate-limit 미들웨어를 사용해 특정 시간 동안 허용되는 요청 수를 제한하여 반복된 요청으로 인한 서버 마비를 방지했습니다.
+  
   ```javascript
   const rateLimit = require('express-rate-limit');
 
@@ -231,7 +246,7 @@ OAuth2.0에서 쓰이는 용어 설명입니다.
 
 #### Register
 
-1. [📝[smpark.ddns.net]](https://smpark.ddns.net)에서 회원가입 후 로그인
+1. [📝[smpark.site]](https://smpark.site)에서 회원가입 후 로그인
 2. Client ID, Client Secret 생성
 3. Homepage Address, Authorization Callback URL, Check Required Information 항목 기재 후 등록
 
@@ -254,7 +269,7 @@ const response_type = 'code';
 
 
 // uri redirect -> method GET
-const uri = `https://smpark.ddns.net/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}&response_type=${response_type}`;
+const uri = `https://smpark.site/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}&response_type=${response_type}`;
 
 window.location.href = uri;
 ```
@@ -287,7 +302,7 @@ return res.redirect(`${redirect_uri}?code=${code}&state=${state}`);
 5. Flow 3: 클라이언트는 전달받은 code와 state를 파싱하여 token 요청
 
 ```javascript
-const response = await axios.post('https://smpark.ddns.net/oauth/token', {
+const response = await axios.post('https://smpark.site/oauth/token', {
   client_id: process.env.CLIENT_ID,
   client_secret: process.env.CLIENT_SECRET,
   code,
@@ -311,7 +326,7 @@ const response = await axios.post('https://smpark.ddns.net/oauth/token', {
 6. Flow 5: 클라이언트는 `Resource Server`에 요청할 때 `access_token`을 포함
 
 ```javascript
-const response = await axios.get('https://resource-server.example.com/scope', {
+const response = await axios.get('https://smpark.store/scope', {
   headers: {
     Authorization: `Bearer ${accessToken}`,
   },
@@ -331,7 +346,7 @@ const response = await axios.get('https://resource-server.example.com/scope', {
 
 #### Log
 
-`winston`과 `margan`을 사용하여 접속과 에러 상황을 로그로 기록합니다. 또한, 콘솔에도 정보를 출력하여 개발을 원활하게 진행할 수 있도록 하였습니다.
+`winston`과 `morgan`을 사용하여 접속과 에러 상황을 로그로 기록합니다. 또한, 콘솔에도 정보를 출력하여 개발을 원활하게 진행할 수 있도록 하였습니다.
 
 ```javascript
 const consoleTransport = new winston.transports.Console({

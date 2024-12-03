@@ -15,14 +15,12 @@ class CodeDeletionService implements ICodeDeletionService {
     const id = User.validateUserId(userId);
     const code = await this.codeRepository.findById(id);
 
-    if (!code) {
-      throw new CustomError(500, ERROR_MESSAGES.SERVER.ISSUE);
-    }
+    if (code) {
+      const isDeleted = this.codeRepository.delete(code.code);
 
-    const isDeleted = this.codeRepository.delete(code.code);
-
-    if (!isDeleted) {
-      throw new CustomError(500, ERROR_MESSAGES.SERVER.ISSUE);
+      if (!isDeleted) {
+        throw new CustomError(500, ERROR_MESSAGES.SERVER.ISSUE);
+      }
     }
   }
 }

@@ -4,10 +4,15 @@ import AuthToken from '@domain/token/value-objects/AuthToken';
 import type { IUserLoginResponse } from '@application/user/interfaces/usecases/IUserLoginUseCase';
 
 class TokenIssuanceMapper {
-  static toOAuthTokens(token: { accessToken: AuthToken; refreshToken: AuthToken }) {
+  static toOAuthTokens(token: {
+    accessToken: AuthToken;
+    refreshToken: AuthToken;
+    expiresAt: number;
+  }) {
     return {
       accessToken: token.accessToken.getValue(),
       refreshToken: token.refreshToken.getValue(),
+      expiresAt: token.expiresAt,
     };
   }
 

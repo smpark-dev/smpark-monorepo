@@ -19,11 +19,18 @@ class TokenPreparationUseCase implements ITokenPreparationUseCase {
   ) {}
 
   async execute(tokenRequest: ITokenPrepareRequest): Promise<string> {
-    const { code, userId } = await this.codeValidationService.validateCode(tokenRequest.code);
     const clients = await this.clientsCredentialsVerifierService.validateClient(tokenRequest);
 
-    this.tokenPreparationService.prepareToken(tokenRequest, code, clients);
+    if (tokenRequest.grant_type !== 'refresh_token') {
+      const { code, userId } = await this.codeValidationService.validateCode(tokenRequest.code);
+      this.tokenPreparationService.prepareToken(tokenRequest, code, clients);
 
+      return userId.getValue();
+    }
+
+    const userId = await this.tokenPreparationService.validateRefreshToken(
+      tokenRequest.refresh_token,
+    );
     return userId.getValue();
   }
 }

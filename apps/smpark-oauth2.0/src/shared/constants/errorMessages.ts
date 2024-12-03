@@ -22,6 +22,7 @@ export const ERROR_MESSAGES = {
     PAGE: '페이지를 찾을 수 없습니다.',
     SCOPE: '허용 데이터 제공 범위가 없습니다.',
     CREDENTIAL: '생성 요청이 모두 누락되었습니다.',
+    TOKEN: '등록되지 않은 토큰입니다.',
   },
   VALIDATION: {
     MISSING: {

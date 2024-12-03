@@ -13,7 +13,7 @@ import type { ICodeValidationService } from '@domain/code/interfaces/services/IC
 class CodeValidationService implements ICodeValidationService {
   constructor(@inject('ICodeRepository') private codeRepository: ICodeRepository) {}
 
-  async validateCode(codeRequest: string): Promise<{ code: Code; userId: BaseId }> {
+  async validateCode(codeRequest?: string): Promise<{ code: Code; userId: BaseId }> {
     const validatedRequestCode = Code.validateCode(codeRequest);
     const { code, userId } = await this.fetchAndValidCode(validatedRequestCode);
 

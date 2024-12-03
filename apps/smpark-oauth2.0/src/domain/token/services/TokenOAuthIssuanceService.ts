@@ -47,6 +47,7 @@ class TokenOAuthIssuanceService implements ITokenOAuthIssuanceService {
     const tokens = Token.generateToken(
       payload,
       Token.createOptions(this.envService),
+      this.envService,
       this.jsonWebTokenService,
     );
 

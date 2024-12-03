@@ -60,9 +60,10 @@ class Token {
   static generateToken(
     payload: ITokenPayload,
     options: ITokenOptions,
+    envService: IEnvService,
     tokenGenerator: IJsonWebTokenService,
-  ): { accessToken: AuthToken; refreshToken: AuthToken } {
-    return AuthToken.create(payload, options, tokenGenerator);
+  ): { accessToken: AuthToken; refreshToken: AuthToken; expiresAt: number } {
+    return AuthToken.create(payload, options, envService, tokenGenerator);
   }
 
   static validateToken(token?: string | null): AuthToken {

@@ -36,7 +36,6 @@ class TokenGenerationController implements ITokenGenerationController {
         ...req.body,
         client_id,
         client_secret,
-        userId: req.userId,
       });
 
       const userId = await this.tokenPreparationUseCase.execute(tokenRequestDTO);
@@ -59,6 +58,7 @@ class TokenGenerationController implements ITokenGenerationController {
       return res.json({
         access_token: tokens.accessToken,
         refresh_token: tokens.refreshToken,
+        expires_at: tokens.expiresAt,
         token_type: 'Bearer',
       });
     } catch (error) {

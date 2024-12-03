@@ -6,6 +6,7 @@ export interface ICredentialRequest {
 export interface ITokenResponse {
   accessToken: string;
   refreshToken: string;
+  expiresAt: number;
 }
 
 export interface ITokenOAuthIssuanceUseCase {
