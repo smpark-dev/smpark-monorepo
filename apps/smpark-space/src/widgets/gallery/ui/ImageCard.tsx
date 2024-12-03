@@ -14,8 +14,8 @@ import { useGalleryImages } from '../model/queries/useGalleryImages';
 type AnimationState = keyof typeof HOME.ANIMATION.STATES;
 
 export const ImageCard = () => {
-  const { status } = useSession();
-  const { data: apiImages } = useGalleryImages(status === 'authenticated');
+  const { data: session, status } = useSession();
+  const { data: apiImages } = useGalleryImages(session?.provider === 'smpark');
 
   const [rotate, setRotate] = useState<AnimationState>(HOME.ANIMATION.STATES.INIT);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -68,6 +68,8 @@ export const ImageCard = () => {
               className={`object-cover select-none rounded-[20px] ${
                 rotate !== 'ROTATING' ? 'cursor-pointer' : ''
               } ${getRotationClass(rotate)}`}
+              placeholder='blur'
+              blurDataURL={image.blurDataUrl}
             />
           </Button>
         ))

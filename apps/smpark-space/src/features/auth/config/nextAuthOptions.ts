@@ -69,8 +69,37 @@ export const nextAuthOptions: NextAuthOptions = {
           provider: account.provider,
           accessToken: account.access_token,
           refreshToken: account.refresh_token,
+          expiresAt: account.expires_at,
         };
       }
+
+      if (token.provider === 'smpark' && token.expiresAt && Date.now() >= Number(token.expiresAt)) {
+        const credentials = Buffer.from(
+          `${process.env.SPACE_SMPARK_CLIENT_ID}:${process.env.SPACE_SMPARK_CLIENT_SECRET}`,
+        ).toString('base64');
+
+        const response = await fetch(`${process.env.SMPARK_OAUTH_BASE_URI}/oauth/token`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Basic ${credentials}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            grant_type: 'refresh_token',
+            refresh_token: token.refreshToken || '',
+          }),
+        });
+
+        const tokens = await response.json();
+
+        return {
+          ...token,
+          accessToken: tokens.access_token,
+          refreshToken: tokens.refresh_token,
+          expiresAt: tokens.expires_at,
+        };
+      }
+
       return token;
     },
     async session({ session, token }) {

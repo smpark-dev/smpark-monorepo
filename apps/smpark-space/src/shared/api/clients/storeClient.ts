@@ -1,5 +1,5 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { getSession } from 'next-auth/react';
+import axios from 'axios';
+import { getSession, signIn } from 'next-auth/react';
 
 export const storeApiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SMPARK_RESOURCE_BASE_URI,
@@ -25,6 +25,22 @@ storeApiClient.interceptors.request.use(
 );
 
 storeApiClient.interceptors.response.use(
-  (response: AxiosResponse) => response.data,
-  (error: AxiosError) => Promise.reject(error),
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401) {
+      const session = await getSession();
+
+      if (!session) {
+        signIn('smpark');
+        throw new Error('Session not found');
+      }
+
+      originalRequest.headers.Authorization = `Bearer ${session.accessToken}`;
+      return storeApiClient(originalRequest);
+    }
+
+    return Promise.reject(error);
+  },
 );
