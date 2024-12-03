@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 import createError from 'http-errors';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import path, { dirname } from 'path';
+import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 
 import env from '@configs/env';
@@ -11,10 +12,30 @@ import ClientsRepository from '@repository/UserRepository';
 interface ImageData {
   name: string;
   data: string;
+  blurDataUrl: string;
 }
 
 const verifyToken = <T>(token: string, jwtSecretKey: string): T => {
-  return jwt.verify(token, jwtSecretKey) as T;
+  try {
+    return jwt.verify(token, jwtSecretKey) as T;
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      throw createError(401, 'Token expired');
+    }
+    if (error instanceof jwt.JsonWebTokenError) {
+      throw createError(401, 'Invalid token');
+    }
+    throw error;
+  }
+};
+
+const generateBlurDataUrl = async (imageBuffer: Buffer): Promise<string> => {
+  const blurredImage = await sharp(imageBuffer)
+    .resize(10, 10, { fit: 'inside' })
+    .blur(5)
+    .toBuffer();
+
+  return `data:image/jpeg;base64,${blurredImage.toString('base64')}`;
 };
 
 const getMimeType = (ext: string): string => {
@@ -77,11 +98,14 @@ export const getImages = async (
         })
         .map(async (file) => {
           try {
-            const image = await fs.readFile(path.join(imagesDir, file));
+            const imageBuffer = await fs.readFile(path.join(imagesDir, file));
             const ext = path.extname(file);
+            const blurDataUrl = await generateBlurDataUrl(imageBuffer);
+
             return {
               name: file,
-              data: `data:${getMimeType(ext)};base64,${image.toString('base64')}`,
+              data: `data:${getMimeType(ext)};base64,${imageBuffer.toString('base64')}`,
+              blurDataUrl,
             };
           } catch (error) {
             console.error(`Failed to read image ${file}:`, error);
@@ -90,7 +114,7 @@ export const getImages = async (
         }),
     );
 
-    return images.filter((image): image is { name: string; data: string } => image !== null);
+    return images.filter((image): image is ImageData => image !== null);
   } catch (error) {
     if (createError.isHttpError(error)) throw error;
     throw createError(500, 'Internal server error');
