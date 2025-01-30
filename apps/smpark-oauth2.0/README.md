@@ -12,14 +12,14 @@ OAuth2.0 표준([RFC-6749](https://datatracker.ietf.org/doc/html/rfc6749))을 �
 - 🏗️ 클린 아키텍처 & DDD 기반 설계
 - 🔄 CI/CD 파이프라인
 
-### Usage
+## Usage
 
-#### Quick Test Login
+### Quick Test Login
 - [🚀 [smpark.dev]](https://smpark.dev) Login -> Smpark Login 클릭
 - [🔐 [smpark.site]](https://smpark.site) ID: `tester`, PW: `1234` 입력 후 로그인
 
 
-#### Quick Test Social Login
+### Quick Test Social Login
 - [🔐 [smpark.site]](https://smpark.site) 회원가입 후 로그인
 - [🔐 [smpark.site]](https://smpark.site) OAuth 페이지 작성 후, 적용 사이트에 소셜 로그인 로직 연동
 
