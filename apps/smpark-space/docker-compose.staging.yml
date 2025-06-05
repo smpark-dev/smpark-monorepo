@@ -15,7 +15,7 @@ services:
       - .env.staging
     environment:
       - NODE_ENV=staging
-      
+      - PORT=3001
     command: yarn smpark-space:staging
 
 networks:
