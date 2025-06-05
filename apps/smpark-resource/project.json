@@ -20,9 +20,6 @@
         "buildTarget": "smpark-resource:build"
       },
       "configurations": {
-        "development": {
-          "buildTarget": "smpark-resource:build:development"
-        },
         "production": {
           "buildTarget": "smpark-resource:build:production"
         }
