@@ -27,9 +27,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn nx build smpark-space --configuration=staging",
-          "yarn nx docker:prod-build smpark-space",
-          "yarn nx docker:prod-push smpark-space"
+          "yarn nx build smpark-space",
+          "yarn nx docker:staging-build smpark-space",
+          "yarn nx docker:staging-push smpark-space"
         ],
         "parallel": false
       }
