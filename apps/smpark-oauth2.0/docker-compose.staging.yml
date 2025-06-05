@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  smpark-oauth2.0:
+    build:
+      context: ../../
+      dockerfile: apps/smpark-oauth2.0/Dockerfile
+      target: staging
+    image: smpark9596/smpark-oauth2.0:${VERSION}
+    platform: linux/amd64
+    container_name: smpark-oauth2.0-staging
+    ports:
+      - '4444:4000'
+    env_file:
+      - .env.staging
+    environment:
+      - NODE_ENV=staging
+      - REDIS_URL=redis://redis-staging:6379
+    depends_on:
+      - redis-staging
+    volumes:
+      - oauth-log-staging:/usr/src/oauth-log
+    command: yarn smpark-oauth2.0:staging
+    networks:
+      - smpark-oauth-network-staging
+
+  redis-staging: 
+    image: redis:alpine
+    container_name: redis-staging
+    volumes:
+      - redis-data-staging:/data 
+    networks:
+      - smpark-oauth-network-staging
+
+networks:
+  smpark-oauth-network-staging:
+    name: smpark-oauth-network-staging
+
+volumes:
+  oauth-log-staging:
+  redis-data-staging: 
