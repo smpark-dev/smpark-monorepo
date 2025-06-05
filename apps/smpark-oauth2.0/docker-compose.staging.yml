@@ -6,7 +6,7 @@ services:
       context: ../../
       dockerfile: apps/smpark-oauth2.0/Dockerfile
       target: staging
-    image: smpark9596/smpark-oauth2.0:${VERSION}
+    image: smpark9596/smpark-oauth2.0-staging:${VERSION}
     platform: linux/amd64
     container_name: smpark-oauth2.0-staging
     ports:
