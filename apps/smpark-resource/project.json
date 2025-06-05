@@ -20,11 +20,21 @@
         "buildTarget": "smpark-resource:build"
       },
       "configurations": {
-        "development": {
-          "buildTarget": "smpark-resource:build:development"
-        },
         "production": {
           "buildTarget": "smpark-resource:build:production"
+        }
+      }
+    },
+    "staging": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "staging",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "smpark-resource:build"
+      },
+      "configurations": {
+        "staging": {
+          "buildTarget": "smpark-resource:build:staging"
         }
       }
     },
@@ -50,13 +60,22 @@
       },
       "configurations": {
         "development": {
-          "minify": false
+          "minify": false,
+          "define": {
+            "process.env.NODE_ENV": "'development'"
+          }
+        },
+        "staging": {
+          "minify": true,
+          "define": {
+            "process.env.NODE_ENV": "'staging'"
+          }
         },
         "production": {
-          "minify": true
-        },
-        "define": {
-          "process.env.NODE_ENV": "'production'"
+          "minify": true,
+          "define": {
+            "process.env.NODE_ENV": "'production'"
+          }
         }
       }
     },
@@ -74,8 +93,49 @@
           "yarn nx build smpark-resource",
           "yarn nx docker:prod-build smpark-resource",
           "yarn nx docker:prod-push smpark-resource"
-        ], 
+        ],
         "parallel": false
+      }
+    },
+    "build:staging": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn nx build smpark-resource --configuration=staging",
+          "yarn nx docker:staging-build smpark-resource",
+          "yarn nx docker:staging-push smpark-resource"
+        ],
+        "parallel": false
+      }
+    },
+    "docker:staging-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.staging.yml --env-file apps/smpark-resource/.env.staging build"
+      }
+    },
+    "docker:staging-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.staging.yml --env-file apps/smpark-resource/.env.staging push"
+      }
+    },
+    "docker:staging-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.staging.yml --env-file apps/smpark-resource/.env.staging up -d"
+      }
+    },
+    "docker:staging-down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.staging.yml --env-file apps/smpark-resource/.env.staging down"
+      }
+    },
+    "docker:staging-pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-resource/docker-compose.staging.yml --env-file apps/smpark-resource/.env.staging pull"
       }
     },
     "docker:prod-build": {

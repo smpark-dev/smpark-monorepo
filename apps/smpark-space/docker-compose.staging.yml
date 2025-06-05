@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  smpark-space:
+    build:
+      context: ../../
+      dockerfile: apps/smpark-space/Dockerfile
+      target: staging
+    image: smpark9596/smpark-space-staging:${VERSION}
+    platform: linux/amd64
+    container_name: smpark-space-staging
+    ports:
+      - "3334:3001"
+    env_file:
+      - .env.staging
+    environment:
+      - NODE_ENV=staging
+    command: yarn smpark-space:staging
+
+networks:
+  default:
+    name: smpark-space-network-staging

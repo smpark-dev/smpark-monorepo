@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const defaultLogDir = path.join(__dirname, '/log');
-const logDir = env.nodeEnv === 'production' ? '../oauth-log' : defaultLogDir;
+const logDir = env.nodeEnv === 'development' ? defaultLogDir : '../oauth-log';
 
 const { combine, colorize, simple, printf } = winston.format;
 
@@ -72,12 +72,12 @@ const errorTransport = new winston.transports.DailyRotateFile({
 
 // 콘솔 트랜스포트
 const consoleTransport = new winston.transports.Console({
-  level: env.nodeEnv === 'production' ? 'warn' : 'debug',
+  level: env.nodeEnv === 'development' ? 'debug' : 'warn',
   format: combine(colorize(), appendTimestamp({ tz: true }), simple()),
 });
 
 const logger = winston.createLogger({
-  level: env.nodeEnv === 'production' ? 'info' : 'debug',
+  level: env.nodeEnv === 'development' ? 'debug' : 'info',
   format: combine(appendTimestamp({ tz: true }), customFormat),
   transports: [infoAndWarnTransport, errorTransport, consoleTransport],
 });

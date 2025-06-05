@@ -23,6 +23,47 @@
         "parallel": false
       }
     },
+    "build:staging": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn nx build smpark-space",
+          "yarn nx docker:staging-build smpark-space",
+          "yarn nx docker:staging-push smpark-space"
+        ],
+        "parallel": false
+      }
+    },
+    "docker:staging-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.staging.yml --env-file apps/smpark-space/.env.staging build"
+      }
+    },
+    "docker:staging-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.staging.yml --env-file apps/smpark-space/.env.staging push"
+      }
+    },
+    "docker:staging-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.staging.yml --env-file apps/smpark-space/.env.staging up -d"
+      }
+    },
+    "docker:staging-down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.staging.yml --env-file apps/smpark-space/.env.staging down"
+      }
+    },
+    "docker:staging-pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-space/docker-compose.staging.yml --env-file apps/smpark-space/.env.staging pull"
+      }
+    },
     "docker:prod-build": {
       "executor": "nx:run-commands",
       "options": {

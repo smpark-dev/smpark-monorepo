@@ -12,7 +12,11 @@ const configureCTX = async (app: Koa): Promise<void> => {
   app.use(
     cors({
       origin: (ctx) => {
-        const validOrigins = ['http://localhost:3000', 'https://smpark.dev'];
+        const validOrigins = [
+          'http://localhost:3000',
+          'https://smpark.dev',
+          'https://staging.smpark.dev',
+        ];
         const requestOrigin = ctx.get('Origin');
 
         if (validOrigins.includes(requestOrigin)) {

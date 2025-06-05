@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  smpark-resource:
+    build:
+      context: ../../
+      dockerfile: apps/smpark-resource/Dockerfile
+      target: staging
+    image: smpark9596/smpark-resource-staging:${VERSION}
+    platform: linux/amd64
+    container_name: smpark-resource-staging
+    ports:
+      - '5556:5001'
+    env_file:
+      - .env.staging
+    environment:
+      - NODE_ENV=staging
+    volumes:
+    - resource-log-staging:/usr/src/resource-log
+    command: yarn smpark-resource:staging
+    
+networks:
+  default:
+    name: smpark-resource-network-staging
+
+volumes:
+  resource-log-staging:
