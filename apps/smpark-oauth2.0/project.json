@@ -23,6 +23,9 @@
         "development": {
           "buildTarget": "smpark-oauth2.0:build:development"
         },
+        "staging": {
+          "buildTarget": "smpark-oauth2.0:build:staging"
+        },
         "production": {
           "buildTarget": "smpark-oauth2.0:build:production"
         }
@@ -55,13 +58,22 @@
       },
       "configurations": {
         "development": {
-          "minify": false
+          "minify": false,
+          "define": {
+            "process.env.NODE_ENV": "'development'"
+          }
+        },
+        "staging": {
+          "minify": true,
+          "define": {
+            "process.env.NODE_ENV": "'staging'"
+          }
         },
         "production": {
-          "minify": true
-        },
-        "define": {
-          "process.env.NODE_ENV": "'production'"
+          "minify": true,
+          "define": {
+            "process.env.NODE_ENV": "'production'"
+          }
         }
       }
     },
@@ -76,7 +88,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn nx build smpark-oauth2.0",
+          "yarn nx build:staging smpark-oauth2.0",
           "yarn nx docker:staging-build smpark-oauth2.0",
           "yarn nx docker:staging-push smpark-oauth2.0"
         ],
@@ -98,6 +110,30 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.staging.yml --env-file apps/smpark-oauth2.0/.env.staging build"
+      }
+    },
+    "docker:staging-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.staging.yml --env-file apps/smpark-oauth2.0/.env.staging push"
+      }
+    },
+    "docker:staging-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.staging.yml --env-file apps/smpark-oauth2.0/.env.staging up -d"
+      }
+    },
+    "docker:staging-down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.staging.yml --env-file apps/smpark-oauth2.0/.env.staging down"
+      }
+    },
+    "docker:staging-pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.staging.yml --env-file apps/smpark-oauth2.0/.env.staging pull"
       }
     },
     "docker:prod-build": {
