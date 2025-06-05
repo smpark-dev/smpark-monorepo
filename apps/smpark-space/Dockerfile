@@ -12,6 +12,17 @@ COPY nx.json ./
 COPY tsconfig.base.json ./
 COPY apps/smpark-space/tsconfig*.json ./tsconfig/sub-config/
 
+FROM base AS staging
+
+COPY apps/smpark-space/.next ./.next
+COPY apps/smpark-space/public ./public
+
+RUN corepack enable 
+
+ENV NODE_ENV=staging
+EXPOSE 3001
+CMD ["yarn", "smpark-space:staging"]
+
 FROM base AS production
 
 COPY apps/smpark-space/.next ./.next
