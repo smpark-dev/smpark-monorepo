@@ -20,14 +20,21 @@
         "buildTarget": "smpark-oauth2.0:build"
       },
       "configurations": {
-        "development": {
-          "buildTarget": "smpark-oauth2.0:build:development"
-        },
-        "staging": {
-          "buildTarget": "smpark-oauth2.0:build:staging"
-        },
         "production": {
           "buildTarget": "smpark-oauth2.0:build:production"
+        }
+      }
+    },
+    "staging": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "staging",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "smpark-oauth2.0:build"
+      },
+      "configurations": {
+        "staging": {
+          "buildTarget": "smpark-oauth2.0:build:staging"
         }
       }
     },
