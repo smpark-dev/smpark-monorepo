@@ -15,7 +15,7 @@ services:
     environment:
       - NODE_ENV=staging
     volumes:
-    - smpark-log-staging:/usr/src/resource-log
+    - resource-log-staging:/usr/src/resource-log
     command: yarn smpark-resource:staging
     
 networks:
