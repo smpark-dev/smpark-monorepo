@@ -6,7 +6,7 @@ services:
       context: ../../
       dockerfile: apps/smpark-space/Dockerfile
       target: staging
-    image: smpark9596/smpark-space:${VERSION}
+    image: smpark9596/smpark-space-staging:${VERSION}
     platform: linux/amd64
     container_name: smpark-space-staging
     ports:
