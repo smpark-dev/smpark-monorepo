@@ -26,9 +26,9 @@ const configureExpress = async (
 ): Promise<void> => {
   const viewsPath = path.join(
     __dirname,
-    env.nodeEnv === 'production' ? 'src/views/templates' : '../../views/templates',
+    env.nodeEnv === 'development' ? '../../views/templates' : 'src/views/templates',
   );
-  const staticPath = path.join(__dirname, env.nodeEnv === 'production' ? 'src/' : '../../');
+  const staticPath = path.join(__dirname, env.nodeEnv === 'development' ? '../../' : 'src/');
 
   app.set('views', viewsPath);
   app.set('view engine', 'pug');
@@ -46,7 +46,7 @@ const configureExpress = async (
       cookie: {
         maxAge: Number(env.oauthRefreshTokenExpiresIn) * 1000,
         httpOnly: true,
-        secure: env.nodeEnv === 'production',
+        secure: env.nodeEnv !== 'development',
         sameSite: 'lax',
       },
     }),

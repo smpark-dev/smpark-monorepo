@@ -14,7 +14,7 @@ class CookieHandler implements ICookieHandler {
       value,
       maxAge = Number(this.envService.getLoginCookieExpiresIn()) * 1000,
       httpOnly = true,
-      secure = this.envService.getNodeEnv() === 'production',
+      secure = this.envService.getNodeEnv() !== 'development',
       sameSite = 'lax',
     } = options;
 

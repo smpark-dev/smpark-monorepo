@@ -12,9 +12,9 @@ const configureSwagger = (app: express.Application, env: EnvConfig): void => {
   const __dirname = dirname(__filename);
 
   const swaggerPath =
-    env.nodeEnv === 'production'
-      ? '/usr/src/oauth/swagger.yaml'
-      : path.join(__dirname, '../../../swagger.yaml');
+    env.nodeEnv === 'development'
+      ? path.join(__dirname, '../../../swagger.yaml')
+      : '/usr/src/oauth/swagger.yaml';
 
   const swaggerDocument = YAML.load(swaggerPath);
 

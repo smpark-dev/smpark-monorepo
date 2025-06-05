@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 
 if (process.env.NODE_ENV === 'production') {
   dotenv.config({ path: 'apps/smpark-resource/.env.production' });
+} else if (process.env.NODE_ENV === 'staging') {
+  dotenv.config({ path: 'apps/smpark-resource/.env.staging' });
 } else {
   dotenv.config({ path: 'apps/smpark-resource/.env.development' });
 }

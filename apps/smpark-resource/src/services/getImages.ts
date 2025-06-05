@@ -75,7 +75,7 @@ export const getImages = async (
     const __dirname = dirname(__filename);
     const imagesDir = path.join(
       __dirname,
-      env.nodeEnv === 'production' ? 'src/assets/images' : '../assets/images',
+      env.nodeEnv === 'development' ? '../assets/images' : 'src/assets/images',
     );
 
     try {
