@@ -135,6 +135,6 @@
     "smpark-resource:staging": "cross-env NODE_ENV=staging node ./dist/apps/smpark-resource/main.js",
     "smpark-space": "next start",
     "smpark-space:prod": "cross-env NODE_ENV=production next start",
-    "smpark-space:staging": "cross-env NODE_ENV=staging next start"
+    "smpark-space:staging": "cross-env NODE_ENV=staging next start -p 3001"
   }
 }
