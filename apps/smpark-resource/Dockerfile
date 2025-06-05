@@ -22,6 +22,14 @@ ENV NODE_ENV=production
 EXPOSE 5000
 CMD ["yarn", "smpark-resource:prod"]
 
+FROM base AS staging
+
+COPY dist ./dist 
+RUN corepack enable 
+ENV NODE_ENV=staging
+EXPOSE 5001  
+CMD ["yarn", "smpark-resource:staging"]
+
 FROM base AS development
 
 RUN corepack enable 
