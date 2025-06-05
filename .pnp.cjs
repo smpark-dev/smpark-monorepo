@@ -3896,6 +3896,14 @@ const RAW_RUNTIME_STATE =
           ["tslib", "npm:2.7.0"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:1.4.3", {\
+        "packageLocation": "./.yarn/cache/@emnapi-runtime-npm-1.4.3-ceb6775ed6-3b7ab72d21.zip/node_modules/@emnapi/runtime/",\
+        "packageDependencies": [\
+          ["@emnapi/runtime", "npm:1.4.3"],\
+          ["tslib", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["@emnapi/wasi-threads", [\
@@ -4571,7 +4579,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/unplugged/@img-sharp-wasm32-npm-0.33.5-e49bff60db/node_modules/@img/sharp-wasm32/",\
         "packageDependencies": [\
           ["@img/sharp-wasm32", "npm:0.33.5"],\
-          ["@emnapi/runtime", "npm:1.2.0"]\
+          ["@emnapi/runtime", "npm:1.4.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -12227,10 +12235,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["detect-libc", [\
-      ["npm:2.0.3", {\
-        "packageLocation": "./.yarn/cache/detect-libc-npm-2.0.3-2ddae34945-88095bda8f.zip/node_modules/detect-libc/",\
+      ["npm:2.0.4", {\
+        "packageLocation": "./.yarn/cache/detect-libc-npm-2.0.4-e8a2aba8b6-c15541f836.zip/node_modules/detect-libc/",\
         "packageDependencies": [\
-          ["detect-libc", "npm:2.0.3"]\
+          ["detect-libc", "npm:2.0.4"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -21118,7 +21126,7 @@ const RAW_RUNTIME_STATE =
           ["@img/sharp-win32-ia32", "npm:0.33.5"],\
           ["@img/sharp-win32-x64", "npm:0.33.5"],\
           ["color", "npm:4.2.3"],\
-          ["detect-libc", "npm:2.0.3"],\
+          ["detect-libc", "npm:2.0.4"],\
           ["semver", "npm:7.6.3"]\
         ],\
         "linkType": "HARD"\
