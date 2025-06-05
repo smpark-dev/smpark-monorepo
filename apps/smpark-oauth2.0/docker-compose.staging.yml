@@ -10,7 +10,7 @@ services:
     platform: linux/amd64
     container_name: smpark-oauth2.0-staging
     ports:
-      - '4444:4000'
+      - '4445:4001'
     env_file:
       - .env.staging
     environment:

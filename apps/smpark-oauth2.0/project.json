@@ -72,6 +72,17 @@
         "lintFilePatterns": ["apps/smpark-oauth2.0/src/**/*.ts"]
       }
     },
+    "build:staging": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn nx build smpark-oauth2.0",
+          "yarn nx docker:staging-build smpark-oauth2.0",
+          "yarn nx docker:staging-push smpark-oauth2.0"
+        ],
+        "parallel": false
+      }
+    },
     "build:prod": {
       "executor": "nx:run-commands",
       "options": {
@@ -81,6 +92,12 @@
           "yarn nx docker:prod-push smpark-oauth2.0"
         ],
         "parallel": false
+      }
+    },
+    "docker:staging-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose -f apps/smpark-oauth2.0/docker-compose.staging.yml --env-file apps/smpark-oauth2.0/.env.staging build"
       }
     },
     "docker:prod-build": {

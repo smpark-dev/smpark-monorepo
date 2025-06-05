@@ -130,7 +130,7 @@ jobs:
         run: yarn nx lint ${{ matrix.project }}
 
       - name: Build
-        run: yarn nx build:prod ${{ matrix.project }}
+        run: yarn nx build:staging ${{ matrix.project }}
 
       - name: Transfer .env files to Windows Desktop
         run: |

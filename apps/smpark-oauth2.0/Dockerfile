@@ -17,18 +17,23 @@ COPY apps/smpark-oauth2.0/swagger.yaml ./
 FROM base AS production
 
 COPY dist ./dist 
-
 # Prod 글로벌 yarn을 사용 -> corepack 연결 -> 지정 yarn 사용 변경
 RUN corepack enable 
-
 ENV NODE_ENV=production
 EXPOSE 4000
 CMD ["yarn", "smpark-oauth2.0:prod"]
 
+FROM base AS staging
+
+COPY dist ./dist 
+RUN corepack enable 
+ENV NODE_ENV=staging
+EXPOSE 4001  
+CMD ["yarn", "smpark-oauth2.0:staging"]
+
 FROM base AS development
 
 RUN corepack enable
-
 ENV NODE_ENV=development
 EXPOSE 4004
 CMD ["yarn", "dev"]
