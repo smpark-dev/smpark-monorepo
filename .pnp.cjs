@@ -27,6 +27,8 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@img/sharp-libvips-linux-x64", "npm:1.0.4"],\
+          ["@img/sharp-linux-x64", "npm:0.33.5"],\
           ["@jest/types", "npm:29.6.3"],\
           ["@koa/cors", "npm:5.0.0"],\
           ["@next/bundle-analyzer", "npm:14.2.11"],\
@@ -21268,6 +21270,8 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["smpark-monorepo", "workspace:."],\
+          ["@img/sharp-libvips-linux-x64", "npm:1.0.4"],\
+          ["@img/sharp-linux-x64", "npm:0.33.5"],\
           ["@jest/types", "npm:29.6.3"],\
           ["@koa/cors", "npm:5.0.0"],\
           ["@next/bundle-analyzer", "npm:14.2.11"],\
