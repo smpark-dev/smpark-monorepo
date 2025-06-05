@@ -6,7 +6,7 @@ services:
       context: ../../
       dockerfile: apps/smpark-resource/Dockerfile
       target: staging
-    image: smpark9596/resource-staging:${RESOURCE_VERSION}
+    image: smpark9596/smpark-resource-staging:${VERSION}
     container_name: resource-staging
     ports:
       - '5556:5001'
@@ -23,4 +23,4 @@ networks:
     name: smpark-resource-network-staging
 
 volumes:
-  smpark_log-staging:
+  resource-log-staging:
