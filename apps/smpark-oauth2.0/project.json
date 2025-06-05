@@ -95,7 +95,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn nx build:staging smpark-oauth2.0",
+          "yarn nx build smpark-oauth2.0 --configuration=staging",
           "yarn nx docker:staging-build smpark-oauth2.0",
           "yarn nx docker:staging-push smpark-oauth2.0"
         ],
