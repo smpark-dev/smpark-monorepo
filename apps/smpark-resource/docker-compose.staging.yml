@@ -7,6 +7,7 @@ services:
       dockerfile: apps/smpark-resource/Dockerfile
       target: staging
     image: smpark9596/smpark-resource-staging:${VERSION}
+    platform: linux/amd64
     container_name: smpark-resource-staging
     ports:
       - '5556:5001'
