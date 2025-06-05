@@ -43,7 +43,7 @@ jobs:
         id: get-version
         run: |
           LATEST_TAG=$(git describe --tags --match "${{ matrix.project }}/v*" --abbrev=0 2>/dev/null || echo "${{ matrix.project }}/v1.0.0")
-          VERSION=${LATEST_TAG#*/v}-staging
+          VERSION=${LATEST_TAG#*/v}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Latest tag: $LATEST_TAG"
 
