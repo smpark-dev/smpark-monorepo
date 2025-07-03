@@ -1,106 +1,96 @@
- 🏗️ SMPark Monorepo
-> 효율적인 개발 환경과 리소스 공유를 위한 통합 개발 workspace
+# 🎨 SMPark - Frontend Developer
 
-## 📌 Overview
-연관된 프로젝트들의 효율적인 관리와 리소스 공유를 위해 모노레포 아키텍처를 도입했습니다. Yarn Workspaces와 PnP를 활용하여 개발 환경을 통합하고 리소스를 최적화했습니다.
+> **성능 최적화와 사용자 경험에 집중하는 프론트엔드 개발자**  
+> T자형 성장을 통해 팀 전체의 생산성 향상에 기여합니다.
 
-## 🗂️ Workspace
-### Main Projects
-- [🚀 Portfolio Site](apps/smpark-space/README.md)
-- [🔐 OAuth2.0 Server](apps/smpark-oauth2.0/README.md)
+[![Portfolio](https://img.shields.io/badge/Portfolio-smpark.dev-blue?style=for-the-badge&logo=react)](https://smpark.dev)
+[![GitHub](https://img.shields.io/badge/GitHub-smpark--dev-black?style=for-the-badge&logo=github)](https://github.com/smpark-dev/smpark-monorepo)
 
-### Internal Services
-- 📦 Resource Server - OAuth2.0 리소스 제공 서비스
+## ⚡ 핵심 성과
 
-## ✨ Monorepo Advantages
-### 💻 개발 효율성
-<details open>
-<summary><b>통합 실행 환경</b></summary>
+- **🎯 성능 최적화**: Lighthouse 100점 달성, LCP 84% 단축 (4.5s → 0.7s)
+- **🎨 사용자 경험**: 60fps Canvas 애니메이션, 완전 반응형 디자인
+- **🛡️ T자형 역량**: OAuth 2.0 서버 직접 구현으로 풀스택 이해도 증명
+- **⚙️ 개발 생산성**: 모노레포 + CI/CD 구축으로 빌드 시간 99.5% 단축
 
-모든 프로젝트 동시 실행 (yarn dev-all)
-빌드 캐시 최적화로 빌드 시간 단축
-패키지 실행 스크립트 표준화 </details>
-<details open>
-<summary><b>모듈 및 설정 공유</b></summary>
+## 🚀 Live Projects
 
-Yarn PnP를 통한 의존성 모듈 공유
-ESLint/Prettier 설정 통일
-TypeScript 설정 공통화 </details>
-### 🔧 리소스 최적화
-<details open>
-<summary><b>CI/CD 파이프라인</b></summary>
+### 🎨 [Portfolio Website](https://smpark.dev)
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-100%20점-brightgreen?style=flat-square)](https://smpark.dev)
+[![Performance](https://img.shields.io/badge/LCP-0.7s-success?style=flat-square)](https://smpark.dev)
+[![Responsive](https://img.shields.io/badge/Responsive-완벽지원-blue?style=flat-square)](https://smpark.dev)
 
-GitHub Actions 워크플로우 통합
-배포 프로세스 표준화
-프로젝트별 독립적 버전 관리 </details>
+**React 성능최적화 포트폴리오 웹사이트**
 
-## 🚀 Performance Improvements
+```
+🎯 성능: Lighthouse 100점 (Performance, SEO, Accessibility, Best Practices)
+⚡ 속도: LCP 0.7초, FCP 0.3초
+🎨 UX: Canvas 애니메이션, Intersection Observer 최적화
+📱 반응형: 모든 디바이스에서 완벽한 사용자 경험
+```
 
-### ⚡ Build & Execution
-<details open>
-<summary><b>빌드 시간 개선</b></summary>
+**Tech Stack:** `Next.js` `TypeScript` `Tailwind CSS` `Canvas API` `Intersection Observer`
 
-- smpark-space[Next.js 14 + SWC]: 10s → 50ms (99.5% ⬇️)
-- smpark-oauth2.0[esbuild]: 2s → 59ms (97.1% ⬇️)
+---
 
-> Nx 캐싱 시스템 도입으로 증분 빌드 시간을 대폭 단축했습니다.
-</details>
+### 🔐 [OAuth 2.0 Server](https://github.com/smpark-dev/smpark-monorepo/tree/main/apps/auth-server)
+[![Security](https://img.shields.io/badge/Security-RFC--6749-red?style=flat-square)](https://github.com/smpark-dev/smpark-monorepo/tree/main/apps/auth-server)
+[![Architecture](https://img.shields.io/badge/Architecture-Clean-orange?style=flat-square)](https://github.com/smpark-dev/smpark-monorepo/tree/main/apps/auth-server)
 
-<details open>
-<summary><b>의존성 관리 마이그레이션 (Node_modules → Yarn PnP)</b></summary>
+**RFC-6749 표준 준수 인증 서버 (T자형 역량 증명)**
 
-- 설치 시간: Node_modules 15.4초 → PnP 10.32초 (33% 단축)
-- 저장 공간: Node_modules 1.1GB → PnP 864MB (21% 절감)
-- Zero Install을 통한 CI/CD 파이프라인 시간 단축
-</details>
+```
+🛡️ 보안: RFC-6749 표준 완전 준수, 웹 보안 방어(CSP/CSRF/XSS)
+🏗️ 아키텍처: Clean Architecture + DDD 적용
+🔄 연동: 포트폴리오 사이트와 완전 통합
+📊 모니터링: 실시간 로그 및 에러 추적
+```
 
-### 🔄 CI/CD Pipeline & DevOps
-> 효율적인 빌드 및 배포 프로세스를 통한 개발 생산성 향상
-#### 🎯 빌드 최적화 전략
-<details open>
-<summary><b>영향도 기반 선별 빌드</b></summary>
+**T자형 역량으로 얻은 가치:**
+- **보안 이해도**: 클라이언트-서버 양측 보안 요구사항 파악
+- **풀스택 개발**: 프론트엔드-백엔드 연동과 OAuth 플로우 구현
+- **실무 이슈 해결**: 토큰 저장 이원화, CORS, CSP 등 보안 이슈 경험
+- **문제 해결**: RFC 문서 분석부터 실제 구현까지 완주
 
-- nx-set-shas로 변경사항 추적: base/head 커밋 비교를 통한 변경점 분석
-- nx affected 기반 스마트 빌드: 변경된 프로젝트와 의존성이 있는 프로젝트만 선별
-- 매트릭스 전략으로 프로젝트별 병렬 빌드: 빌드 파이프라인 처리량 향상
-- 변경된 부분만 재빌드하여 리소스 절약 </details>
+**Tech Stack:** `Node.js` `Express` `MongoDB` `JWT` `Clean Architecture`
 
-<details open>
-<summary><b>캐시 시스템</b></summary>
+## 🛠 Preferred Tech Stack
 
-- GitHub Actions의 캐시 최적화 (LFS, Next.js, NX)
-- Docker 이미지 레이어 캐싱
-- 빌드 아티팩트 재사용을 통한 빌드 시간 단축 </details>
+```javascript
+// Frontend Core
+const frontend = ['React', 'Next.js', 'TypeScript'];
 
-#### 🌿 GitFlow & 배포 자동화
+// State Management & Forms  
+const stateManagement = ['Zustand', 'TanStack Query', 'React Hook Form'];
 
-<details open>
-<summary><b>브랜치 전략</b></summary>
+// Styling & Build
+const styling = ['Tailwind CSS', 'Vite'];
 
-- main: 프로덕션 배포용 브랜치
-- feature/*: 기능 개발 브랜치
-- Git 태그 기반 버전 관리 시스템 </details>
+// Backend & DevOps (T-shaped)
+const backend = ['Node.js'];
+const devops = ['Docker', 'GitHub Actions', 'Storybook'];
+```
 
-<details open>
-<summary><b>자동화된 배포</b></summary>
+## 📈 개발 철학
 
-- Docker 컨테이너 기반 배포
-- 프로젝트별 독립 환경변수 관리
-- Windows Desktop 환경으로의 자동 배포
-- SSH를 통한 원격 배포 자동화 </details>
+> **"단순히 주어진 UI를 구현하는 것을 넘어, 팀 전체의 개발 경험과 사용자 경험을 함께 향상시키려 노력합니다"**
 
-#### 🛡️ 품질 관리 & 보안
+- 🎯 **성능 최적화**: 사용자 경험 개선을 위한 지속적 최적화
+- 🤝 **팀 기여**: 모노레포, CI/CD 환경 구축 등 개발 환경 개선으로 팀 생산성 향상 노력
+- 📈 **T자형 성장**: 프론트엔드 전문성과 백엔드 이해도를 갖춘 협업 역량
+- 💪 **완주 정신**: 시작한 일은 끝까지 완주하는 것을 가장 중요하게 생각
 
-<details open>
-<summary><b>코드 품질</b></summary>
+## 📚 더 자세한 내용이 궁금하다면
 
-- ESLint를 통한 코드 품질 검증
-- TypeScript 타입 체크
-- GitHub Actions를 통한 자동화된 린팅 </details>
+- 📖 [포트폴리오 기술 문서](apps/smpark-space/README.md) - FSD 아키텍처와 성능 최적화 과정
+- 🔐 [OAuth서버 기술 문서](apps/smpark-oauth2.0/README.md) - RFC 분석과 보안 구현 상세  
 
-<details open>
-<summary><b>보안 관리</b></summary>
+## 📞 Contact
 
-- GitHub Secrets를 통한 민감정보 관리
-- 프로젝트별 독립된 환경변수 주입
-- Docker 레지스트리 인증 자동화 </details>
+- **Portfolio**: [https://smpark.dev](https://smpark.dev)
+- **GitHub**: [https://github.com/smpark-dev](https://github.com/smpark-dev)
+- **Email**: smpark7723@gmail.com
+
+---
+
+*"프론트엔드 전문성을 기반으로 T자형 성장을 추구하며, 팀과 함께 성장하는 개발자입니다."*
