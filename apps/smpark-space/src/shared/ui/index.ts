@@ -1,5 +1,5 @@
-export { StarryNightCanvas } from './backgroundCanvas';
-export { Button, NavigationButton, ToggleArrow } from './button';
-export { Loading } from './loading/Loading';
-export { Logo } from './logo/Logo';
-export { Footer } from './footer/Footer';
+export { Button, NavigationButton, ToggleArrow } from './Button';
+export { Loading } from './Loading/Loading';
+export { Logo } from './Logo/Logo';
+export { Footer } from './Footer/Footer';
+export { AppErrorBoundary } from './ErrorBoundary';
